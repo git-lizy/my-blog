@@ -1,0 +1,37 @@
+@import "../../pages/base";
+
+.SideBar{
+  .recommend{
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    .title{
+      color: $themeColor;
+      font-size: 16px;
+      & span{
+        vertical-align: middle;
+      }
+      &::before{
+        content: ' ';
+       background-image: url("/icon/recommend.svg");
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: middle;
+
+      }
+
+    }
+  }
+
+  .rank{
+    @extend .recommend;
+    .title{
+      &::before{
+        background-image: url("/icon/rank.svg") ;
+      }
+  }
+  }
+
+}

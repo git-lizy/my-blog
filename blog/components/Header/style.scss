@@ -1,0 +1,20 @@
+@import "../../pages/base";
+
+.Header {
+    height: 45px;
+    line-height: 45px;
+    border-bottom: 1px solid #f2f2f2;
+    box-shadow:0px 0px 4px 0px rgba(208,208,208,0.5);
+    .name{
+        font-size: 18px;
+        color: $themeColor;
+    }
+    .type{
+        color: #cccccc;
+    }
+    .description{
+        color:#bbbbbb ;
+        text-align: right;
+    }
+}
+
