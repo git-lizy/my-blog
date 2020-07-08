@@ -2,9 +2,9 @@
 
 .SideBar{
   .recommend{
-    padding: 10px;
+    background-color: #ffffff;
     width: 100%;
-    border-radius: 5px;
+    margin-bottom: 10px;
     .title{
       color: $themeColor;
       font-size: 16px;
@@ -15,18 +15,22 @@
         content: ' ';
        background-image: url("/icon/recommend.svg");
         background-size: cover;
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         display: inline-block;
         vertical-align: middle;
 
       }
 
     }
+    li{
+      line-height: 1.8;
+    }
   }
 
   .rank{
     @extend .recommend;
+    margin-bottom: 0;
     .title{
       &::before{
         background-image: url("/icon/rank.svg") ;

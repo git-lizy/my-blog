@@ -10,8 +10,8 @@ function Container(props) {
 		<Header/>
 		<NavBar/>
 		<Row  className={'containerMainRow'}>
-			<Col span={20}></Col>
-			<Col span={4}>
+			<Col xs={24} sm={24} md={19}></Col>
+			<Col xs={0} sm={0} md={5}>
 				<SideBar/>
 			</Col>
 		</Row>

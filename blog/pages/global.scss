@@ -1,7 +1,15 @@
 
 ul{
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 ;
   list-style-type: none;
 }
+body,html{
+  background-color: #f4f4f4 !important;
+}
 
+.card{
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 6px 10px;
+}
