@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,memo} from 'react'
 import { Row , Col ,} from 'antd'
 import './style.scss'
 
@@ -13,4 +13,4 @@ function Header(props) {
 		</Row>
 	</div>
 }
-export default Header
+export default memo(Header)

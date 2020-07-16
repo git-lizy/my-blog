@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,memo} from 'react'
 import { Row , Col ,} from 'antd'
 import './style.scss'
 
@@ -26,4 +26,4 @@ function SideBar(props) {
 
 	</div>
 }
-export default SideBar
+export default memo(SideBar)

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,memo} from 'react'
 import { Row , Col ,} from 'antd'
 import './style.scss'
 
@@ -12,4 +12,4 @@ function NavBar(props) {
 		</Row>
 	</div>
 }
-export default NavBar
+export default memo(NavBar)
