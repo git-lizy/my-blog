@@ -10,11 +10,15 @@
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "antd": "^4.4.0",
+    "axios": "^0.19.2",
     "css-loader": "^3.6.0",
+    "highlight.js": "^10.1.2",
+    "marked": "^1.1.1",
     "next": "9.4.4",
     "node-sass": "^4.14.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-markdown": "^4.3.1",
     "sass": "^1.26.9"
   },
   "devDependencies": {

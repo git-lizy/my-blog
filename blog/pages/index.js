@@ -1,14 +1,16 @@
 import Head from 'next/head'
 import React,{useState,memo} from 'react'
 import Container from '../components/Container'
+import ArticleList from '../components/ArticleList'
 
 
 export default function Home() {
-	const [text,setText]=useState(0)
+	const [locationList,setLocationList]=useState([])
+
 	return (
 		<div className="container">
-			<Container locations={[{label:'xx',path:'xxxx'},{label:'xx',path:'xxxx'},{label:'xx',path:'xxxx'}]}>
-				<span onClick={()=>{setText(text+1)}}>{text}</span>
+			<Container>
+				<ArticleList/>
 			</Container>
 		</div>
 	)

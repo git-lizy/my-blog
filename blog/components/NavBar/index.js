@@ -1,15 +1,31 @@
-import React,{useState,memo} from 'react'
-import { Row , Col ,} from 'antd'
+import React,{useState,memo,useEffect} from 'react'
+import { Row , Col ,message} from 'antd'
+import { withRouter } from 'next/router'
 import './style.scss'
+import {get} from "../../utils/requestUtil";
 
 function NavBar(props) {
-	const NavBarList = ['HTML','CSS','JavaScript','ES6+','React','Vue']
+	const [list,setList] = useState([])
+	useEffect(()=>{
+		getArticlType()
+	},[])
+
+	async function getArticlType(){
+		try {
+			let res = await get('http://127.0.0.1:7001/frontEnd/articleType',{})
+			setList(res)
+		}catch (e) {
+			message.error('获取数据失败')
+		}
+
+	}
+	// const NavBarList = ['HTML','CSS','JavaScript','ES6+','React','Vue']
 	return <div className={'NavBar'}>
 		<Row justify={'space-around'} >
-			{NavBarList.map((item,index)=>{
-				return <Col key={index} xs={6} sm={4}  className={'NavBarItem'}>{item}</Col>
+			{list.map((item,index)=>{
+				return <Col onClick={()=>{props.router.push(`/?type=${item.name}`)}} key={index} xs={6} sm={4}  className={'NavBarItem'}>{item.name}</Col>
 			})}
 		</Row>
 	</div>
 }
-export default memo(NavBar)
+export default memo(withRouter(NavBar))

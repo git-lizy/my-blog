@@ -12,7 +12,7 @@ function Container(props) {
 		<NavBar/>
 		<Row  className={'containerMainRow'}>
 			<Col xs={24} sm={24} md={19}>
-				<Location locations={props.locations}/>
+				<Location />
 				{props.children}
 			</Col>
 			<Col xs={0} sm={0} md={5}>
