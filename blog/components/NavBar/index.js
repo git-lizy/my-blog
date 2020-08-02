@@ -19,11 +19,22 @@ function NavBar(props) {
 		}
 
 	}
+	const typeClick=async(item)=>{
+		props.router.push(`/?type=${item.name}`)
+		props.pathChange(`/?type=${item.name}`)
+		// try {
+		// 	let res = await get('http://127.0.0.1:7001/frontEnd/articleList',{type:item.name})
+		// 	setList(res)
+		// }catch (e) {
+		// 	message.error('获取数据失败')
+		// }
+
+	}
 	// const NavBarList = ['HTML','CSS','JavaScript','ES6+','React','Vue']
 	return <div className={'NavBar'}>
 		<Row justify={'space-around'} >
 			{list.map((item,index)=>{
-				return <Col onClick={()=>{props.router.push(`/?type=${item.name}`)}} key={index} xs={6} sm={4}  className={'NavBarItem'}>{item.name}</Col>
+				return <Col onClick={()=>{typeClick(item)}} key={index} xs={6} sm={4}  className={'NavBarItem'}>{item.name}</Col>
 			})}
 		</Row>
 	</div>

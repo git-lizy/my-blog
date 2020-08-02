@@ -1,18 +1,24 @@
 import React,{useState,memo,useEffect} from 'react'
 import { Row , Col ,message} from 'antd'
+import {withRouter} from 'next/router'
+import Qs from 'qs'
 import { get } from '../../utils/requestUtil'
 import "./style.scss"
 
-export default function articleList() {
+ function articleList(props) {
+     console.log('router',props)
     const [list,setList]=useState([])
-
+     const {path} = props
     useEffect(()=>{
-        getArticlList()
+        console.log('path',path)
+        let query=path.lastIndexOf('?')>-1?Qs.parse(path.slice(path.lastIndexOf('?')+1)):{}
+        let type = query.type
+        getArticlList(type)
     },[])
 
-    async function getArticlList(){
+    async function getArticlList(type){
         try {
-            let res = await get('http://127.0.0.1:7001/frontEnd/articleList',{})
+            let res = await get('http://127.0.0.1:7001/frontEnd/articleList',{type})
             console.log('res',res)
             setList(res)
         }catch (e) {
@@ -35,3 +41,4 @@ export default function articleList() {
         </div>
     )
 }
+export default articleList

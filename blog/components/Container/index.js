@@ -9,7 +9,7 @@ import './style.scss'
 function Container(props) {
 	return <>
 		<Header/>
-		<NavBar/>
+		<NavBar pathChange={props.pathChange}/>
 		<Row  className={'containerMainRow'}>
 			<Col xs={24} sm={24} md={19}>
 				<Location />
@@ -21,4 +21,4 @@ function Container(props) {
 		</Row>
 	</>
 }
-export default memo(Container)
+export default Container

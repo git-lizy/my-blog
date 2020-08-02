@@ -1,18 +1,19 @@
 import React,{useState,memo,useEffect} from 'react'
 import { Breadcrumb,Col} from 'antd'
+import Qs from 'qs'
 import {withRouter} from 'next/router'
 import './style.scss'
 
 function Location(props) {
 	// console.log('router',props)
 	const [locations,setLocations] = useState([])
-	const {router:{pathname,query}} = props
+	const {router:{asPath}} = props
 
 	useEffect(()=>{
-		let list  = pathname==='/'?['']:pathname.split('/')
+		let list  = asPath==='/'?['']:asPath.split('/')
 
 		let newList = []
-		let currentPath='/'
+		let query=asPath.lastIndexOf('?')>-1?Qs.parse(asPath.slice(asPath.lastIndexOf('?')+1)):{}
 		list.forEach((item,index)=>{
 			if(item===''){
 				newList.push({name:'首页',path:'/'})
@@ -30,13 +31,10 @@ function Location(props) {
 			}
 
 		})
-		console.log('newList',newList)
-		if(JSON.stringify(newList) !== JSON.stringify(locations)){
-			console.log('yyy',newList,locations)
-			setLocations(newList)
-		}
+		setLocations(newList)
 
-	},[locations])
+
+	},[])
 
 	return <Col className={'Location'} xs={0} sm={0} md={24}>
 		当前位置：
