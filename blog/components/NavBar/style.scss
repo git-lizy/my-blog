@@ -25,6 +25,9 @@
     &::-webkit-scrollbar {
       display: none;
     }
+    &:hover{
+      cursor: pointer;
+    }
     @media screen and (max-width: 768px){
       justify-content: flex-start;
     }

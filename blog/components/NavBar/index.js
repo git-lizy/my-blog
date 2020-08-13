@@ -21,16 +21,8 @@ function NavBar(props) {
 	}
 	const typeClick=async(item)=>{
 		props.router.push(`/?type=${item.name}`)
-		props.pathChange(`/?type=${item.name}`)
-		// try {
-		// 	let res = await get('http://127.0.0.1:7001/frontEnd/articleList',{type:item.name})
-		// 	setList(res)
-		// }catch (e) {
-		// 	message.error('获取数据失败')
-		// }
 
 	}
-	// const NavBarList = ['HTML','CSS','JavaScript','ES6+','React','Vue']
 	return <div className={'NavBar'}>
 		<Row justify={'space-around'} >
 			{list.map((item,index)=>{

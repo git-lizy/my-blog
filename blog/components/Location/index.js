@@ -5,16 +5,18 @@ import {withRouter} from 'next/router'
 import './style.scss'
 
 function Location(props) {
-	// console.log('router',props)
+	// console.log('location的router',props)
 	const [locations,setLocations] = useState([])
-	const {router:{asPath}} = props
+	const {path} = props
 
 	useEffect(()=>{
-		let list  = asPath==='/'?['']:asPath.split('/')
+		console.log('传进来的path',path)
+		let list  = path==='/'?['']:path.split('/')
 
 		let newList = []
-		let query=asPath.lastIndexOf('?')>-1?Qs.parse(asPath.slice(asPath.lastIndexOf('?')+1)):{}
+		let query=path.lastIndexOf('?')>-1?Qs.parse(path.slice(path.lastIndexOf('?')+1)):{}
 		list.forEach((item,index)=>{
+			console.log('item',item)
 			if(item===''){
 				newList.push({name:'首页',path:'/'})
 				if(query.type){
@@ -23,8 +25,8 @@ function Location(props) {
 				}
 
 			}
-			if(item==='details'){
-				newList.push({name:'文章详情',path:'/details'})
+			if(item.includes('details')){
+				newList.push({name:'文章详情',path:`/details?id=${query.id}`})
 				// if(query.type){
 				// 	newList.push({name:query.type,path:`?type=${query.type}`})
 				// }
@@ -49,4 +51,4 @@ function Location(props) {
 Location.defaultProps={
 	locations:[]
 }
-export default withRouter(memo(Location))
+export default Location

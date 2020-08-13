@@ -6,11 +6,11 @@ import { get } from '../../utils/requestUtil'
 import "./style.scss"
 
  function articleList(props) {
-     console.log('router',props)
+     // console.log('props',props)
     const [list,setList]=useState([])
-     const {path} = props
+     const {path}=props
     useEffect(()=>{
-        console.log('path',path)
+        // console.log('path',props.router)
         let query=path.lastIndexOf('?')>-1?Qs.parse(path.slice(path.lastIndexOf('?')+1)):{}
         let type = query.type
         getArticlList(type)
@@ -26,13 +26,16 @@ import "./style.scss"
         }
 
     }
+    let itemClick=(id)=>{
+        props.router.push(`/details?id=${id}`)
+    }
     return (
         <div className="articleList">
             {list.map(item=>{
                 return <Row className={'articleItem card'} key={item.id} >
                         <Col className={'cover'}><img src="/icon/cover.jpg"  alt=""/></Col>
                     <Col className="msg">
-                        <span className={'title'}>{item.title}</span>
+                        <a className={'title'} onClick={itemClick.bind(articleList,item.id)}>{item.title}</a>
                         <span className={'hotNumber'}>浏览次数：{item.hot}</span>
                         <span className={'detail'}>{item.introduce}</span>
                     </Col>
@@ -41,4 +44,4 @@ import "./style.scss"
         </div>
     )
 }
-export default articleList
+export default withRouter(articleList)

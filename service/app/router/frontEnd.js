@@ -8,5 +8,6 @@ module.exports = app => {
     const { router, controller } = app;
     router.get('/frontEnd/articleType', controller.frontEnd.home.getArticleType);
     router.get('/frontEnd/articleList', controller.frontEnd.home.getArticleList);
+    router.get('/frontEnd/articleDetail', controller.frontEnd.detail.getArticleDetail);
 
 };
