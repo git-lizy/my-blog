@@ -7,11 +7,9 @@ class DetailController extends Controller {
     async getArticleDetail() {
         const { ctx,app } = this;
         let id= ctx.request.query.id
-        let res = await app.mysql.query('SELECT * FROM `article_list` WHERE `id` = '+`${id}`+' LIMIT 0, 1')
+        let res = await ctx.service.article.getArticleDetail(id)
         ctx.body = res;
     }
-
-
 
 }
 

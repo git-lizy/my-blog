@@ -3,6 +3,7 @@ import { Row , Col ,message} from 'antd'
 import { withRouter } from 'next/router'
 import './style.scss'
 import {get} from "../../utils/requestUtil";
+import ipPort from '../../common/ipPort'
 
 function NavBar(props) {
 	const [list,setList] = useState([])
@@ -12,7 +13,7 @@ function NavBar(props) {
 
 	async function getArticlType(){
 		try {
-			let res = await get('http://127.0.0.1:7001/frontEnd/articleType',{})
+			let res = await get(ipPort+'/default/articleType',{})
 			setList(res)
 		}catch (e) {
 			message.error('获取数据失败')

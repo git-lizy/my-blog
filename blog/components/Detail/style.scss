@@ -1,0 +1,12 @@
+.detail{
+  margin:10px 20px 0 0;
+  background-color: transparent;
+  @media screen and (max-width: 768px){
+    margin:10px 20px 0 20px;
+    min-height:calc(100vh - 160px);
+  }
+
+}
+.detailMain{
+  background-color: #ffffff;
+}

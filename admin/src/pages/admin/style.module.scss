@@ -1,0 +1,11 @@
+.logo{
+  padding: 10px;
+  :global(.blog){
+    font-size: 20px;
+    color: #7db8ee;
+  }
+  :global(.system){
+    font-size: 14px;
+    color: #ffffff;
+  }
+}

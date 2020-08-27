@@ -24,8 +24,13 @@ module.exports = appInfo => {
   };
 
   config.cors = {
-    origin: '*',//匹配规则  域名+端口  *则为全匹配
+    origin: 'http://localhost:3000',//匹配规则  域名+端口  *则为全匹配
+    credentials:true,
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
+
+  config.security  = {
+    csrf: false //暂时取消csrf安全防范
   };
 
   config.mysql = {

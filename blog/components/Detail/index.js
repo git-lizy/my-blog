@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import { get } from '../../utils/requestUtil'
 import highLight from 'highlight.js'
 import marked from 'marked'
+import ipPort from '../../common/ipPort'
 import "./style.scss"
 import 'highlight.js/styles/monokai-sublime.css'
 import {withRouter} from 'next/router'
@@ -28,7 +29,6 @@ function Detail(props) {
     });
 
     useEffect(()=>{
-        console.log('Detailpath',props.router)
         const path = props.router.asPath
         let query=path.lastIndexOf('?')>-1?Qs.parse(path.slice(path.lastIndexOf('?')+1)):{}
         let id = query.id
@@ -38,7 +38,7 @@ function Detail(props) {
 
     async function getArticleDetail(id){
         try {
-            let res = await get('http://127.0.0.1:7001/frontEnd/articleDetail',{id})
+            let res = await get(ipPort+'/default/articleDetail',{id})
             console.log('res',res)
 
             if(res.length){
@@ -53,9 +53,12 @@ function Detail(props) {
     let HTML = marked(text)
 
     return(
-        <div className="Detail card"  dangerouslySetInnerHTML = {{ __html: HTML }} >
+        <div className="detail">
+            <div className="detailMain card"  dangerouslySetInnerHTML = {{ __html: HTML }} >
 
+            </div>
         </div>
+
     )
 }
 export default withRouter(Detail)

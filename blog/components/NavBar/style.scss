@@ -15,6 +15,9 @@
     margin: 0;
     border-radius: 0;
     border: none;
+    z-index: 1;
+    top:45px;
+    position: fixed;
   }
   .ant-row{
     width: 100%;

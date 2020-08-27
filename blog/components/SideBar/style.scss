@@ -26,9 +26,16 @@
     }
     li{
       line-height: 1.8;
-      overflow: hidden;
-      text-overflow:ellipsis;
-      white-space: nowrap;
+      font-size:14px;
+      //overflow: hidden;
+      //text-overflow:ellipsis;
+      //white-space: nowrap;
+      a{
+        &:hover{
+          color:#7db8ee;
+        }
+        color: rgba(0, 0, 0, 0.65);
+      }
     }
   }
 

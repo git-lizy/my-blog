@@ -3,6 +3,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.articleList{
+  @media screen and (max-width: 768px){
+    min-height:calc(100vh - 160px);
+  }
+}
 
 .articleItem{
   padding:12px;
@@ -50,7 +55,7 @@
       font-size:12px
 
     }
-    .detail{
+    .introduce{
       font-size:12px;
       color:#8c8b8b;
       overflow: auto;
@@ -58,4 +63,8 @@
       white-space:initial;
     }
   }
+}
+.loadingText{
+  text-align: center;
+  color: #bbbbbb;
 }
