@@ -1,54 +1,89 @@
-import React,{useState,memo,useEffect} from 'react'
-import { Breadcrumb,Col} from 'antd'
+import React, {useEffect, useState} from 'react'
+import {Breadcrumb, Col, message} from 'antd'
 import Qs from 'qs'
 import {withRouter} from 'next/router'
 import './style.scss'
+import {connect} from 'react-redux'
+import {get} from "../../utils/requestUtil";
+import ipPort from "../../common/ipPort";
+
+
+const initMapStateToProps = (state) => {
+    return {
+        typeList: state.articleTypeList
+    }
+};
 
 function Location(props) {
-	// console.log('location的router',props)
-	const [locations,setLocations] = useState([])
-	const {path} = props
+    // console.log('location的router',props)
+    const [locations, setLocations] = useState([]);
+    const {path, typeList} = props;
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1)) : {};
+    const {type, id} = query;
 
-	useEffect(()=>{
-		console.log('传进来的path',path)
-		let list  = path==='/'?['']:path.split('/')
+    useEffect(() => {
+        const func = async () => {
+            let newList = [];
+            if (path === '/') {
+                newList[0] = {name: '首页', path: '/'};
+            } else if (path.startsWith('/list?type')) {
+                if (type && typeList.find(item => item.name === type)) {
+                    newList[0] = {name: '首页', path: '/'};
+                    newList[1] = {name: type, path: `/list?type=${type}`}
+                } else {
+                    newList[0] = {name: '首页', path: '/'};
+                }
+            } else if (path.startsWith('/detail?id')) {
+                if (id) {
+                    let res = await getOtherMsgById(id);
+                    newList[0] = {name: '首页', path: '/'};
+                    newList[1] = {name: res.type, path: `/list?type=${res.type}`};
+                    newList[2] = {name: res.title, path: `/detail?id=${res.id}`}
+                }
+            } else {
+                newList[0] = {name: '首页', path: '/'};
+            }
+            setLocations(newList)
+        };
+        func()
 
-		let newList = []
-		let query=path.lastIndexOf('?')>-1?Qs.parse(path.slice(path.lastIndexOf('?')+1)):{}
-		list.forEach((item,index)=>{
-			console.log('item',item)
-			if(item===''){
-				newList.push({name:'首页',path:'/'})
-				if(query.type){
-					console.log('xxx')
-					newList.push({name:query.type,path:`?type=${query.type}`})
-				}
+    }, []);
 
-			}
-			if(item.includes('details')){
-				newList.push({name:'文章详情',path:`/details?id=${query.id}`})
-				// if(query.type){
-				// 	newList.push({name:query.type,path:`?type=${query.type}`})
-				// }
-			}
+    //根据id查询非文章内容的其他信息
+    async function getOtherMsgById(id) {
+        console.log('getOtherMsgById');
+        try {
+            let res = await get(ipPort + '/default/otherMsgById', {id});
+            if (res.success && res.results.length) {
+                return res.results[0]
+            } else {
+                message.error(`获取文章信息111失败，异常信息为：${res.code}`);
+                return {}
+            }
+        } catch (e) {
+            message.error(`获取文章信息2失败，异常信息为：${e}`);
+            return {}
 
-		})
-		setLocations(newList)
+        }
 
+    }
 
-	},[])
+    return <Col className={'Location'} xs={0} sm={0} md={24}>
+        当前位置：
+        <Breadcrumb separator=">" style={{display: 'inline-block'}}>
+            {locations.map((item, index) => {
+                return <Breadcrumb.Item key={index} onClick={() => {
+                    props.router.push(item.path)
+                }}>{item.name}</Breadcrumb.Item>
+            })}
+        </Breadcrumb>
 
-	return <Col className={'Location'} xs={0} sm={0} md={24}>
-		当前位置：
-		<Breadcrumb separator=">" style={{display:'inline-block'}}>
-			{locations.map((item,index)=>{
-				return <Breadcrumb.Item key={index} href={item.path}>{item.name}</Breadcrumb.Item>
-			})}
-		</Breadcrumb>
-
-	</Col>
+    </Col>
 }
-Location.defaultProps={
-	locations:[]
-}
-export default Location
+
+Location.defaultProps = {
+    locations: []
+};
+export default connect(initMapStateToProps, () => {
+    return {}
+})(withRouter(Location))

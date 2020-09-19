@@ -5,9 +5,10 @@
  */
 
 module.exports = app => {
-    const { router, controller } = app;
+    const {router, controller} = app;
     const adminAuth = app.middleware.adminLoginCheck();
-    router.post('/admin/login', controller.admin.login.index)
-    router.get('/admin/getArticleList',adminAuth, controller.admin.article.getArticleList);
+    router.post('/admin/login', controller.admin.login.index);
+    router.get('/admin/getArticleList', adminAuth, controller.admin.article.getArticleList);
+    router.post('/admin/upload', controller.admin.file.upload)
 
 };

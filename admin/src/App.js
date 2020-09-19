@@ -1,21 +1,22 @@
 import React from 'react';
 import './App.css';
 import AppRouter from './router/router'
-import { HashRouter as Router,Switch,Route } from 'react-router-dom'
+import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Switch>
-          {AppRouter.map(item=>{
-            return <Route exact={item.exact} key={item.path} path={item.path} render={props=><item.component {...props} child={item.child}/>}/>
-          })}
-        </Switch>
-      </Router>
+    return (
+        <div className="App">
+            <Router>
+                <Switch>
+                    {AppRouter.map(item => {
+                        return <Route exact={item.exact} key={item.path} path={item.path}
+                                      render={props => <item.component {...props} child={item.child}/>}/>
+                    })}
+                </Switch>
+            </Router>
 
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;

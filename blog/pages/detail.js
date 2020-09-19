@@ -1,12 +1,11 @@
 import React from 'react'
-import ArticleList from '../components/ArticleList'
+import Detail from '../components/Detail'
 import {withRouter} from 'next/router'
 
 
 function Home(props) {
-
     return (
-        <ArticleList path={props.router.asPath}/>
+        <Detail key={props.router.asPath}/>
     )
 }
 

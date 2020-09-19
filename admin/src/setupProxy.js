@@ -1,7 +1,7 @@
 const proxy = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
     app.use(proxy('/admin', {
-        target: 'http://localhost:7002/'
+        target: 'http://localhost:7001/'
     }));
 };

@@ -6,7 +6,7 @@ import {withRouter} from 'next/router'
 function Home(props) {
 
     return (
-        <ArticleList path={props.router.asPath}/>
+        <ArticleList key={props.router.asPath} path={props.router.asPath}/>
     )
 }
 

@@ -1,33 +1,38 @@
-.loginBody{
+.loginBody {
   background-image: url("../../icon/loginBg.jpg");
   width: 100vw;
   height: 100vh;
   background-size: cover;
 }
-.loginMain{
+
+.loginMain {
   //width: 400px;
   //background-color: #7db8ee;
   //padding: 10px;
   position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
 }
-.title{
+
+.title {
   padding: 10px 0;
   text-align: center;
-  :global(.blog){
+
+  :global(.blog) {
     color: #7db8ee;
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 4px;
   }
-  :global(.system){
+
+  :global(.system) {
     font-size: 16px;
 
   }
 }
-.loginButton{
+
+.loginButton {
   width: 100%;
 }

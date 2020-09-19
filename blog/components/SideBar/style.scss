@@ -1,20 +1,24 @@
 @import "../../pages/base";
 
-.SideBar{
+.SideBar {
   margin-top: 30px;
-  .recommend{
+
+  .recommend {
     background-color: #ffffff;
     width: 100%;
     margin-bottom: 10px;
-    .title{
+
+    .title {
       color: $themeColor;
       font-size: 16px;
-      & span{
+
+      & span {
         vertical-align: middle;
       }
-      &::before{
+
+      &::before {
         content: ' ';
-       background-image: url("/icon/recommend.svg");
+        background-image: url("/icon/recommend.svg");
         background-size: cover;
         width: 16px;
         height: 16px;
@@ -24,29 +28,32 @@
       }
 
     }
-    li{
+
+    li {
       line-height: 1.8;
-      font-size:14px;
+      font-size: 14px;
       //overflow: hidden;
       //text-overflow:ellipsis;
       //white-space: nowrap;
-      a{
-        &:hover{
-          color:#7db8ee;
+      a {
+        &:hover {
+          color: #7db8ee;
         }
+
         color: rgba(0, 0, 0, 0.65);
       }
     }
   }
 
-  .rank{
+  .rank {
     @extend .recommend;
     margin-bottom: 0;
-    .title{
-      &::before{
-        background-image: url("/icon/rank.svg") ;
+
+    .title {
+      &::before {
+        background-image: url("/icon/rank.svg");
       }
-  }
+    }
   }
 
 }

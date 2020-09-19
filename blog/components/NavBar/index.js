@@ -1,35 +1,31 @@
-import React,{useState,memo,useEffect} from 'react'
-import { Row , Col ,message} from 'antd'
-import { withRouter } from 'next/router'
+import React, {memo} from 'react'
+import {Col, Row} from 'antd'
+import {withRouter,} from 'next/router'
 import './style.scss'
-import {get} from "../../utils/requestUtil";
-import ipPort from '../../common/ipPort'
+import {connect} from 'react-redux'
+
+const initMapStateToProps = (state) => {
+    return {
+        typeList: state.articleTypeList
+    }
+};
 
 function NavBar(props) {
-	const [list,setList] = useState([])
-	useEffect(()=>{
-		getArticlType()
-	},[])
+    const {typeList} = props;
 
-	async function getArticlType(){
-		try {
-			let res = await get(ipPort+'/default/articleType',{})
-			setList(res)
-		}catch (e) {
-			message.error('获取数据失败')
-		}
+    const typeClick = async (item) => {
+        props.router.push(`/list?type=${item.name}`)
 
-	}
-	const typeClick=async(item)=>{
-		props.router.push(`/?type=${item.name}`)
-
-	}
-	return <div className={'NavBar'}>
-		<Row justify={'space-around'} >
-			{list.map((item,index)=>{
-				return <Col onClick={()=>{typeClick(item)}} key={index} xs={6} sm={4}  className={'NavBarItem'}>{item.name}</Col>
-			})}
-		</Row>
-	</div>
+    };
+    return <div className={'NavBar'}>
+        <Row justify={'space-around'}>
+            {typeList.map((item, index) => {
+                return <Col onClick={() => {
+                    typeClick(item)
+                }} key={index} xs={6} sm={4} className={'NavBarItem'}>{item.name}</Col>
+            })}
+        </Row>
+    </div>
 }
-export default memo(withRouter(NavBar))
+
+export default connect(initMapStateToProps)(memo(withRouter(NavBar)))

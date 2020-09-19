@@ -1,12 +1,36 @@
-.detail{
-  margin:10px 20px 0 0;
+.detail {
+  margin: 10px 20px 0 0;
   background-color: transparent;
-  @media screen and (max-width: 768px){
-    margin:10px 20px 0 20px;
-    min-height:calc(100vh - 160px);
+  @media screen and (max-width: 768px) {
+    margin: 10px 20px 0 20px;
+    min-height: calc(100vh - 160px);
+  }
+  @media screen and (min-width: 768px) {
+    min-height: calc(100vh - 205px);
   }
 
+  .otherMsg {
+    padding-bottom: 6px;
+
+    .title {
+      color: #7db8ee;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .date {
+      text-align: center;
+      color: #cccccc;
+      font-size: 12px;
+
+      & > span:first-child {
+        padding-right: 10px;
+      }
+    }
+  }
 }
-.detailMain{
+
+.detailMain {
   background-color: #ffffff;
 }
