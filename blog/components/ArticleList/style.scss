@@ -14,19 +14,22 @@
 }
 
 .articleItem {
-  padding: 12px;
+  padding:10px;
   margin-bottom: 10px;
   margin-right: 20px;
-
   &:first-child {
     margin-top: 10px;
   }
-
   @media screen and (max-width: 768px) {
-    margin: 10px 10px 0 10px;
+    margin: 16px 16px 0 16px;
+
     &:first-child {
       margin-top: 10px;
     }
+  }
+  @media screen and (max-width: 576px) {
+    padding: 0;
+    border-radius: 12px;
   }
 
   .cover {
@@ -43,18 +46,25 @@
 
     img {
       width: 100%;
+      @media screen and (max-width: 576px) {
+        height:140px;
+        border-radius:12px 12px 0 0;
+      }
       //height:100%
     }
   }
 
   .msg {
-    flex: 2;
+    flex: 3;
     min-width: 150px;
 
     display: flex;
     flex-direction: column;
     @extend .shenglue;
+    @media screen and (max-width: 576px) {
+      padding: 10px 12px;
 
+    }
     .title {
 
       @extend .shenglue;
@@ -80,7 +90,7 @@
       text-overflow: initial;
       white-space: initial;
       @media screen and (min-width: 992px) {
-        flex-basis: 65%;
+        flex-basis: calc(100% - 40px);
       }
 
     }

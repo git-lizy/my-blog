@@ -57,11 +57,11 @@ function Location(props) {
             if (res.success && res.results.length) {
                 return res.results[0]
             } else {
-                message.error(`获取文章信息111失败，异常信息为：${res.code}`);
+                message.error(`获取文章信息失败，异常信息为：${res.code}`);
                 return {}
             }
         } catch (e) {
-            message.error(`获取文章信息2失败，异常信息为：${e}`);
+            message.error(`获取文章信息失败，异常信息为：${e}`);
             return {}
 
         }

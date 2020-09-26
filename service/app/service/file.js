@@ -11,11 +11,12 @@ class FileService extends Service {
             //读取文件
             let fileContent = await fs.readFile(file.filepath);
             //写入文件
-            await fs.writeFile(`app/public/${new Date().getTime()}.png`, fileContent);
+            const timestamp = new Date().getTime()
+            await fs.writeFile(`app/public/${timestamp}.png`, fileContent);
             res = {
                 success: true,
                 msg: '上传成功',
-                path: `/public/${new Date().getTime()}.png`
+                path: `/public/${timestamp}.png`
             }
         } catch (e) {
             res = {

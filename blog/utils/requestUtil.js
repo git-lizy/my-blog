@@ -32,6 +32,7 @@ export function get(url, params = {}, headers = {}) {
             url,
             params,
             method: 'GET',
+            withCredentials:true,
             // paramsSerializer: function (params) {
             // 	return Qs.stringify(params)
             // },
@@ -54,6 +55,7 @@ export function post(url, params = {}, headers = {}) {
             url,
             data: params,
             method: 'POST',
+            withCredentials:true,
             // paramsSerializer: function (params) {
             // 	return Qs.stringify(params)
             // },

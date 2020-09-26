@@ -40,4 +40,13 @@
     }
   }
 
+  .NavBarItem{
+    @media screen and (max-width: 768px) {
+      &.active{
+        background-color: #60a3e8;
+      }
+    }
+
+  }
+
 }

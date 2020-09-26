@@ -27,6 +27,7 @@ class HomeController extends Controller {
         ctx.body = res;
     }
 
+
 }
 
 module.exports = HomeController;

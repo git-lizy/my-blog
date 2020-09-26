@@ -61,6 +61,7 @@ function ImageUpload(props) {
         try {
             let res = await postFile(ipPort + '/admin/upload', {file: file});
             if (res.success) {
+                console.log('res.path',res.path)
                 setCurrentUploadPath(res.path);
                 return true
             } else {

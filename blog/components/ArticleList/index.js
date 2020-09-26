@@ -89,6 +89,7 @@ function articleList(props) {
             }
 
         } catch (e) {
+            setLoading(false);
             message.error(`获取文章数据失败，异常信息为：${e}`);
             CurrentPage.current = CurrentPage.current - 1;
             setLoadingText('加载失败')
@@ -103,7 +104,7 @@ function articleList(props) {
         <Spin spinning={loading}>
             <div className="articleList">
                 {list.map(item => {
-                    return <Row className={'articleItem card'} key={item.id}>
+                    return <Row  className={'articleItem card'} key={item.id}>
                         <Col className={'cover'}><img src="/icon/cover.jpg" alt=""/></Col>
                         <Col className="msg">
                             <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>

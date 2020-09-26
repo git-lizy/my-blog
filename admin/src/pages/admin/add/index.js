@@ -103,7 +103,7 @@ function Index(props) {
         setUploadStatus(false);
         setCroppedDataUrl(croppedBase64);
         //base64转file对象
-        setCoverFile(dataURLtoFile(croppedBase64, `${new Date().getTime()}.png`));
+        setCoverFile(dataURLtoFile(croppedBase64, `封面.png`));
         //设置表单值
         formRef.current.setFieldsValue({'cover': true})
     };
@@ -117,6 +117,7 @@ function Index(props) {
             let res = await postFile(ipPort + '/admin/upload', {file: coverFile});
             if (res.success) {
                 setUploadStatus(true);
+                setCoverFile(ipPort+res.path)
                 message.success('上传成功')
             } else {
                 setUploadStatus(false);

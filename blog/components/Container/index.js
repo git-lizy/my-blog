@@ -32,10 +32,10 @@ function Container(props) {
 
     return <>
         <Header/>
-        <NavBar/>
+        <NavBar path={props.router.asPath}/>
         <Row className={'containerMainRow'}>
             <Col xs={24} sm={24} md={19}>
-                {typeList.length && <Location key={props.router.asPath} path={props.router.asPath}/>}
+                {typeList.length>0 && <Location key={props.router.asPath} path={props.router.asPath}/>}
                 <div className={'children'}>
                     {props.children}
                 </div>
