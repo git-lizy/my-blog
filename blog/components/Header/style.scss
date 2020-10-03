@@ -26,6 +26,12 @@
   .description {
     color: #bbbbbb;
     text-align: right;
+    @media screen and (max-width: 768px) {
+      visibility:hidden;
+    }
+  }
+  .searchIcon{
+    text-align: center;
   }
 }
 

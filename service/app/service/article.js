@@ -2,10 +2,19 @@ const Service = require('egg').Service;
 
 class ArticleService extends Service {
 
-    async getArticleList(type, page = 1) {
+    async getArticleList(type, page = 1,keywords) {
         const {ctx, app} = this;
-        console.log('query', ctx.request.query);
-        let sql = type ? 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'` + ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : 'SELECT * FROM `article_list` LIMIT ' + `${(page - 1) * 10}` + ', 10';
+        // console.log('query', ctx.request.query);
+        let sql;
+        if(type){
+            sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'` + ' LIMIT ' + `${(page - 1) * 10}` + ', 10'
+        }else{
+            if(keywords){
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE '+ `'%${keywords}%'`+'LIMIT ' + `${(page - 1) * 10}` + ', 10'
+            }else{
+                sql = 'SELECT * FROM `article_list` LIMIT ' + `${(page - 1) * 10}` + ', 10'
+            }
+        }
         try {
             let res = await app.mysql.query(sql);
             return {

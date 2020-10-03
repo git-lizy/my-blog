@@ -16,7 +16,8 @@ class HomeController extends Controller {
         console.log('query', ctx.request.query);
         let type = ctx.request.query.type;
         let page = ctx.request.query.page;
-        let res = await ctx.service.article.getArticleList(type, page);
+        let keywords = ctx.request.query.keywords;
+        let res = await ctx.service.article.getArticleList(type, page,keywords);
         ctx.body = res;
     }
 

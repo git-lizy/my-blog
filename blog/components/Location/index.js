@@ -19,7 +19,7 @@ function Location(props) {
     const [locations, setLocations] = useState([]);
     const {path, typeList} = props;
     const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1)) : {};
-    const {type, id} = query;
+    const {type, id, keywords} = query;
 
     useEffect(() => {
         const func = async () => {
@@ -33,6 +33,10 @@ function Location(props) {
                 } else {
                     newList[0] = {name: '首页', path: '/'};
                 }
+            } else if (path.startsWith('/list?keywords')) {
+                newList[0] = {name: '首页', path: '/'};
+                newList[1] = {name: '搜索结果', path: `/list?keywords=${keywords}`}
+
             } else if (path.startsWith('/detail?id')) {
                 if (id) {
                     let res = await getOtherMsgById(id);
@@ -69,7 +73,7 @@ function Location(props) {
     }
 
     return <Col className={'Location'} xs={0} sm={0} md={24}>
-        当前位置：
+        <span>当前位置：</span>
         <Breadcrumb separator=">" style={{display: 'inline-block'}}>
             {locations.map((item, index) => {
                 return <Breadcrumb.Item key={index} onClick={() => {

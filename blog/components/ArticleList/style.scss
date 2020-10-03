@@ -18,13 +18,13 @@
   margin-bottom: 10px;
   margin-right: 20px;
   &:first-child {
-    margin-top: 10px;
+    //margin-top: 10px;
   }
   @media screen and (max-width: 768px) {
     margin: 16px 16px 0 16px;
 
     &:first-child {
-      margin-top: 10px;
+      margin-top: 0px;
     }
   }
   @media screen and (max-width: 576px) {
@@ -69,16 +69,43 @@
 
       @extend .shenglue;
       font-size: 17px;
+      line-height: 17px;
       font-weight: bold
     }
 
-    .hotNumber {
-      font-size: 12px
 
-    }
 
     .date {
-      @media screen and (max-width: 992px) {
+      .hotNumber {
+        font-size: 12px;
+        padding-left: 14px;
+        padding-right:14px;
+        position: relative;
+        &::after{
+          position: absolute;
+          left:0;
+          top:2px;
+          content: '';
+          background-size: cover;
+          width:12px;
+          height:12px;
+        }
+        &.hot::after{
+          background-image: url("/icon/hot.svg");
+        }
+        &.createDate::after{
+          background-image: url("/icon/create_time.svg");
+        }
+        &.update_date::after{
+          background-image: url("/icon/update_time.svg");
+        }
+
+      }
+      span{
+        color:#bbbbbb;
+        vertical-align: bottom;
+      }
+      @media screen and (min-width: 576px) and (max-width: 992px) {
         display: none;
       }
     }
@@ -100,4 +127,8 @@
 .loadingText {
   text-align: center;
   color: #bbbbbb;
+  @media screen and (max-width: 576px) {
+    padding:4px 0;
+  }
+
 }

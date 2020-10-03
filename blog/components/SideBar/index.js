@@ -7,8 +7,8 @@ import {withRouter} from 'next/router'
 
 
 function SideBar(props) {
-    const [recommendList, setRecommendList] = useState([]);
-    const [rankList, setRankList] = useState([]);
+    const [recommendList, setRecommendList] = useState([1,2,3,4,5,6,7,8,9,10]);
+    const [rankList, setRankList] = useState([1,2,3,4,5,6,7,8,9,10]);
     const [recommendLoading, setRecommendLoading] = useState(false);
     const [rankLoading, setRankLoading] = useState(false);
     useEffect(() => {
