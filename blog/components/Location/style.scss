@@ -1,3 +1,18 @@
-.ant-breadcrumb-link:hover {
-  cursor: pointer;
+.Location {
+  .ant-breadcrumb-link:hover {
+    cursor: pointer;
+  }
+  .ant-breadcrumb > span:last-child{
+    font-size: 0;
+    &>span:first-child {
+      font-size: 14px;
+      vertical-align:-6px;
+      display: inline-block;
+      max-width: 200px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+
+  }
 }

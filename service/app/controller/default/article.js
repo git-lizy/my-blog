@@ -14,16 +14,14 @@ class HomeController extends Controller {
     async getArticleList() {
         const {ctx, app} = this;
         console.log('query', ctx.request.query);
-        let type = ctx.request.query.type;
-        let page = ctx.request.query.page;
-        let keywords = ctx.request.query.keywords;
+        const {type,page,keywords} = ctx.request.query
         let res = await ctx.service.article.getArticleList(type, page,keywords);
         ctx.body = res;
     }
 
     async getOtherMsgById() {
         const {ctx, app} = this;
-        let id = ctx.request.query.id;
+        const {id} = ctx.request.query
         let res = await ctx.service.article.getOtherMsgById(id);
         ctx.body = res;
     }

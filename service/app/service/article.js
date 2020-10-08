@@ -1,18 +1,55 @@
 const Service = require('egg').Service;
 
 class ArticleService extends Service {
+    //随机生成唯一文章id
+    async getRandomArticleId() {
+        const {ctx, app} = this;
+        try {
+            //文章id生成规则：时间戳_随机十位数
+            let articleId;
+            let random = '';
+            let timeStamp = new Date().getTime().toString()
+            for (var i = 1; i <= 10; i++) {
+                const num = Math.floor(Math.random() * 10);
+                random += num;
+            }
+            articleId = `${timeStamp}_${random}`
+            return {
+                success: true,
+                msg: '查询成功',
+                articleId: articleId
+            }
+        } catch (e) {
+            return {
+                success: false,
+                msg: '查询失败',
+                code: e.toString(),
+            }
+        }
+    }
 
-    async getArticleList(type, page = 1,keywords) {
+
+    //根据条件获取文章列表数据
+    async getArticleList(type, page , keywords) {
         const {ctx, app} = this;
         // console.log('query', ctx.request.query);
         let sql;
-        if(type){
-            sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'` + ' LIMIT ' + `${(page - 1) * 10}` + ', 10'
-        }else{
+        if (type) {
             if(keywords){
-                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE '+ `'%${keywords}%'`+'LIMIT ' + `${(page - 1) * 10}` + ', 10'
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' AND `type` = ' + `'${type}'`+' ORDER BY `update_date` ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                console.log('11111',sql)
             }else{
-                sql = 'SELECT * FROM `article_list` LIMIT ' + `${(page - 1) * 10}` + ', 10'
+                console.log('2')
+                sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'`+' ORDER BY `update_date` ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+            }
+
+        } else {
+            if (keywords) {
+                console.log('3')
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' ORDER BY `update_date` ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+            } else {
+                console.log('4')
+                sql = 'SELECT * FROM `article_list` ' +' ORDER BY `update_date` '+ (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             }
         }
         try {
@@ -26,7 +63,7 @@ class ArticleService extends Service {
             return {
                 success: false,
                 msg: '查询失败',
-                code: e
+                code: e.toString(),
             }
         }
     }
@@ -45,7 +82,7 @@ class ArticleService extends Service {
             return {
                 success: false,
                 msg: '查询失败',
-                code: e
+                code: e.toString(),
             }
         }
 
@@ -56,7 +93,7 @@ class ArticleService extends Service {
     async getOtherMsgById(id) {
         const {ctx, app} = this;
         try {
-            let res = await app.mysql.query('SELECT * FROM `article_list` WHERE `id` = ' + `${id}` + ' LIMIT 0, 1');
+            let res = await app.mysql.query('SELECT * FROM `article_list` WHERE `id` = ' + `'${id}'` + ' LIMIT 0, 1');
             return {
                 success: true,
                 msg: '查询成功',
@@ -66,22 +103,25 @@ class ArticleService extends Service {
             return {
                 success: false,
                 msg: '查询失败',
-                code: e
+                code: e.toString(),
             }
         }
 
     }
-
-    async getArticleDetail(article_id,shoulUpdate) {
+    //根据文章id获取详细内容
+    async getArticleDetail(article_id, shoulUpdate) {
         const {ctx, app} = this;
+        console.log('otherMsggggg',shoulUpdate)
         try {
             //获取当前文章详情内容
-            let contentMsg = await app.mysql.query('SELECT * FROM `article_content` WHERE `article_id` = ' + `${article_id}` + ' LIMIT 0, 1');
+            let contentMsg = await app.mysql.query('SELECT * FROM `article_content` WHERE `article_id` = ' + `'${article_id}'` + ' LIMIT 0, 1');
             //获取当前文章其他信息
-            let otherMsg = await app.mysql.query('SELECT * FROM `article_list` WHERE `id` = ' + `${article_id}` + ' LIMIT 0, 1');
+            let { results:otherMsg } = await ctx.service.article.getOtherMsgById(article_id)
+                // console.log('otherMsggggg',otherMsg,otherMsg.results.length)
             //是否更新浏览量
-            if(shoulUpdate==='true'){
-                await ctx.service.article.updateArticleHotById(article_id,otherMsg[0].hot)
+            if (shoulUpdate === 'true') {
+
+                await ctx.service.article.updateArticleHotById(article_id, otherMsg[0].hot)
             }
 
             if (contentMsg.length && otherMsg.length) {
@@ -89,13 +129,10 @@ class ArticleService extends Service {
                     success: true,
                     msg: '查询成功',
                     results: [{
+                        ...otherMsg[0],
                         ...contentMsg[0],
                         // article_id:otherMsg[0].id,
-                        title: otherMsg[0].title,
-                        type: otherMsg[0].type,
-                        hot: otherMsg[0].hot,
-                        create_date: otherMsg[0].create_date,
-                        update_date: otherMsg[0].update_date,
+
                     }]
 
                 }
@@ -110,33 +147,35 @@ class ArticleService extends Service {
             return {
                 success: false,
                 msg: '查询失败',
-                code: e
+                code: e.toString(),
             }
         }
 
     }
 
     //根据文章id更新文章浏览量
-    async updateArticleHotById(articleId,oldHot) {
+    async updateArticleHotById(articleId, oldHot) {
         const numberOldHot = Number(oldHot)
         const {ctx, app} = this;
         try {
-            let res = await app.mysql.query('UPDATE `article_list` SET `hot` = ' + `${numberOldHot+1}` +' WHERE `id` = '+`${articleId}`);
+            let res = await app.mysql.query('UPDATE `article_list` SET `hot` = ' + `${numberOldHot + 1}` + ' WHERE `id` = ' + `'${articleId}'`);
             // console.log('res',res)
             return {
                 success: true,
                 msg: '操作成功',
             }
         } catch (e) {
-            console.log('e',e)
+            console.log('e', e)
             return {
                 success: false,
                 msg: '操作失败',
-                code: e
+                code: e.toString(),
             }
         }
 
     }
+
+
 }
 
 module.exports = ArticleService;

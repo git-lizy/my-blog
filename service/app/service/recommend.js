@@ -15,7 +15,7 @@ class RecommendService extends Service {
             return {
                 success: true,
                 msg: '查询失败',
-                code: e
+                code: e.toString(),
             }
         }
     }

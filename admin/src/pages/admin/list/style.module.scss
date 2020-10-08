@@ -1,0 +1,12 @@
+.container {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+
+  :global(.padRight) {
+    padding-right: 20px;
+  }
+}
+
+

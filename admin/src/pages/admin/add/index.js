@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {get, postFile} from "../../../utils/requestUtil";
-import {Button, Col, Form, Input, message, Modal, Row, Select} from "antd";
+import {get, postFile,post} from "../../../utils/requestUtil";
+import {Button, Col, Form, Input, message, Modal, Row, Select,Rate,Spin} from "antd";
+import url from 'url'
 import ImageUpload from '../../../components/ImageUpload'
 import {PlusCircleOutlined,} from '@ant-design/icons';
 import ipPort from '../../../common/ipPort'
@@ -10,18 +11,28 @@ import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css' // 引入Cropper对应的css
 import 'highlight.js/styles/monokai-sublime.css'
 import Style from './style.module.scss'
+import './preview.scss'
 
 const {Option} = Select;
 
 function Index(props) {
+
+    const search = props.location.search
+    //获取get参数
+    const query = url.parse(search,true).query
+    const [pageLoading,setPageLoading] = useState(false)
+    const [initialValues,setInitialValues] = useState('')
+    const [submitText,setSubmitText] = useState('发布文章')
     const [Typelist, setTypelist] = useState([]); //文章类型数据源
     const [preview, setPreview] = useState('');
     const [dataUrl, setDataUrl] = useState(''); //裁剪前封面
-    const [croppedDataUrl, setCroppedDataUrl] = useState(''); //裁剪后封面
-    const [coverFile, setCoverFile] = useState(''); //裁剪后封面的文件对象
-    const [cropperModal, setCropperModal] = useState(false);
-    const [uploadLoading, setUploadLoading] = useState(false);
+    const [filePath, setFilePath] = useState(''); //上传后的封面地址
+    const coverFile = useRef(); //裁剪后封面的文件对象
+    const [cropperModal, setCropperModal] = useState(false); //裁剪弹窗显隐
+    const [uploadLoading, setUploadLoading] = useState(false); //封面上传加载状态
+    const [submitLoading, setSubmitLoading] = useState(false); //表单体提交加载状态
     const [uploadStatus, setUploadStatus] = useState(false); //当前封面是否已上传
+    const [articleId,setArticleId] = useState(query.articleId?query.articleId:'') //生成的文章id
     const cropperObj = useRef();
     const fileInput = useRef(); //上传表单元素
     const formRef = useRef(); //表单引用
@@ -60,13 +71,61 @@ function Index(props) {
         }
     });
     useEffect(() => {
+
+        //判断是编辑还是新建从而是否新建文章id
+        console.log('articleId',articleId)
+        if(!articleId){
+            getRandomArticleId()
+        }else{
+            setSubmitText('更新文章')
+            getArticleDetail(articleId,false)
+        }
         getArticlType()
     }, []);
+
+    //模式为编辑时获取文章数据
+    async function getArticleDetail(id,shouldUpdate) {
+        setPageLoading(true);
+        try {
+            let res = await get(ipPort + '/admin/articleDetail', {id,update:shouldUpdate});
+            setPageLoading(false);
+            if (res.data === 'no-login') {
+                props.history.push('/')
+                return
+            }
+            if (res.success && res.results.length) {
+                //赋值初始值
+                const {title,type,introduce,content,cover_path,recommend} = res.results[0]
+                setInitialValues({
+                    title,
+                    type,
+                    content,
+                    introduce,
+                    recommend:recommend.length,
+                    cover:cover_path
+                })
+                setPreview(marked(content))
+                setFilePath(cover_path)
+            } else {
+                setInitialValues({});
+                message.error(`获取文章详情失败，异常信息为：${res.code}`)
+            }
+        } catch (e) {
+            setPageLoading(false);
+            setInitialValues({});
+            message.error(`获取文章详情失败，异常信息为：${e}`)
+        }
+
+    }
 
     //获取所有文章类型
     async function getArticlType() {
         try {
             let res = await get(ipPort + '/default/articleType', {});
+            if (res.data === 'no-login') {
+                props.history.push('/')
+                return
+            }
             if (res.success && res.results.length) {
                 setTypelist(res.results)
             } else {
@@ -81,6 +140,28 @@ function Index(props) {
 
     }
 
+    //获取随机文章id进行绑定当前文章
+    async function getRandomArticleId() {
+        try {
+            let res = await get(ipPort + '/admin/getRandomArticleId', {});
+            if (res.data === 'no-login') {
+                props.history.push('/')
+                return
+            }
+            if (res.success && res.articleId) {
+                setArticleId(res.articleId)
+            } else {
+                setArticleId('');
+                message.error(`新建文章id失败,异常信息：${res.code}`)
+            }
+
+        } catch (e) {
+            setArticleId('');
+            message.error(`新建文章id失败,异常信息：${e}`)
+        }
+
+    }
+
     const contentChange = (e) => {
         setPreview(marked(e.target.value))
     };
@@ -88,7 +169,6 @@ function Index(props) {
         e.persist();
         if (!e.target.files[0]) return;
         const dataUrl = await fileToBase64(e.target.files[0]);
-        // console.log('dataUrl',dataUrl)
         setDataUrl(dataUrl);
         setCropperModal(true)
 
@@ -101,11 +181,10 @@ function Index(props) {
 
         setCropperModal(false);
         setUploadStatus(false);
-        setCroppedDataUrl(croppedBase64);
         //base64转file对象
-        setCoverFile(dataURLtoFile(croppedBase64, `封面.png`));
-        //设置表单值
-        formRef.current.setFieldsValue({'cover': true})
+        coverFile.current = dataURLtoFile(croppedBase64, `封面.png`)
+
+        uploadClick()
     };
     const modalCancel = () => {
         setCropperModal(false)
@@ -114,10 +193,21 @@ function Index(props) {
     const uploadClick = async () => {
         setUploadLoading(true);
         try {
-            let res = await postFile(ipPort + '/admin/upload', {file: coverFile});
+            let res = await postFile(ipPort + '/admin/upload', {
+                file: coverFile.current,
+                articleId:articleId,
+                isCover:true,//是否为封面（用于删除旧有封面）
+                oldPath:filePath,//前一张封面的服务器路径地址（用于删除旧有封面）
+            });
+            if (res.data === 'no-login') {
+                props.history.push('/')
+                return
+            }
             if (res.success) {
                 setUploadStatus(true);
-                setCoverFile(ipPort+res.path)
+                //设置表单值
+                formRef.current.setFieldsValue({'cover': true})
+                setFilePath(res.path)
                 message.success('上传成功')
             } else {
                 setUploadStatus(false);
@@ -131,22 +221,58 @@ function Index(props) {
         setUploadLoading(false)
     };
 
+    const submit = async(values) => {
+        // const {}
+        console.log('values',values)
+        const {content,title,type,introduce,recommend} = values
+        const apiPath = submitText === '发布文章'?'/admin/releaseArticle':'/admin/updateArticle'
+        setSubmitLoading(true);
+        try {
+            let res = await post(ipPort + apiPath, {
+
+                articleId,
+                title,
+                type,
+                recommend:String(recommend),
+                content,
+                coverPath:filePath,
+                introduce
+            });
+            if (res.data === 'no-login') {
+                props.history.push('/')
+                return
+            }
+            if (res.success) {
+                message.success('发布成功')
+                props.history.push('/admin/list')
+            } else {
+                message.error(`发布失败，异常信息为${res.code}`)
+            }
+
+        } catch (e) {
+            message.error(`发布失败，异常信息为${e}`)
+        }
+        setSubmitLoading(false)
+    }
+
+    useEffect(()=>{
+        console.log('initialValues',initialValues)
+    },[initialValues])
+
     return (
         <div className={Style.container}>
-            <Form layout={'vertical'} ref={ele => {
-                formRef.current = ele
-            }} name="controrl-ref" onFinish={() => {
-            }}>
+            <Spin spinning={pageLoading}>
+            <Form key={initialValues} initialValues={initialValues}  onFinish={submit}  layout={'vertical'} scrollToFirstError ref={ele => {formRef.current = ele}} name="controrl-ref" >
                 <Row>
 
-                    <Col span={12} className={'padRight'}>
-                        <Form.Item name="title" label="文章标题" rules={[{required: true}]}>
+                    <Col span={11} className={'padRight'}>
+                        <Form.Item  name="title" label="文章标题" rules={[{required: true,message:'请输入标题'}]}>
                             <Input placeholder="请输入标题"/>
                         </Form.Item>
                     </Col>
 
-                    <Col span={6} className={'padRight'}>
-                        <Form.Item name="type" label="类型" rules={[{required: true}]}>
+                    <Col span={4} className={'padRight'}>
+                        <Form.Item name="type" label="类型" rules={[{required: true,message:'请选择类型'}]}>
                             <Select
                                 placeholder="请选择类型"
                                 onChange={() => {
@@ -154,7 +280,7 @@ function Index(props) {
                                 allowClear
                             >
                                 {Typelist.map((item, index) => {
-                                    return <Option key={index} value={item.name}>{item.name}</Option>
+                                    return <Option key={item.name} value={item.name}>{item.name}</Option>
                                 })}
 
 
@@ -162,9 +288,14 @@ function Index(props) {
                         </Form.Item>
                     </Col>
 
-                    <Col span={6} className={`padRight ${Style.releaseCol}`}>
-                        <Button icon={<PlusCircleOutlined/>} type={'primary'} size={'large'} onClick={() => {
-                        }}>发布文章</Button>
+                    <Col span={4} className={'padRight'}>
+                        <Form.Item name="recommend" label="推荐指数" rules={[{required: true,message:'请选择推荐指数'}]}>
+                           <Rate/>
+                        </Form.Item>
+                    </Col>
+
+                    <Col span={5} className={`padRight ${Style.releaseCol}`}>
+                        <Button loading={submitLoading} icon={<PlusCircleOutlined/>} type={'primary'} htmlType="submit" size={'large'} >{submitText}</Button>
                     </Col>
 
                 </Row>
@@ -172,7 +303,7 @@ function Index(props) {
                 <Row>
 
                     <Col span={9} className={'padRight'}>
-                        <Form.Item name="content" label="文章内容" rules={[{required: true}]}>
+                        <Form.Item name="content" label="文章内容" rules={[{required: true,message:'请输入文章内容'}]}>
                             <Input.TextArea className={Style.content} autoSize={{minRows: 20}}
                                             onChange={contentChange}/>
                         </Form.Item>
@@ -180,26 +311,26 @@ function Index(props) {
 
                     <Col span={9} className={'padRight'}>
                         <div className={Style.previewText}>预览</div>
-                        <div className={Style.preview} dangerouslySetInnerHTML={{__html: preview}}>
+                        <div id={'preview'} className={Style.preview} dangerouslySetInnerHTML={{__html: preview}}>
 
                         </div>
 
                     </Col>
                     <Col span={6} className={''}>
-                        <Form.Item name="introduce" label="文章介绍" rules={[{required: true}]}>
-                            <Input.TextArea className={Style.content} autoSize={{minRows: 3}} onChange={contentChange}/>
+                        <Form.Item name="introduce" label="文章介绍" rules={[{required: true,message:'请输入文章介绍'}]}>
+                            <Input.TextArea className={Style.content} autoSize={{minRows: 3}} />
                         </Form.Item>
 
-                        <Form.Item name="cover" label="封面上传" rules={[{required: true}]}>
-                            <div className={croppedDataUrl ? Style.coverView : ''}>{croppedDataUrl ?
-                                <img src={croppedDataUrl} alt=""/> : null}</div>
+                        <Form.Item name="cover" label="封面上传" rules={[{required: true,message:'请上传封面'}]}>
+                            <div className={filePath ? Style.coverView : ''}>
+                                {filePath ? <img src={ipPort+filePath} alt=""/> : null}
+                            </div>
                             <div className={Style.coverButtons}>
                                 <Button type={'primary'} onClick={() => {
                                     fileInput.current.click()
-                                }}>选择封面</Button>
+                                }}>{'选择封面'}</Button>
 
-                                {croppedDataUrl ? <Button disabled={uploadStatus} loading={uploadLoading}
-                                                          onClick={uploadClick}>{uploadStatus ? '已上传' : '上传'}</Button> : null}
+                                {uploadStatus ? <Button loading={uploadLoading} disabled={true} >{uploadLoading?'上传中':'已上传'}</Button> : null}
                             </div>
 
                             <input ref={(ele) => {
@@ -240,14 +371,14 @@ function Index(props) {
 
                         <div>
                             <div>其他图片上传</div>
-                            <ImageUpload/>
+                            <ImageUpload articleId={articleId}/>
                         </div>
 
 
                     </Col>
                 </Row>
             </Form>
-
+            </Spin>
         </div>
     );
 

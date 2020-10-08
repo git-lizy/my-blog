@@ -32,16 +32,15 @@ function Login(props) {
             }
 
         } catch (e) {
-            console.log('e', e);
             setLoading(false);
-            message.error('登录失败')
+            message.error(`登录失败，异常信息为${e}`)
         }
     };
     return <div className={Style.loginBody}>
 
         <div className={Style.loginMain}>
             <div className={Style.title}>
-                <div className={'blog'}>小蚊子博客</div>
+                <div className={'blog'}>铸心博客</div>
                 <div className={'system'}>后台管理系统</div>
             </div>
 

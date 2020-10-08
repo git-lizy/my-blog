@@ -7,9 +7,8 @@ const Controller = require('egg').Controller;
 class DetailController extends Controller {
     async getArticleDetail() {
         const {ctx, app} = this;
-        let id = ctx.request.query.id;
-        let shoulUpdate = ctx.request.query.update;
-        let res = await ctx.service.article.getArticleDetail(id,shoulUpdate);
+        const {id,update} = ctx.request.query
+        let res = await ctx.service.article.getArticleDetail(id,update);
         ctx.body = res;
     }
 

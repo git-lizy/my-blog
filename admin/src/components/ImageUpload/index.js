@@ -49,6 +49,7 @@ function ImageUpload(props) {
         //表示上传文件而非删除
         if (currentLength > fileListNumber.current) {
             newFileList[newFileList.length - 1].url = ipPort + currentUploadPath
+            newFileList[newFileList.length - 1].path = currentUploadPath
         }
         fileListNumber.current = currentLength;
         setFileList(newFileList)
@@ -59,7 +60,11 @@ function ImageUpload(props) {
     const beforeUpload = async (file, fileList) => {
         console.log('file', file, fileList);
         try {
-            let res = await postFile(ipPort + '/admin/upload', {file: file});
+            let res = await postFile(ipPort + '/admin/upload', {
+                file: file,
+                articleId:props.articleId,
+                isCover:false,//是否为封面（用于删除旧有封面）
+            });
             if (res.success) {
                 console.log('res.path',res.path)
                 setCurrentUploadPath(res.path);
@@ -78,8 +83,24 @@ function ImageUpload(props) {
 
 
     };
-    const beforeRemove = (file) => {
+    const beforeRemove = async(file) => {
         console.log('file', file)
+        try {
+            let res = await postFile(ipPort + '/admin/delete', {
+                oldPath:file.path,//删除的图片服务器路径地址
+            });
+            if (res.success) {
+                return true
+            } else {
+                message.error(`删除失败，异常信息为${res.code}`)
+                return false
+            }
+
+        } catch (e) {
+            message.error(`删除失败，异常信息为${e}`)
+            return false
+        }
+
     };
 
     const uploadButton = (

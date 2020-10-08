@@ -24,7 +24,7 @@ function Header(props) {
     return <div className={'Header'}>
         <Row justify={'space-around'}>
             <Col xs={20} sm={20} md={12} >
-                <a className={'name'} onClick={indexClick.bind(Header)}>小蚊子</a>
+                <a className={'name'} onClick={indexClick.bind(Header)}>铸心</a>
                 <span className={'type'}>&nbsp;个人技术博客</span>
             </Col>
             <Col xs={0} sm={0} md={10} className={'description'}>专注于互联网前端基础技术分享</Col>

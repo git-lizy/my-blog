@@ -7,6 +7,7 @@ import highLight from 'highlight.js'
 import marked from 'marked'
 import ipPort from '../../common/ipPort'
 import "./style.scss"
+import './detail.scss'
 import 'highlight.js/styles/monokai-sublime.css'
 import {withRouter} from 'next/router'
 
@@ -32,8 +33,8 @@ function Detail(props) {
     //判断是否需要更新浏览量（通过设置cookie以及有效期）
     const shouldUpdateHot=(id)=>{
         //没有该文章的相应cookie，则执行更新
-        if(Cookie.get('updateHot')!==id){
-            Cookie.set('updateHot',id,{maxAge:3600*3}) //设置三小时有效期
+        if(!Cookie.get(`updateHot_${id}`)){
+            Cookie.set(`updateHot_${id}`,id,{maxAge:3600*3}) //设置三小时有效期
             return true
         }else{
             return false
@@ -55,17 +56,14 @@ function Detail(props) {
             setLoading(false);
             if (res.success && res.results.length) {
                 setData(res.results[0])
-                return  res.results[0]
             } else {
                 setData({});
                 message.error(`获取文章详情失败，异常信息为：${res.code}`)
-                return {}
             }
         } catch (e) {
             setLoading(false);
             setData({});
             message.error(`获取文章详情失败，异常信息为：${e}`)
-            return {}
         }
 
     }
@@ -85,7 +83,7 @@ function Detail(props) {
                         </div>
                     </div>
 
-                    <div className={'markedContent'} dangerouslySetInnerHTML={{__html: HTML}}></div>
+                    <div id={'detail'} className={'markedContent'} dangerouslySetInnerHTML={{__html: HTML}}></div>
                 </div>
             </div>
         </Spin>
