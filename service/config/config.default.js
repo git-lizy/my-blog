@@ -3,10 +3,13 @@
 'use strict';
 
 const path = require('path');
+const ipPort = require('./ipPort')
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
 module.exports = appInfo => {
+
+
     /**
      * built-in config
      * @type {Egg.EggAppConfig}
@@ -25,7 +28,7 @@ module.exports = appInfo => {
     };
 
     config.cors = {
-        origin: 'http://localhost:3000',//匹配规则  域名+端口  *则为全匹配
+        origin: ipPort.blog,//匹配规则  域名+端口  *则为全匹配
         credentials: true,
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
     };
@@ -46,7 +49,7 @@ module.exports = appInfo => {
         // database configuration
         client: {
             // host
-            host: 'localhost',
+            host: ipPort.ip,
             // port
             port: '3306',
             // username
@@ -54,7 +57,7 @@ module.exports = appInfo => {
             // password
             password: 'gouri123',
             // database
-            database: 'my-blog',
+            database: 'my_blog',
         },
         // load into app, default is open
         app: true,

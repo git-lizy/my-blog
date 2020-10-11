@@ -109,7 +109,7 @@ function articleList(props) {
             <div className="articleList">
                 {list.current.map(item => {
                     return <Row  className={'articleItem card'} key={item.id}>
-                 <Col className={'cover'}><img src={ipPort+item.cover_path} alt=""/></Col>
+                 <Col className={'cover'}><img src={ipPort+item.cover_path} alt="cover"/></Col>
                         <Col className="msg">
                             <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>
                             <span className={'introduce'}>{item.introduce}</span>

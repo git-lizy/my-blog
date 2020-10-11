@@ -130,7 +130,7 @@ function ImageUpload(props) {
                 footer={null}
                 onCancel={handleCancel}
             >
-                <img alt="example" style={{width: '100%'}} src={previewImage}/>
+                <img alt="preview" style={{width: '100%'}} src={previewImage}/>
             </Modal>
         </>
     );

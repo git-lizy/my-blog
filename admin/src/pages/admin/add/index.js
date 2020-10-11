@@ -323,7 +323,7 @@ function Index(props) {
 
                         <Form.Item name="cover" label="封面上传" rules={[{required: true,message:'请上传封面'}]}>
                             <div className={filePath ? Style.coverView : ''}>
-                                {filePath ? <img src={ipPort+filePath} alt=""/> : null}
+                                {filePath ? <img src={ipPort+filePath} alt="cover"/> : null}
                             </div>
                             <div className={Style.coverButtons}>
                                 <Button type={'primary'} onClick={() => {

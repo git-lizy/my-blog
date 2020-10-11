@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Checkbox, Form, Input, message} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import ipPort from '../../common/ipPort'
 import Style from './style.module.scss'
 import {post} from '../../utils/requestUtil'
 
@@ -18,7 +19,7 @@ function Login(props) {
         const {account, password, remember} = formValues;
         try {
             setLoading(true);
-            let res = await post('/admin/login', {
+            let res = await post(ipPort+'/admin/login', {
                 account, password, remember
             });
             console.log('res', res);
