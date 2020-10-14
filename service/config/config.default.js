@@ -28,7 +28,7 @@ module.exports = appInfo => {
     };
 
     config.cors = {
-        origin: ipPort.blog,//匹配规则  域名+端口  *则为全匹配
+        // origin: ipPort.blog,//匹配规则  域名+端口  *则为全匹配
         credentials: true,
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
     };
@@ -38,7 +38,8 @@ module.exports = appInfo => {
     };
 
     config.security = {
-        csrf: false //暂时取消csrf安全防范
+        csrf: false, //暂时取消csrf安全防范
+        domainWhiteList:[ipPort.admin,ipPort.blog]
     };
     // config.view={
     //   // 如果还有其他模板引擎，需要合并多个目录
@@ -49,7 +50,7 @@ module.exports = appInfo => {
         // database configuration
         client: {
             // host
-            host: ipPort.ip,
+            host: 'localhost',
             // port
             port: '3306',
             // username
