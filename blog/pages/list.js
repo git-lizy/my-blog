@@ -1,6 +1,7 @@
 import React from 'react'
 import ArticleList from '../components/ArticleList'
 import {withRouter} from 'next/router'
+import Head from 'next/head'
 import Qs from 'qs'
 import {get} from "../utils/requestUtil";
 import ipPort from "../common/ipPort";

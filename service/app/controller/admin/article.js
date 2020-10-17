@@ -26,6 +26,8 @@ class ArticleController extends Controller {
     //发布新文章
     async releaseArticle() {
         const {ctx, app} = this;
+        //创建mysql事务
+        const conn = await app.mysql.beginTransaction();
         const {articleId,title,type,content,introduce,recommend,coverPath} = ctx.request.body
         let recommendFormat
         switch (recommend) {
@@ -49,6 +51,7 @@ class ArticleController extends Controller {
                 break
         }
         let res={}
+
         try {
             //写入其他信息
             let addOtherMsgRes = await app.mysql.query(
@@ -60,12 +63,17 @@ class ArticleController extends Controller {
                 'INSERT INTO `article_content`(`article_id`,`content`) VALUES ('
                 +`'${articleId}'`+', '+`'${content}'`
                 +')')
+            //提交事务
+            await conn.commit()
             res = {
                 success: true,
                 msg: '操作成功',
                 articleId,
             }
+
         } catch (e) {
+            //回滚事务
+            await conn.rollback()
             res = {
                 success: false,
                 msg: '操作失败',
@@ -79,6 +87,8 @@ class ArticleController extends Controller {
     //编辑更新文章
     async updateArticle() {
         const {ctx, app} = this;
+        //创建mysql事务
+        const conn = await app.mysql.beginTransaction();
         const {articleId,title,type,content,introduce,recommend,coverPath} = ctx.request.body
         let recommendFormat
         switch (recommend) {
@@ -108,12 +118,16 @@ class ArticleController extends Controller {
             let updateOtherMsgRes = await app.mysql.query('UPDATE `article_list` SET `title` = '+`'${title}'`+', `type` = '+`'${type}'`+', `introduce` = '+`'${introduce}'`+', `recommend` = '+`'${recommendFormat}'`+', `cover_path` = '+`'${coverPath}'`+',`update_date` = '+`'${moment().format('YYYY-MM-DD')}'`+' WHERE `id` = ' + `'${articleId}'`)
             //更新文章详情数据
             let updateContentRes = await app.mysql.query('UPDATE `article_content` SET `content` = '+`'${content}'`+' WHERE `article_id` = ' + `'${articleId}'`)
+            //提交事务
+            await conn.commit()
             res = {
                 success: true,
                 msg: '操作成功',
                 articleId,
             }
         } catch (e) {
+            //回滚事务
+            await conn.rollback()
             res = {
                 success: false,
                 msg: '操作失败',
@@ -127,6 +141,8 @@ class ArticleController extends Controller {
     //删除文章
     async deleteArticle() {
         const {ctx, app} = this;
+        //创建mysql事务
+        const conn = await app.mysql.beginTransaction();
         const {articleId} = ctx.request.body
         let res={}
         try {
@@ -135,6 +151,8 @@ class ArticleController extends Controller {
             await app.mysql.query('DELETE FROM `article_list` WHERE `id` = ' + `'${articleId}'`)
             //删除详情信息
             await app.mysql.query('DELETE FROM `article_content` WHERE `article_id` = ' + `'${articleId}'`)
+            //提交事务
+            await conn.commit()
             //删除对应文章相关的图片静态资源
             await ctx.service.file.delete(articleId,'directory');
             res = {
@@ -143,6 +161,8 @@ class ArticleController extends Controller {
                 articleId,
             }
         } catch (e) {
+            //回滚事务
+            await conn.rollback()
             res = {
                 success: false,
                 msg: '操作失败',

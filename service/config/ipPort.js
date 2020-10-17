@@ -1,7 +1,7 @@
 let blog,service,admin,ip
 if(process.env.NODE_ENV==='production'){
     ip='47.95.223.83'
-    blog = 'http://'+ip+':80'
+    blog = 'http://'+ip
     service='http://'+ip+':8081'
     admin = 'http://'+ip+':8082'
 }else{

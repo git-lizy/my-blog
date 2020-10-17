@@ -111,6 +111,7 @@ class ArticleService extends Service {
     //根据文章id获取详细内容
     async getArticleDetail(article_id, shoulUpdate) {
         const {ctx, app} = this;
+
         console.log('otherMsggggg',shoulUpdate)
         try {
             //获取当前文章详情内容
@@ -123,6 +124,7 @@ class ArticleService extends Service {
 
                 await ctx.service.article.updateArticleHotById(article_id, otherMsg[0].hot)
             }
+
 
             if (contentMsg.length && otherMsg.length) {
                 return {
@@ -143,6 +145,7 @@ class ArticleService extends Service {
                     code: '数据出现空异常'
                 }
             }
+
         } catch (e) {
             return {
                 success: false,
