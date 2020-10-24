@@ -79,8 +79,8 @@ function Detail(props) {
                     <div className={'otherMsg'}>
                         <div className={'title'}>{data.title}</div>
                         <div className={'date'}>
-                            <span>发布时间：{data.create_date}</span>
-                            <span>更新时间：{data.update_date}</span>
+                            <span>发布时间：{data.create_date?.slice(0,10)}</span>
+                            <span>更新时间：{data.update_date?.slice(0,10)}</span>
                         </div>
                     </div>
 

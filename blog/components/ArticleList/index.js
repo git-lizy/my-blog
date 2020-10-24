@@ -110,14 +110,15 @@ function articleList(props) {
             <div className="articleList">
                 {(list.current.length>0?list.current:initialList).map(item => {
                     return <Row  className={'articleItem card'} key={item.id}>
-                        <Col className={'cover'}><img src={ipPort+item.cover_path} alt="cover"/></Col>
+                        {/*<Col className={'cover'}><img src={ipPort+item.cover_path} alt="cover"/></Col>*/}
                         <Col className="msg">
                             <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>
                             <span className={'introduce'}>{item.introduce}</span>
                             <div className={'date'}>
+                                <span className={'hotNumber createDate'}>{item.type}</span>
+                                <span className={'hotNumber createDate'}>{item.create_date?.slice(0,10)}</span>
+                                <span className={'hotNumber update_date'}>{item.update_date?.slice(0,10)}</span>
                                 <span className={'hotNumber hot'}>{item.hot}</span>
-                                <span className={'hotNumber createDate'}>{item.create_date?.slice(5)}</span>
-                                <span className={'hotNumber update_date'}>{item.update_date?.slice(5)}</span>
                             </div>
 
 

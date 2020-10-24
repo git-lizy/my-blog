@@ -1,37 +1,75 @@
-@import "../../pages/base";
+@import "../../pages/base.scss";
 
 .Header {
-  background-color: #ffffff;
-  height: 45px;
-  line-height: 45px;
-  border-bottom: 1px solid #f2f2f2;
-  box-shadow: 0px 0px 4px 0px rgba(208, 208, 208, 0.5);
+  background-image: url("/icon/bg.jpg");
+  height: 360px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
   @media screen and (max-width: 768px) {
+    height: 220px;
+  }
+  .classifyTabs{
+    .ant-tabs-tab{
+      color:#dddddd;
+      padding-left:10px;
+      padding-right:10px;
+      &:nth-last-child(2){
+        margin-right:0
+      }
+    }
+  }
+
+  .HeaderMain {
+    height: 45px;
+    line-height: 45px;
+    color: #dddddd;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.15);
     position: fixed;
     width: 100%;
     z-index: 1;
     top: 0;
-    //display: none;
-  }
 
-  .name {
-    font-size: 18px;
-    color: $themeColor;
-  }
-
-  .type {
-    color: #cccccc;
-  }
-
-  .description {
-    color: #bbbbbb;
-    text-align: right;
-    @media screen and (max-width: 768px) {
-      visibility:hidden;
+    &.scrollStyle {
+      background-color: rgba(80 ,80 ,80, 0.8);
+      color: #aaaaaa;
+      box-shadow:0 0 15px 0 rgba(41, 36, 36, 0.8)
     }
+
+    .name {
+      background-image: url("/icon/logo.svg");
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 25px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .type {
+      vertical-align: middle;
+      @media screen and (max-width: 576px) {
+        font-size: 14px;
+      }
+    }
+
+    .headerRight {
+      color: #dddddd;
+      font-weight: bold;
+      text-align: right;
+      letter-spacing: 6px;
+    }
+
+
+
   }
-  .searchIcon{
-    text-align: center;
+
+
+}
+.aboutModal{
+  .ant-modal{
+    //width: 400px;
+    max-width:90%;
   }
 }
 

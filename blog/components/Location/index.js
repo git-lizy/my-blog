@@ -3,16 +3,9 @@ import {Breadcrumb, Col, message} from 'antd'
 import Qs from 'qs'
 import {withRouter} from 'next/router'
 import './style.scss'
-import {connect} from 'react-redux'
 import {get} from "../../utils/requestUtil";
 import ipPort from "../../common/ipPort";
 
-
-const initMapStateToProps = (state) => {
-    return {
-        typeList: state.articleTypeList
-    }
-};
 
 function Location(props) {
     // console.log('location的router',props)
@@ -88,6 +81,4 @@ function Location(props) {
 Location.defaultProps = {
     locations: []
 };
-export default connect(initMapStateToProps, () => {
-    return {}
-})(withRouter(Location))
+export default (withRouter(Location))

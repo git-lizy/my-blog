@@ -1,39 +1,120 @@
-import React, {memo,useState} from 'react'
-import {Col, Row,} from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import React, {memo, useState, useEffect, useRef} from 'react'
+import {Col, Row, Menu, Dropdown, Modal} from 'antd'
+import {MenuOutlined, } from '@ant-design/icons'
 import {withRouter} from 'next/router'
+import NavBar from '../NavBar'
+import SearchBar from "../SearchBar";
+import About from "../About";
 import './style.scss'
 
+
 function Header(props) {
-    const [show,setShow] = useState(false)
+    const [classifyVisible,setClassifyVisible] = useState(false)
+    const [searchVisible,setSearchVisible] = useState(false)
+    const [aboutVisible,setAboutVisible] = useState(false)
+
+    const { typeList,onSearchReload } = props
+
+    const header = useRef()
+    const headerMain = useRef()
     const indexClick = () => {
         props.router.push(`/`)
     };
-
-    const onSearchClick = () =>{
-        const searchBarStyle = document.getElementById('SearchBar').style
-        if(show){
-            searchBarStyle.zIndex='-1';
-            setShow(false)
-        }else{
-            searchBarStyle.zIndex='100';
-            setShow(true)
+    const scrollListener = () => {
+        const headerHeight = header.current.offsetHeight
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+        if (scrollTop > headerHeight - 50) {
+            headerMain.current.classList.add('scrollStyle')
+            // classifyRef.current && navBar.current.classList.add('scrollStyle')
+            // searchRef.current && searchBar.current.classList.add('scrollStyle')
+        } else {
+            headerMain.current.classList.remove('scrollStyle')
+            // classifyRef.current && navBar.current.classList.remove('scrollStyle')
+            // searchRef.current && searchBar.current.classList.remove('scrollStyle')
         }
-
     }
-    return <div className={'Header'}>
-        <Row justify={'space-around'}>
-            <Col xs={20} sm={20} md={12} >
-                <a className={'name'} onClick={indexClick.bind(Header)}>铸心</a>
+
+    const clickListener = () =>{
+        setClassifyVisible(false)
+        setSearchVisible(false)
+    }
+    useEffect(() => {
+        headerMain.current = document.querySelector('.HeaderMain')
+        header.current = document.getElementById('Header')
+        document.addEventListener('scroll', scrollListener)
+        document.addEventListener('click', clickListener)
+        return () => {
+            document.removeEventListener('scroll', scrollListener)
+            document.removeEventListener('click', clickListener)
+        }
+    }, [])
+
+    const MenuItemClick = (type,e) => {
+        e.nativeEvent.stopImmediatePropagation()
+        switch (type) {
+            case 'classify':
+                setClassifyVisible(true)
+                break
+            case 'search':
+                setSearchVisible(true)
+                break
+            case 'about':
+                setAboutVisible(true)
+                break
+            default :
+                break
+        }
+    }
+
+    const classifyMenu = (
+        <Menu>
+            <Menu.Item>
+                <a className={'search'} onClick={MenuItemClick.bind(Header,'classify')}>分类</a>
+            </Menu.Item>
+            <Menu.Item>
+                <a className={'search'} onClick={MenuItemClick.bind(Header,'search')}>搜索</a>
+            </Menu.Item>
+            <Menu.Item>
+                <a className={'search'} onClick={MenuItemClick.bind(Header,'about')}>关于</a>
+            </Menu.Item>
+        </Menu>
+    )
+
+
+    return <div className={'Header'} id={'Header'}>
+        <Row justify={'space-around'} className={'HeaderMain'}>
+            <Col xs={13}>
+                <a className={'name'} onClick={indexClick.bind(Header)}></a>
                 <span className={'type'}>&nbsp;个人技术博客</span>
             </Col>
-            <Col xs={0} sm={0} md={10} className={'description'}>专注于互联网前端基础技术分享</Col>
-            <Col xs={2} sm={2} md={0} className={'searchIcon'} >
-                <div onClick={onSearchClick}>
-                    <SearchOutlined style={{color:'#7db8ee',fontSize:'18px'}} />
-                </div>
+            <Col xs={0} md={7} className="headerRight">
+                你见树，却未见森林
+            </Col>
+            <Col xs={7} md={0} className="headerRight">
+                <Dropdown overlay={classifyMenu} trigger={['click']}>
+                    <MenuOutlined style={{fontSize: '18px'}}/>
+                </Dropdown>
+            </Col>
+
+            {/*搜索框 文章分类*/}
+            <Col xs={24} md={0}>
+                {classifyVisible && <NavBar  path={props.router.asPath} typeList={typeList} />}
+                {searchVisible &&  <SearchBar  onSearchReload={onSearchReload}/>}
+                <Modal
+                    title="关于博主"
+                    visible={aboutVisible}
+                    footer={null}
+                    destroyOnClose
+                    wrapClassName={'aboutModal'}
+                    onCancel={()=>{setAboutVisible(false)}}
+                >
+                    <About/>
+                </Modal>
 
             </Col>
+
+
+
         </Row>
     </div>
 }

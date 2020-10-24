@@ -1,6 +1,5 @@
 import React, {memo, useEffect,useState} from 'react'
 import Header from '../Header'
-import NavBar from '../NavBar'
 import SideBar from '../SideBar'
 import Location from '../Location'
 import SearchBar from '../SearchBar'
@@ -38,28 +37,27 @@ function Container(props) {
     }
 
     return <>
-        <Header/>
-        <NavBar path={props.router.asPath}/>
+        <Header typeList={typeList} onSearchReload={onSearchReload}/>
         <Row className={'containerMainRow'}>
             <Row style={{width:'100%'}} align="middle">
-                <Col xs={0} sm={0} md={19} style={{paddingBottom: '10px'}}>
-                    {typeList.length>0 && <Location key={props.router.asPath} path={props.router.asPath}/>}
+                <Col xs={0} sm={0} md={18} style={{paddingBottom: '10px'}}>
+                    {typeList.length>0 && <Location typeList={typeList} key={props.router.asPath} path={props.router.asPath}/>}
                 </Col>
-                <Col xs={24} sm={24} md={5} style={{paddingBottom: '10px'}}>
+                <Col xs={0}  md={6} style={{paddingBottom: '10px'}}>
                     <SearchBar onSearchReload={onSearchReload}/>
                 </Col>
             </Row>
 
             <Row style={{width:'100%'}}>
-                <Col xs={24} sm={24} md={19}>
+                <Col xs={24} sm={24} md={18}>
 
                     <div className={'children'} key={searchReload}>
                         {props.children}
                     </div>
 
                 </Col>
-                <Col xs={0} sm={0} md={5}>
-                    <SideBar/>
+                <Col xs={0} sm={0} md={6}>
+                    <SideBar typeList={typeList}/>
                 </Col>
             </Row>
         </Row>

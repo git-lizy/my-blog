@@ -1,38 +1,23 @@
 import React, {memo, useEffect, useState,} from 'react'
-import {message, Spin} from 'antd'
-import './style.scss'
+import {message, Spin, Tooltip} from 'antd'
+import {WechatOutlined, QqOutlined, GithubOutlined} from '@ant-design/icons'
 import {get} from "../../utils/requestUtil";
 import ipPort from "../../common/ipPort";
+import NavBar from '../../components/NavBar'
+import About from '../../components/About'
 import {withRouter} from 'next/router'
+import './style.scss'
 
 
 function SideBar(props) {
-    const [recommendList, setRecommendList] = useState([1,2,3,4,5,6,7,8,9,10]);
-    const [rankList, setRankList] = useState([1,2,3,4,5,6,7,8,9,10]);
+    const {typeList} = props
+    const [rankList, setRankList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     const [recommendLoading, setRecommendLoading] = useState(false);
     const [rankLoading, setRankLoading] = useState(false);
     useEffect(() => {
-        getRecommendList();
         getHotList()
     }, []);
 
-    async function getRecommendList() {
-        setRecommendLoading(true);
-        try {
-            let res = await get(ipPort + '/default/recommendList', {});
-            setRecommendLoading(false);
-            if (res.success) {
-                setRecommendList(res.results)
-            } else {
-                setRecommendList([]);
-                message.error(`获取推荐信息失败，异常信息为：${res.code}`)
-            }
-        } catch (e) {
-            setRecommendLoading(false);
-            message.error(`获取推荐信息失败，异常信息为：${e}`)
-        }
-
-    }
 
     async function getHotList() {
         setRankLoading(true);
@@ -58,19 +43,18 @@ function SideBar(props) {
     };
 
     return <div className={'SideBar'}>
-        <Spin spinning={recommendLoading}>
-            <div className={'recommend card'}>
-                <div className={'title'}><span>&nbsp;推荐阅读</span></div>
-                <ul>
-                    {recommendList.map((item, index) => {
-                        return <li key={index}>
-                            <a onClick={itemClick.bind(SideBar, item.id)}><span
-                                style={{color: '#7db8ee'}}>{index + 1}.</span>&nbsp;{item.title}</a>
-                        </li>
-                    })}
-                </ul>
-            </div>
-        </Spin>
+
+        <div className={'about card'}>
+            <div className={'title'}><span>&nbsp;关于博主</span></div>
+            <About/>
+        </div>
+
+
+        <div className={'classify card'}>
+            <div className={'title'}><span>&nbsp;文章分类</span></div>
+            <NavBar path={props.router.asPath} typeList={typeList}/>
+        </div>
+
 
         <Spin spinning={rankLoading}>
             <div className={'rank card'}>

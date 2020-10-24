@@ -1,33 +1,33 @@
 @import "../../pages/base";
 
 .SearchBar {
-
   width:100%;
+
   :global(.ant-input-affix-wrapper){
     padding: 2px 8px;
   }
   :global(.ant-input-search-icon){
     padding:0
   }
-
-  @media screen and (max-width: 768px) {
-    width:100%;
-    background-color:#ffffff;
-    position: fixed;
-    top:45px;
-    left:0;
-    padding:10px 14px;
-    z-index:-1;
-    box-shadow: 0px 4px 4px 0px rgba(208, 208, 208, 0.5);
-    :global(.ant-input-search.ant-input-affix-wrapper){
-      height:40px;
-      border-color: $themeColor;
-
+  @media screen and (max-width:768px) {
+    padding: 0 15px;
+    .ant-input-affix-wrapper{
+      background-color:rgba(0,0,0,0.6)
+    }
+    .ant-input{
+      background-color:rgba(0,0,0,0);
+      color:#ffffff;
     }
 
+    .ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{
+      border-color:#dddddd
+    }
+    .ant-input-affix-wrapper:hover{
+      border-color:#dddddd
+    }
+
+
   }
-  @media screen and (min-width: 767px) {
-    z-index: -1;
-  }
+
 }
 
