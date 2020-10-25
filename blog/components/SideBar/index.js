@@ -5,14 +5,17 @@ import {get} from "../../utils/requestUtil";
 import ipPort from "../../common/ipPort";
 import NavBar from '../../components/NavBar'
 import About from '../../components/About'
+import MarkNav from 'markdown-navbar'
+import 'markdown-navbar/dist/navbar.css'
 import {withRouter} from 'next/router'
 import './style.scss'
 
 
 function SideBar(props) {
-    const {typeList} = props
+    const {typeList,articleDetail} = props
+    console.log('articleDetail',articleDetail)
+    const [isDetail] = useState(!!props.router.asPath.startsWith('/detail?'))
     const [rankList, setRankList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    const [recommendLoading, setRecommendLoading] = useState(false);
     const [rankLoading, setRankLoading] = useState(false);
     useEffect(() => {
         getHotList()
@@ -50,25 +53,42 @@ function SideBar(props) {
         </div>
 
 
-        <div className={'classify card'}>
-            <div className={'title'}><span>&nbsp;文章分类</span></div>
-            <NavBar path={props.router.asPath} typeList={typeList}/>
-        </div>
-
-
-        <Spin spinning={rankLoading}>
-            <div className={'rank card'}>
-                <div className={'title'}><span>&nbsp;访问排行</span></div>
-                <ul>
-                    {rankList.map((item, index) => {
-                        return <li key={index}>
-                            <a onClick={itemClick.bind(SideBar, item.id)}><span
-                                style={{color: '#7db8ee'}}>{index + 1}.</span>&nbsp;{item.title}</a>
-                        </li>
-                    })}
-                </ul>
+        {!isDetail &&
+            <>
+            <div className={'classify card'}>
+                <div className={'title'}><span>&nbsp;文章分类</span></div>
+                <NavBar path={props.router.asPath} typeList={typeList}/>
             </div>
-        </Spin>
+
+
+            <Spin spinning={rankLoading}>
+                <div className={'rank card'}>
+                    <div className={'title'}><span>&nbsp;访问排行</span></div>
+                    <ul>
+                        {rankList.map((item, index) => {
+                            return <li key={index}>
+                                <a onClick={itemClick.bind(SideBar, item.id)}><span
+                                    style={{color: '#7db8ee'}}>{index + 1}.</span>&nbsp;{item.title}</a>
+                            </li>
+                        })}
+                    </ul>
+                </div>
+            </Spin>
+            </>
+        }
+
+        {isDetail &&
+        <div className={'markNav card'}>
+            <div className={'title'}><span>&nbsp;文章导航</span></div>
+            <MarkNav
+                className="markNavMain"
+                source={articleDetail.content?articleDetail.content:''}
+                // headingTopOffset={80}
+                // ordered={false}
+            />
+        </div>
+        }
+
 
     </div>
 }

@@ -28,35 +28,15 @@ class ArticleController extends Controller {
         const {ctx, app} = this;
         //创建mysql事务
         const conn = await app.mysql.beginTransaction();
-        const {articleId,title,type,content,introduce,recommend,coverPath} = ctx.request.body
-        let recommendFormat
-        switch (recommend) {
-            case '1':
-                recommendFormat = '*'
-                break
-            case '2':
-                recommendFormat = '**'
-                break
-            case '3':
-                recommendFormat = '***'
-                break
-            case '4':
-                recommendFormat = '****'
-                break
-            case '5':
-                recommendFormat = '*****'
-                break
-            default:
-                recommendFormat = '*'
-                break
-        }
+        const {articleId,title,type,content,introduce} = ctx.request.body
+
         let res={}
 
         try {
             //写入其他信息
             let addOtherMsgRes = await app.mysql.query(
-                'INSERT INTO `article_list`(`id`,`title`, `type`, `introduce`, `hot`, `recommend`, `create_date`, `update_date`,`cover_path`) VALUES ('+
-                `'${articleId}'`+', '+`'${title}'`+', '+`'${type}'`+', '+`'${introduce}'`+','+'0'+', '+`'${recommendFormat}'`+', '+`'${moment().format('YYYY-MM-DD')}'`+', '+`'${moment().format('YYYY-MM-DD')}'`+', '+`'${coverPath}'`
+                'INSERT INTO `article_list`(`id`,`title`, `type`, `introduce`, `hot`,  `create_date`, `update_date`) VALUES ('+
+                `'${articleId}'`+', '+`'${title}'`+', '+`'${type}'`+', '+`'${introduce}'`+','+'0'+', '+`'${moment().format('YYYY-MM-DD HH:mm:ss')}'`+', '+`'${moment().format('YYYY-MM-DD HH:mm:ss')}'`
                 +')')
             //写入文章详情数据
             let addContentRes = await app.mysql.query(
@@ -89,33 +69,13 @@ class ArticleController extends Controller {
         const {ctx, app} = this;
         //创建mysql事务
         const conn = await app.mysql.beginTransaction();
-        const {articleId,title,type,content,introduce,recommend,coverPath} = ctx.request.body
-        let recommendFormat
-        switch (recommend) {
-            case '1':
-                recommendFormat = '*'
-                break
-            case '2':
-                recommendFormat = '**'
-                break
-            case '3':
-                recommendFormat = '***'
-                break
-            case '4':
-                recommendFormat = '****'
-                break
-            case '5':
-                recommendFormat = '*****'
-                break
-            default:
-                recommendFormat = '*'
-                break
-        }
+        const {articleId,title,type,content,introduce} = ctx.request.body
+
         let res={}
         try {
 
             //更新 其他信息
-            let updateOtherMsgRes = await app.mysql.query('UPDATE `article_list` SET `title` = '+`'${title}'`+', `type` = '+`'${type}'`+', `introduce` = '+`'${introduce}'`+', `recommend` = '+`'${recommendFormat}'`+', `cover_path` = '+`'${coverPath}'`+',`update_date` = '+`'${moment().format('YYYY-MM-DD')}'`+' WHERE `id` = ' + `'${articleId}'`)
+            let updateOtherMsgRes = await app.mysql.query('UPDATE `article_list` SET `title` = '+`'${title}'`+', `type` = '+`'${type}'`+', `introduce` = '+`'${introduce}'`+',`update_date` = '+`'${moment().format('YYYY-MM-DD HH:mm:ss')}'`+' WHERE `id` = ' + `'${articleId}'`)
             //更新文章详情数据
             let updateContentRes = await app.mysql.query('UPDATE `article_content` SET `content` = '+`'${content}'`+' WHERE `article_id` = ' + `'${articleId}'`)
             //提交事务

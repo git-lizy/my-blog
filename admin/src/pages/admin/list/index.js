@@ -73,7 +73,7 @@ function Index(props) {
             }
             if (res.success) {
                 message.success(`删除成功`)
-                getArticlList()
+                getArticlList({})
             } else {
                 message.error(`删除文章失败,异常信息：${res.code}`)
             }
@@ -105,19 +105,19 @@ function Index(props) {
             title: '发布日期',
             dataIndex: 'create_date',
             key: 'create_date',
-            width: '15%'
+            width: '17%'
         },
         {
             title: '更新日期',
             dataIndex: 'update_date',
             key: 'update_date',
-            width: '15%'
+            width: '17%'
         },
         {
             title: '浏览量',
             key: 'hot',
             dataIndex: 'hot',
-            width: '15%'
+            width: '11%'
         },
         {
             title: '操作',
@@ -174,7 +174,7 @@ function Index(props) {
                             <Input placeholder="请输入标题"/>
                         </Form.Item>
                     </Col>
-                    <Col span={8} style={{textAlign:'center'}}>
+                    <Col span={8} style={{textAlign:'left'}}>
                         <Button  type={'primary'} htmlType={'submit'}>查询</Button>
                     </Col>
 

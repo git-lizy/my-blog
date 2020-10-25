@@ -1,4 +1,4 @@
-import {getArticleType} from './actionType'
+import {getArticleType,getArticleDetail} from './actionType'
 import {get} from '../utils/requestUtil'
 import {message} from 'antd'
 import ipPort from "../common/ipPort";
@@ -21,3 +21,9 @@ export function GET_TYPE(data) {
         }
     }
 }
+
+//获取文章详情数据
+export function SET_DETAIL(data) {
+    return {type:getArticleDetail,data}
+}
+

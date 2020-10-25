@@ -10,6 +10,16 @@ function articleTypeList(state = [], action) {
     }
 }
 
+function articleDetail(state = {}, action) {
+    switch (action.type) {
+        case 'getArticleDetail':
+            return action.data;
+        default:
+            return state
+    }
+}
+
 export default combineReducers({
-    articleTypeList
+    articleTypeList,
+    articleDetail
 })

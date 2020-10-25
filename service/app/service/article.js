@@ -36,20 +36,20 @@ class ArticleService extends Service {
         let sql;
         if (type) {
             if(keywords){
-                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' AND `type` = ' + `'${type}'`+' ORDER BY `update_date` ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' AND `type` = ' + `'${type}'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
                 console.log('11111',sql)
             }else{
                 console.log('2')
-                sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'`+' ORDER BY `update_date` ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             }
 
         } else {
             if (keywords) {
                 console.log('3')
-                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' ORDER BY `update_date` ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             } else {
                 console.log('4')
-                sql = 'SELECT * FROM `article_list` ' +' ORDER BY `update_date` '+ (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` ' +' ORDER BY `update_date` DESC '+ (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             }
         }
         try {
@@ -73,6 +73,10 @@ class ArticleService extends Service {
         const {ctx, app} = this;
         try {
             let res = await app.mysql.query('SELECT * FROM `article_type` ORDER BY `id` LIMIT 0, 10');
+            for(let [index,item] of res.entries()){
+                let total = await app.mysql.query('SELECT Count(*) FROM article_list WHERE article_list.type = '+`'${item.name}'`);
+                res[index].total = total[0]['Count(*)']
+            }
             return {
                 success: true,
                 msg: '查询成功',
@@ -172,6 +176,31 @@ class ArticleService extends Service {
             return {
                 success: false,
                 msg: '操作失败',
+                code: e.toString(),
+            }
+        }
+
+    }
+
+
+    //获取博客的文章总数量和总访问量
+    async getArticleTotals() {
+        const {ctx, app} = this;
+        try {
+            let articleTotal = await app.mysql.query('SELECT Count(*) FROM article_list');
+            let hotTotal = await app.mysql.query('SELECT sum(hot) FROM article_list');
+            return {
+                success: true,
+                msg: '查询成功',
+                totals: {
+                    hot:hotTotal[0]['sum(hot)'],
+                    article:articleTotal[0]['Count(*)']
+                }
+            }
+        } catch (e) {
+            return {
+                success: false,
+                msg: '查询失败',
                 code: e.toString(),
             }
         }

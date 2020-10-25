@@ -26,7 +26,12 @@ class HomeController extends Controller {
         ctx.body = res;
     }
 
-
+    //获取博客的文章总数量和总访问量
+    async getArticleTotals() {
+        const {ctx, app} = this;
+        let res = await ctx.service.article.getArticleTotals();
+        ctx.body = res;
+    }
 }
 
 module.exports = HomeController;

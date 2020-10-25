@@ -52,6 +52,20 @@
     }
 
   }
+  .markNav{
+    @extend .classify;
+    padding: 0;
+    .title{
+      padding: 6px 10px 0;
+      &::before {
+        background-image: url("/icon/nav.svg");
+      }
+    }
+    .markdown-navigation .title-anchor.active{
+      font-weight: bold;
+      color: $themeColor;
+    }
+  }
   .rank {
     @extend .classify;
     margin-bottom: 0;

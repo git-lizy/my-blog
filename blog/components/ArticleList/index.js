@@ -15,7 +15,8 @@ function articleList(props) {
     const list = useRef([]);
     const CurrentPage = useRef(1);
     const isEnd = useRef(initialList.length < 10); //是否加载全部完毕
-    let query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1)) : {};
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1,jingHaoIndex?jingHaoIndex:path.length)) : {};
     let type = path.startsWith('/list') ? query.type : undefined;
     let keywords = path.startsWith('/list') ? query.keywords : undefined;
 

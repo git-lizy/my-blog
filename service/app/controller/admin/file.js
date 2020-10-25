@@ -6,7 +6,7 @@ const Controller = require('egg').Controller;
 class FileController extends Controller {
     async upload() {
         const {ctx, app} = this;
-        const { articleId ,isCover,oldPath} = ctx.request.body
+        const { articleId } = ctx.request.body
         const file = ctx.request.files[0]
         console.log('fileeee',file)
         let uploadRes = await ctx.service.file.upload(file,articleId);

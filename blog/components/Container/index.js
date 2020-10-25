@@ -20,12 +20,13 @@ const initMapDispatchToProps = (dispath) => {
 };
 const initMapStateToProps = (state) => {
     return {
-        typeList: state.articleTypeList
+        typeList: state.articleTypeList,
+        articleDetail:state.articleDetail
     }
 };
 
 function Container(props) {
-    const {typeList} = props;
+    const {typeList,articleDetail} = props;
     //处理点击搜索时重置刷新文章列表（因为当搜索关键字前后一样时，文章列表不会刷新）
     const [searchReload , setSearchReload] = useState(false)
     useEffect(() => {
@@ -57,7 +58,7 @@ function Container(props) {
 
                 </Col>
                 <Col xs={0} sm={0} md={6}>
-                    <SideBar typeList={typeList}/>
+                    <SideBar key={props.router.asPath} typeList={typeList} articleDetail={articleDetail}/>
                 </Col>
             </Row>
         </Row>

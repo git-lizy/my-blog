@@ -63,7 +63,6 @@ function ImageUpload(props) {
             let res = await postFile(ipPort + '/admin/upload', {
                 file: file,
                 articleId:props.articleId,
-                isCover:false,//是否为封面（用于删除旧有封面）
             });
             if (res.success) {
                 console.log('res.path',res.path)

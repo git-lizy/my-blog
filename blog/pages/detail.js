@@ -1,15 +1,30 @@
-import React from 'react'
+import React ,{useEffect}from 'react'
 import Detail from '../components/Detail'
 import {withRouter} from 'next/router'
 import {useCookie} from 'next-cookie'
 import Head from 'next/head'
 import Qs from 'qs'
+import {connect} from 'react-redux'
 import {get} from "../utils/requestUtil";
 import ipPort from "../common/ipPort";
+import {SET_DETAIL} from "../store/action";
 
+const initMapDispatchToProps = (dispath) => {
+    return {
+        setDetail(data) {
+            dispath(SET_DETAIL(data))
+        },
+    }
+};
+const initMapStateToProps = (state) => {
+    return {}
 
+};
 function Home(props) {
-    const {detailData} = props
+    const {detailData,setDetail} = props
+    useEffect(()=>{
+        setDetail(detailData)
+    })
     return (
         <>
             <Head>
@@ -37,7 +52,9 @@ Home.getInitialProps = async(ctx)=>{
     }
 
     const {asPath:path}=ctx
-    let query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1)) : {};
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1,jingHaoIndex?jingHaoIndex:path.length)) : {};
+    console.log('queryeeee',query)
     let id = query.id;
     let update = shouldUpdateHot(id)
     try{
@@ -56,4 +73,4 @@ Home.getInitialProps = async(ctx)=>{
 
 }
 
-export default withRouter(Home)
+export default connect(initMapStateToProps, initMapDispatchToProps)(withRouter(Home))
