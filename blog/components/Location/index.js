@@ -17,7 +17,9 @@ function Location(props) {
     // console.log('location的router',props)
     const [locations, setLocations] = useState([]);
     const {path, typeList} = props;
+    //获取地址可能出现的#下标
     const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
+    //获取地址传递的参数
     const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
     // console.log('queryyy',query)
     const {type, id, keywords} = query;
