@@ -193,8 +193,8 @@ class ArticleService extends Service {
                 success: true,
                 msg: '查询成功',
                 totals: {
-                    hot:hotTotal[0]['sum(hot)'],
-                    article:articleTotal[0]['Count(*)']
+                    hot:Number(hotTotal[0]['sum(hot)']),
+                    article:Number(articleTotal[0]['Count(*)'])
                 }
             }
         } catch (e) {
