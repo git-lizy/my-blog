@@ -14,32 +14,33 @@ function Home(props) {
         <>
             <Head>
                 <title>铸心个人博客|专注于互联网web前端基础技术分享</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
                 <meta name="keywords" content="铸心,博客,前端,web前端,html,css,javascript,vue,react,es6,node,webpack"/>
-                <meta name="description" content="铸心个人技术博客于学习笔记，专注于互联网web前端基础技术分享,包括html,css,javascript,vue,react,es6,node,webpack等相关技术"/>
+                <meta name="description"
+                      content="铸心个人技术博客于学习笔记，专注于互联网web前端基础技术分享,包括html,css,javascript,vue,react,es6,node,webpack等相关技术"/>
             </Head>
-        <ArticleList  initialList={initialList} key={props.router.asPath} path={props.router.asPath}/>
+            <ArticleList initialList={initialList} key={props.router.asPath} path={props.router.asPath}/>
         </>
     )
 }
 
 //服务端渲染获取初始数据
-Home.getInitialProps = async(ctx)=>{
-    const {asPath:path}=ctx
-    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false
-    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1,jingHaoIndex?jingHaoIndex:path.length)) : {};
+Home.getInitialProps = async (ctx) => {
+    const {asPath: path} = ctx
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
     let type = path.startsWith('/list') ? query.type : undefined;
     let keywords = path.startsWith('/list') ? query.keywords : undefined;
-    try{
-        let res = await get(ipPort + '/default/articleList', {type, page:1,keywords});
+    try {
+        let res = await get(ipPort + '/default/articleList', {type, page: 1, keywords});
         if (res.success) {
 
-            return {initialList:res.results}
+            return {initialList: res.results}
         } else {
-            return {initialList:[]}
+            return {initialList: []}
         }
-    }catch (e) {
-        return {initialList:[]}
+    } catch (e) {
+        return {initialList: []}
     }
 
 }

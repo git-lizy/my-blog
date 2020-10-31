@@ -88,8 +88,8 @@ function Index(props) {
 
     }
 
-    const tableChange = (pagination) =>{
-        console.log('page',pagination)
+    const tableChange = (pagination) => {
+        console.log('page', pagination)
     }
 
     //表格列配置
