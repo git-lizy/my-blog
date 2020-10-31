@@ -10,11 +10,11 @@
 
 ## 项目结构
 
-blog：博客项目前端工程，所用技术栈为next + react hooks + antd + axios
+blog：博客项目前端工程，所用技术栈为Next.js + React Hooks + Antd + Axios
 
-service：博客项目后端服务，所用技术栈为egg
+service：博客项目后端服务，所用技术栈为Egg.js
 
-admin：博客后台管理系统，所用技术栈为create-react-app + react hooks + axios
+admin：博客后台管理系统，所用技术栈为Create-React-App + React Hooks + Antd + Axios
 
 files：博客所用静态资源存放目录（如上传的图片等文件）
 
