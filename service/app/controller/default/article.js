@@ -11,14 +11,16 @@ class HomeController extends Controller {
         let res = await ctx.service.article.getArticleType();
         ctx.body = res;
     }
+
     //获取文章列表数据源
     async getArticleList() {
         const {ctx, app} = this;
         // console.log('query', ctx.request.query);
-        const {type,page,keywords} = ctx.request.query
-        let res = await ctx.service.article.getArticleList(type, page,keywords);
+        const {type, page, keywords} = ctx.request.query
+        let res = await ctx.service.article.getArticleList(type, page, keywords);
         ctx.body = res;
     }
+
     //获取指定文章其他信息（不含文章具体内容）
     async getOtherMsgById() {
         const {ctx, app} = this;

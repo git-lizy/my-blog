@@ -10,11 +10,12 @@ class ArticleController extends Controller {
     async getArticleList() {
         const {ctx, app} = this;
         // console.log('query', ctx.request.query);
-        const {type,page,keywords} = ctx.request.query
+        const {type, page, keywords} = ctx.request.query
 
-        let res = await ctx.service.article.getArticleList(type, page,keywords);
+        let res = await ctx.service.article.getArticleList(type, page, keywords);
         ctx.body = res;
     }
+
     //获取随机文章id
     async getRandomArticleId() {
         const {ctx, app} = this;
@@ -28,21 +29,21 @@ class ArticleController extends Controller {
         const {ctx, app} = this;
         //创建mysql事务
         const conn = await app.mysql.beginTransaction();
-        const {articleId,title,type,content,introduce} = ctx.request.body
+        const {articleId, title, type, content, introduce} = ctx.request.body
 
-        let res={}
+        let res = {}
 
         try {
             //写入其他信息
             let addOtherMsgRes = await app.mysql.query(
-                'INSERT INTO `article_list`(`id`,`title`, `type`, `introduce`, `hot`,  `create_date`, `update_date`) VALUES ('+
-                `'${articleId}'`+', '+`'${title}'`+', '+`'${type}'`+', '+`'${introduce}'`+','+'0'+', '+`'${moment().format('YYYY-MM-DD HH:mm:ss')}'`+', '+`'${moment().format('YYYY-MM-DD HH:mm:ss')}'`
-                +')')
+                'INSERT INTO `article_list`(`id`,`title`, `type`, `introduce`, `hot`,  `create_date`, `update_date`) VALUES (' +
+                `'${articleId}'` + ', ' + `'${title}'` + ', ' + `'${type}'` + ', ' + `'${introduce}'` + ',' + '0' + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'`
+                + ')')
             //写入文章详情数据
             let addContentRes = await app.mysql.query(
                 'INSERT INTO `article_content`(`article_id`,`content`) VALUES ('
-                +`'${articleId}'`+', '+`'${content}'`
-                +')')
+                + `'${articleId}'` + ', ' + `'${content}'`
+                + ')')
             //提交事务
             await conn.commit()
             res = {
@@ -60,7 +61,7 @@ class ArticleController extends Controller {
                 code: e.toString(),
             }
         }
-        ctx.body=res
+        ctx.body = res
 
     }
 
@@ -69,15 +70,15 @@ class ArticleController extends Controller {
         const {ctx, app} = this;
         //创建mysql事务
         const conn = await app.mysql.beginTransaction();
-        const {articleId,title,type,content,introduce} = ctx.request.body
+        const {articleId, title, type, content, introduce} = ctx.request.body
 
-        let res={}
+        let res = {}
         try {
 
             //更新 其他信息
-            let updateOtherMsgRes = await app.mysql.query('UPDATE `article_list` SET `title` = '+`'${title}'`+', `type` = '+`'${type}'`+', `introduce` = '+`'${introduce}'`+',`update_date` = '+`'${moment().format('YYYY-MM-DD HH:mm:ss')}'`+' WHERE `id` = ' + `'${articleId}'`)
+            let updateOtherMsgRes = await app.mysql.query('UPDATE `article_list` SET `title` = ' + `'${title}'` + ', `type` = ' + `'${type}'` + ', `introduce` = ' + `'${introduce}'` + ',`update_date` = ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ' WHERE `id` = ' + `'${articleId}'`)
             //更新文章详情数据
-            let updateContentRes = await app.mysql.query('UPDATE `article_content` SET `content` = '+`'${content}'`+' WHERE `article_id` = ' + `'${articleId}'`)
+            let updateContentRes = await app.mysql.query('UPDATE `article_content` SET `content` = ' + `'${content}'` + ' WHERE `article_id` = ' + `'${articleId}'`)
             //提交事务
             await conn.commit()
             res = {
@@ -94,7 +95,7 @@ class ArticleController extends Controller {
                 code: e.toString(),
             }
         }
-        ctx.body=res
+        ctx.body = res
 
     }
 
@@ -104,7 +105,7 @@ class ArticleController extends Controller {
         //创建mysql事务
         const conn = await app.mysql.beginTransaction();
         const {articleId} = ctx.request.body
-        let res={}
+        let res = {}
         try {
 
             //删除其他信息
@@ -114,7 +115,7 @@ class ArticleController extends Controller {
             //提交事务
             await conn.commit()
             //删除对应文章相关的图片静态资源
-            await ctx.service.file.delete(articleId,'directory');
+            await ctx.service.file.delete(articleId, 'directory');
             res = {
                 success: true,
                 msg: '操作成功',
@@ -129,15 +130,15 @@ class ArticleController extends Controller {
                 code: e.toString(),
             }
         }
-        ctx.body=res
+        ctx.body = res
 
     }
 
     async getArticleDetail() {
         const {ctx, app} = this;
 
-        const {id,update} = ctx.request.query
-        let res = await ctx.service.article.getArticleDetail(id,update);
+        const {id, update} = ctx.request.query
+        let res = await ctx.service.article.getArticleDetail(id, update);
         ctx.body = res;
     }
 

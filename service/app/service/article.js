@@ -30,26 +30,26 @@ class ArticleService extends Service {
 
 
     //根据条件获取文章列表数据
-    async getArticleList(type, page , keywords) {
+    async getArticleList(type, page, keywords) {
         const {ctx, app} = this;
         // console.log('query', ctx.request.query);
         let sql;
         if (type) {
-            if(keywords){
-                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' AND `type` = ' + `'${type}'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+            if (keywords) {
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'` + ' AND `type` = ' + `'${type}'` + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
                 // console.log('11111',sql)
-            }else{
+            } else {
                 // console.log('2')
-                sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'` + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
             }
 
         } else {
             if (keywords) {
                 // console.log('3')
-                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'` + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
             } else {
                 // console.log('4')
-                sql = 'SELECT * FROM `article_list` ' +' ORDER BY `update_date` DESC '+ (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
+                sql = 'SELECT * FROM `article_list` ' + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
             }
         }
         try {
@@ -73,8 +73,8 @@ class ArticleService extends Service {
         const {ctx, app} = this;
         try {
             let res = await app.mysql.query('SELECT * FROM `article_type` ORDER BY `id` LIMIT 0, 10');
-            for(let [index,item] of res.entries()){
-                let total = await app.mysql.query('SELECT Count(*) FROM article_list WHERE article_list.type = '+`'${item.name}'`);
+            for (let [index, item] of res.entries()) {
+                let total = await app.mysql.query('SELECT Count(*) FROM article_list WHERE article_list.type = ' + `'${item.name}'`);
                 res[index].total = total[0]['Count(*)']
             }
             return {
@@ -112,6 +112,7 @@ class ArticleService extends Service {
         }
 
     }
+
     //根据文章id获取详细内容
     async getArticleDetail(article_id, shoulUpdate) {
         const {ctx, app} = this;
@@ -121,8 +122,8 @@ class ArticleService extends Service {
             //获取当前文章详情内容
             let contentMsg = await app.mysql.query('SELECT * FROM `article_content` WHERE `article_id` = ' + `'${article_id}'` + ' LIMIT 0, 1');
             //获取当前文章其他信息
-            let { results:otherMsg } = await ctx.service.article.getOtherMsgById(article_id)
-                // console.log('otherMsggggg',otherMsg,otherMsg.results.length)
+            let {results: otherMsg} = await ctx.service.article.getOtherMsgById(article_id)
+            // console.log('otherMsggggg',otherMsg,otherMsg.results.length)
             //是否更新浏览量
             if (shoulUpdate === 'true') {
 
@@ -193,8 +194,8 @@ class ArticleService extends Service {
                 success: true,
                 msg: '查询成功',
                 totals: {
-                    hot:Number(hotTotal[0]['sum(hot)']),
-                    article:Number(articleTotal[0]['Count(*)'])
+                    hot: Number(hotTotal[0]['sum(hot)']),
+                    article: Number(articleTotal[0]['Count(*)'])
                 }
             }
         } catch (e) {
