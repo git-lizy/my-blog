@@ -1,3 +1,9 @@
+/*
+* 组件名称：当前位置导航
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
 import React, {useEffect, useState} from 'react'
 import {Breadcrumb, Col, message} from 'antd'
 import Qs from 'qs'
@@ -11,9 +17,9 @@ function Location(props) {
     // console.log('location的router',props)
     const [locations, setLocations] = useState([]);
     const {path, typeList} = props;
-    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false
-    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1,jingHaoIndex?jingHaoIndex:path.length)) : {};
-    console.log('queryyy',query)
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
+    // console.log('queryyy',query)
     const {type, id, keywords} = query;
 
     useEffect(() => {
@@ -50,7 +56,7 @@ function Location(props) {
 
     //根据id查询非文章内容的其他信息
     async function getOtherMsgById(id) {
-        console.log('getOtherMsgById');
+        // console.log('getOtherMsgById');
         try {
             let res = await get(ipPort + '/default/otherMsgById', {id});
             if (res.success && res.results.length) {

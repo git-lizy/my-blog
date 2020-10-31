@@ -1,16 +1,18 @@
-#preview{
-  p{
+#preview {
+  p {
     line-height: 1.6;
     font-style: normal;
     color: rgb(59, 69, 78);
   }
-  pre{
+
+  pre {
     padding: 0.75rem 0.15rem 0.75rem 0.8rem;
     background-color: #183055 !important;
     color: #f8f8f2 !important;
     border: none;
     border-radius: 6px;
-    &>code {
+
+    & > code {
       line-height: 1.55rem;
     }
   }

@@ -1,3 +1,9 @@
+/*
+* 组件名称：底部内容
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
 import React, {memo} from 'react'
 import {Col, Row,} from 'antd'
 import './style.scss'

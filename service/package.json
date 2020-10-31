@@ -14,7 +14,8 @@
     "egg-view-assets": "^1.6.1",
     "fs": "^0.0.1-security",
     "moment": "^2.29.0",
-    "mz": "^2.7.0"
+    "mz": "^2.7.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "autod": "^3.0.1",

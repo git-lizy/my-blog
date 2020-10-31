@@ -23,6 +23,7 @@ function Home(props) {
     )
 }
 
+//服务端渲染获取初始数据
 Home.getInitialProps = async(ctx)=>{
     const {asPath:path}=ctx
     const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false

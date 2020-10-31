@@ -1,16 +1,22 @@
-import React, {memo,useEffect} from 'react'
-import {Col, Row,Input} from 'antd'
+/*
+* 组件名称：文章搜索
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
+import React, {memo, useEffect} from 'react'
+import {Input} from 'antd'
 import {withRouter} from 'next/router'
 import './style.scss'
 
-function SearchBar(props){
-    const {onSearchReload,onRef} = props
+function SearchBar(props) {
+    const {onSearchReload, onRef} = props
 
-    const onSearch = (value) =>{
+    const onSearch = (value) => {
         props.router.replace(`/list?keywords=${value}`)
         onSearchReload()
     }
-    useEffect(()=>{
+    useEffect(() => {
         // const dom = document.getElementById('SearchBar')
         // onRef && onRef(dom)
 
@@ -23,13 +29,15 @@ function SearchBar(props){
         //     dom.classList.remove('scrollStyle')
         // }
 
-    },[])
-    return <div className={'SearchBar'} id={'SearchBar'} onClick={(e)=>{e.nativeEvent.stopImmediatePropagation()}}>
-            <Input.Search
-                placeholder="搜索文章"
-                onSearch={onSearch}
-                // style={{ width: 200 }}
-            />
+    }, [])
+    return <div className={'SearchBar'} id={'SearchBar'} onClick={(e) => {
+        e.nativeEvent.stopImmediatePropagation()
+    }}>
+        <Input.Search
+            placeholder="搜索文章"
+            onSearch={onSearch}
+            // style={{ width: 200 }}
+        />
     </div>
 }
 

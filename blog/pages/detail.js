@@ -38,6 +38,7 @@ function Home(props) {
     )
 }
 
+//服务端渲染获取初始数据
 Home.getInitialProps = async(ctx)=>{
     const Cookie = useCookie()
     //判断是否需要更新浏览量（通过设置cookie以及有效期）
@@ -54,7 +55,7 @@ Home.getInitialProps = async(ctx)=>{
     const {asPath:path}=ctx
     const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false
     const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1,jingHaoIndex?jingHaoIndex:path.length)) : {};
-    console.log('queryeeee',query)
+    // console.log('queryeeee',query)
     let id = query.id;
     let update = shouldUpdateHot(id)
     try{

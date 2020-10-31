@@ -1,3 +1,5 @@
+//axios请求封装页面
+
 import axios from 'axios'
 // import Qs from 'qs'
 const $axios = axios.create({
@@ -73,6 +75,7 @@ export function post(url, params = {}, headers = {}) {
     })
 }
 
+//文件上传专用
 export function postFile(url, params = {}, headers = {}) {
     const formData = new FormData();
     for (let [key, value] of Object.entries(params)) {

@@ -1,6 +1,11 @@
+/*
+* 组件名称：侧边栏
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
 import React, {memo, useEffect, useState,} from 'react'
-import {message, Spin, Tooltip} from 'antd'
-import {WechatOutlined, QqOutlined, GithubOutlined} from '@ant-design/icons'
+import {message, Spin} from 'antd'
 import {get} from "../../utils/requestUtil";
 import ipPort from "../../common/ipPort";
 import NavBar from '../../components/NavBar'
@@ -12,10 +17,10 @@ import './style.scss'
 
 
 function SideBar(props) {
-    const {typeList,articleDetail} = props
-    console.log('articleDetail',articleDetail)
+    const {typeList, articleDetail} = props
+    // console.log('articleDetail',articleDetail)
     const [isDetail] = useState(!!props.router.asPath.startsWith('/detail?'))
-    const [rankList, setRankList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    const [rankList, setRankList] = useState([]);
     const [rankLoading, setRankLoading] = useState(false);
     useEffect(() => {
         getHotList()
@@ -54,7 +59,7 @@ function SideBar(props) {
 
 
         {!isDetail &&
-            <>
+        <>
             <div className={'classify card'}>
                 <div className={'title'}><span>&nbsp;文章分类</span></div>
                 <NavBar path={props.router.asPath} typeList={typeList}/>
@@ -63,7 +68,7 @@ function SideBar(props) {
 
             <Spin spinning={rankLoading}>
                 <div className={'rank card'}>
-                    <div className={'title'}><span>&nbsp;访问排行</span></div>
+                    <div className={'title'}><span>&nbsp;热门文章</span></div>
                     <ul>
                         {rankList.map((item, index) => {
                             return <li key={index}>
@@ -74,7 +79,7 @@ function SideBar(props) {
                     </ul>
                 </div>
             </Spin>
-            </>
+        </>
         }
 
         {isDetail &&
@@ -82,7 +87,7 @@ function SideBar(props) {
             <div className={'title'}><span>&nbsp;文章导航</span></div>
             <MarkNav
                 className="markNavMain"
-                source={articleDetail.content?articleDetail.content:''}
+                source={articleDetail.content ? articleDetail.content : ''}
                 // headingTopOffset={80}
                 // ordered={false}
             />

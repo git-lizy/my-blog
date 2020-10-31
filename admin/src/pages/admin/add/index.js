@@ -1,13 +1,13 @@
+/*发布文章页面*/
 import React, {useEffect, useRef, useState} from 'react';
-import {get, postFile,post} from "../../../utils/requestUtil";
-import {Button, Col, Form, Input, message, Modal, Row, Select,Rate,Spin} from "antd";
+import {get, post} from "../../../utils/requestUtil";
+import {Button, Col, Form, Input, message, Row, Select, Spin} from "antd";
 import url from 'url'
 import ImageUpload from '../../../components/ImageUpload'
 import {PlusCircleOutlined,} from '@ant-design/icons';
 import ipPort from '../../../common/ipPort'
 import highLight from 'highlight.js'
 import marked from 'marked'
-import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css' // 引入Cropper对应的css
 import 'highlight.js/styles/monokai-sublime.css'
 import Style from './style.module.scss'
@@ -16,20 +16,27 @@ import './preview.scss'
 const {Option} = Select;
 
 function Index(props) {
-
     const search = props.location.search
     //获取get参数
-    const query = url.parse(search,true).query
-    const [pageLoading,setPageLoading] = useState(false)
-    const [initialValues,setInitialValues] = useState('')
-    const [submitText,setSubmitText] = useState('发布文章')
-    const [Typelist, setTypelist] = useState([]); //文章类型数据源
+    const query = url.parse(search, true).query
+    //页面加载状态
+    const [pageLoading, setPageLoading] = useState(false)
+    //表单初始值
+    const [initialValues, setInitialValues] = useState('')
+    //提交按钮的文本值
+    const [submitText, setSubmitText] = useState('发布文章')
+    //文章类型数据源
+    const [Typelist, setTypelist] = useState([]);
+    //文章预览内容
     const [preview, setPreview] = useState('');
-    const [submitLoading, setSubmitLoading] = useState(false); //表单体提交加载状态
-    const [articleId,setArticleId] = useState(query.articleId?query.articleId:'') //生成的文章id
-    const formRef = useRef(); //表单引用
+    //表单提交加载状态
+    const [submitLoading, setSubmitLoading] = useState(false);
+    //当前文章articleId
+    const [articleId, setArticleId] = useState(query.articleId ? query.articleId : '') //生成的文章id
+    //表单引用
+    const formRef = useRef();
 
-
+    //markdown转html效果配置
     const renderer = new marked.Renderer();
     marked.setOptions({
         renderer: renderer,
@@ -45,31 +52,31 @@ function Index(props) {
         }
     });
     useEffect(() => {
-
         //判断是编辑还是新建从而是否新建文章id
-        console.log('articleId',articleId)
-        if(!articleId){
+        // console.log('articleId',articleId)
+        if (!articleId) {
             getRandomArticleId()
-        }else{
+        } else {
             setSubmitText('更新文章')
-            getArticleDetail(articleId,false)
+            getArticleDetail(articleId, false)
         }
         getArticlType()
     }, []);
 
     //模式为编辑时获取文章数据
-    async function getArticleDetail(id,shouldUpdate) {
+    async function getArticleDetail(id, shouldUpdate) {
         setPageLoading(true);
         try {
-            let res = await get(ipPort + '/admin/articleDetail', {id,update:shouldUpdate});
+            let res = await get(ipPort + '/admin/articleDetail', {id, update: shouldUpdate});
             setPageLoading(false);
+            //校验登录状态
             if (res.data === 'no-login') {
                 props.history.push('/')
                 return
             }
             if (res.success && res.results.length) {
                 //赋值初始值
-                const {title,type,introduce,content} = res.results[0]
+                const {title, type, introduce, content} = res.results[0]
                 setInitialValues({
                     title,
                     type,
@@ -93,6 +100,7 @@ function Index(props) {
     async function getArticlType() {
         try {
             let res = await get(ipPort + '/default/articleType', {});
+            //校验登录状态
             if (res.data === 'no-login') {
                 props.history.push('/')
                 return
@@ -115,6 +123,7 @@ function Index(props) {
     async function getRandomArticleId() {
         try {
             let res = await get(ipPort + '/admin/getRandomArticleId', {});
+            //校验登录状态
             if (res.data === 'no-login') {
                 props.history.push('/')
                 return
@@ -133,20 +142,16 @@ function Index(props) {
 
     }
 
+    //文章内容输入改变时
     const contentChange = (e) => {
         setPreview(marked(e.target.value))
     };
 
-
-
-
-
-
-    const submit = async(values) => {
-        // const {}
-        console.log('values',values)
-        const {content,title,type,introduce} = values
-        const apiPath = submitText === '发布文章'?'/admin/releaseArticle':'/admin/updateArticle'
+    //点击提交按钮
+    const submit = async (values) => {
+        // console.log('values',values)
+        const {content, title, type, introduce} = values
+        const apiPath = submitText === '发布文章' ? '/admin/releaseArticle' : '/admin/updateArticle'
         setSubmitLoading(true);
         try {
             let res = await post(ipPort + apiPath, {
@@ -157,6 +162,7 @@ function Index(props) {
                 content,
                 introduce
             });
+            //校验登录状态
             if (res.data === 'no-login') {
                 props.history.push('/')
                 return
@@ -174,78 +180,79 @@ function Index(props) {
         setSubmitLoading(false)
     }
 
-    useEffect(()=>{
-        console.log('initialValues',initialValues)
-    },[initialValues])
+    useEffect(() => {
+        // console.log('initialValues',initialValues)
+    }, [initialValues])
 
     return (
         <div className={Style.container}>
             <Spin spinning={pageLoading}>
-            <Form key={initialValues} initialValues={initialValues}  onFinish={submit}  layout={'vertical'} scrollToFirstError ref={ele => {formRef.current = ele}} name="controrl-ref" >
-                <Row>
+                <Form key={initialValues} initialValues={initialValues} onFinish={submit} layout={'vertical'}
+                      scrollToFirstError ref={ele => {
+                    formRef.current = ele
+                }} name="controrl-ref">
+                    <Row>
 
-                    <Col span={13} className={'padRight'}>
-                        <Form.Item  name="title" label="文章标题" rules={[{required: true,message:'请输入标题'}]}>
-                            <Input placeholder="请输入标题"/>
-                        </Form.Item>
-                    </Col>
+                        <Col span={13} className={'padRight'}>
+                            <Form.Item name="title" label="文章标题" rules={[{required: true, message: '请输入标题'}]}>
+                                <Input placeholder="请输入标题"/>
+                            </Form.Item>
+                        </Col>
 
-                    <Col span={5} className={'padRight'}>
-                        <Form.Item name="type" label="类型" rules={[{required: true,message:'请选择类型'}]}>
-                            <Select
-                                placeholder="请选择类型"
-                                onChange={() => {
-                                }}
-                                allowClear
-                            >
-                                {Typelist.map((item, index) => {
-                                    return <Option key={item.name} value={item.name}>{item.name}</Option>
-                                })}
-
-
-                            </Select>
-                        </Form.Item>
-                    </Col>
+                        <Col span={5} className={'padRight'}>
+                            <Form.Item name="type" label="类型" rules={[{required: true, message: '请选择类型'}]}>
+                                <Select
+                                    placeholder="请选择类型"
+                                    onChange={() => {
+                                    }}
+                                    allowClear
+                                >
+                                    {Typelist.map((item, index) => {
+                                        return <Option key={item.name} value={item.name}>{item.name}</Option>
+                                    })}
 
 
-
-                    <Col span={5} className={`padRight ${Style.releaseCol}`}>
-                        <Button loading={submitLoading} icon={<PlusCircleOutlined/>} type={'primary'} htmlType="submit" size={'large'} >{submitText}</Button>
-                    </Col>
-
-                </Row>
-
-                <Row>
-
-                    <Col span={9} className={'padRight'}>
-                        <Form.Item name="content" label="文章内容" rules={[{required: true,message:'请输入文章内容'}]}>
-                            <Input.TextArea className={Style.content} autoSize={{minRows: 20}}
-                                            onChange={contentChange}/>
-                        </Form.Item>
-                    </Col>
-
-                    <Col span={9} className={'padRight'}>
-                        <div className={Style.previewText}>预览</div>
-                        <div id={'preview'} className={Style.preview} dangerouslySetInnerHTML={{__html: preview}}>
-
-                        </div>
-
-                    </Col>
-                    <Col span={6} className={''}>
-                        <Form.Item name="introduce" label="文章介绍" rules={[{required: true,message:'请输入文章介绍'}]}>
-                            <Input.TextArea className={Style.content} autoSize={{minRows: 3}} />
-                        </Form.Item>
+                                </Select>
+                            </Form.Item>
+                        </Col>
 
 
-                        <div>
-                            <div>所需图片上传</div>
-                            <ImageUpload articleId={articleId}/>
-                        </div>
+                        <Col span={5} className={`padRight ${Style.releaseCol}`}>
+                            <Button loading={submitLoading} icon={<PlusCircleOutlined/>} type={'primary'}
+                                    htmlType="submit" size={'large'}>{submitText}</Button>
+                        </Col>
 
+                    </Row>
 
-                    </Col>
-                </Row>
-            </Form>
+                    <Row>
+
+                        <Col span={9} className={'padRight'}>
+                            <Form.Item name="content" label="文章内容" rules={[{required: true, message: '请输入文章内容'}]}>
+                                <Input.TextArea className={Style.content} autoSize={{minRows: 20}}
+                                                onChange={contentChange}/>
+                            </Form.Item>
+                        </Col>
+
+                        <Col span={9} className={'padRight'}>
+                            <div className={Style.previewText}>预览</div>
+                            <div id={'preview'} className={Style.preview} dangerouslySetInnerHTML={{__html: preview}}>
+
+                            </div>
+
+                        </Col>
+                        <Col span={6} className={''}>
+                            <Form.Item name="introduce" label="文章介绍" rules={[{required: true, message: '请输入文章介绍'}]}>
+                                <Input.TextArea className={Style.content} autoSize={{minRows: 3}}/>
+                            </Form.Item>
+
+                            <div>
+                                <div>所需图片上传</div>
+                                <ImageUpload articleId={articleId}/>
+                            </div>
+
+                        </Col>
+                    </Row>
+                </Form>
             </Spin>
         </div>
     );

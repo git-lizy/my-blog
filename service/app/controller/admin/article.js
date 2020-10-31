@@ -6,7 +6,7 @@ const moment = require('moment')
 // import { Controller } from 'egg'
 
 class ArticleController extends Controller {
-
+    //获取文章列表
     async getArticleList() {
         const {ctx, app} = this;
         // console.log('query', ctx.request.query);
@@ -15,7 +15,7 @@ class ArticleController extends Controller {
         let res = await ctx.service.article.getArticleList(type, page,keywords);
         ctx.body = res;
     }
-
+    //获取随机文章id
     async getRandomArticleId() {
         const {ctx, app} = this;
         // console.log('query', ctx.request.query);

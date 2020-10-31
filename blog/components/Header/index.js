@@ -1,25 +1,49 @@
-import React, {memo, useState, useEffect, useRef} from 'react'
-import {Col, Row, Menu, Dropdown, Modal} from 'antd'
-import {MenuOutlined, } from '@ant-design/icons'
+/*
+* 组件名称：顶部内容
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
+import React, {memo, useEffect, useRef, useState} from 'react'
+import {Col, Dropdown, Menu, Modal, Row} from 'antd'
+import {MenuOutlined,} from '@ant-design/icons'
 import {withRouter} from 'next/router'
 import NavBar from '../NavBar'
 import SearchBar from "../SearchBar";
 import About from "../About";
 import './style.scss'
+import {get} from "../../utils/requestUtil";
+import ipPort from "../../common/ipPort";
 
 
 function Header(props) {
-    const [classifyVisible,setClassifyVisible] = useState(false)
-    const [searchVisible,setSearchVisible] = useState(false)
-    const [aboutVisible,setAboutVisible] = useState(false)
-
-    const { typeList,onSearchReload } = props
+    const [classifyVisible, setClassifyVisible] = useState(false)
+    const [searchVisible, setSearchVisible] = useState(false)
+    const [aboutVisible, setAboutVisible] = useState(false)
+    const [bgPath, setBgPath] = useState('')
+    const {typeList, onSearchReload} = props
 
     const header = useRef()
     const headerMain = useRef()
     const indexClick = () => {
         props.router.push(`/`)
     };
+
+    async function getBgImage() {
+        try {
+            let res = await get(ipPort + '/default/getBgImage', {});
+            if (res.success && res.path) {
+                setBgPath(res.path)
+            } else {
+                setBgPath('/icon/default_bg.jpg')
+            }
+        } catch (e) {
+            setBgPath('/icon/default_bg.jpg')
+        }
+
+
+    }
+
     const scrollListener = () => {
         const headerHeight = header.current.offsetHeight
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
@@ -34,11 +58,12 @@ function Header(props) {
         }
     }
 
-    const clickListener = () =>{
+    const clickListener = () => {
         setClassifyVisible(false)
         setSearchVisible(false)
     }
     useEffect(() => {
+        getBgImage()
         headerMain.current = document.querySelector('.HeaderMain')
         header.current = document.getElementById('Header')
         document.addEventListener('scroll', scrollListener)
@@ -49,7 +74,7 @@ function Header(props) {
         }
     }, [])
 
-    const MenuItemClick = (type,e) => {
+    const MenuItemClick = (type, e) => {
         e.nativeEvent.stopImmediatePropagation()
         switch (type) {
             case 'classify':
@@ -69,19 +94,19 @@ function Header(props) {
     const classifyMenu = (
         <Menu>
             <Menu.Item>
-                <a className={'search'} onClick={MenuItemClick.bind(Header,'classify')}>分类</a>
+                <a className={'search'} onClick={MenuItemClick.bind(Header, 'classify')}>分类</a>
             </Menu.Item>
             <Menu.Item>
-                <a className={'search'} onClick={MenuItemClick.bind(Header,'search')}>搜索</a>
+                <a className={'search'} onClick={MenuItemClick.bind(Header, 'search')}>搜索</a>
             </Menu.Item>
             <Menu.Item>
-                <a className={'search'} onClick={MenuItemClick.bind(Header,'about')}>关于</a>
+                <a className={'search'} onClick={MenuItemClick.bind(Header, 'about')}>关于</a>
             </Menu.Item>
         </Menu>
     )
 
 
-    return <div className={'Header'} id={'Header'}>
+    return <div className={'Header'} id={'Header'} style={{backgroundImage: `url(${ipPort + bgPath})`}}>
         <Row justify={'space-around'} className={'HeaderMain'}>
             <Col xs={13}>
                 <a className={'name'} onClick={indexClick.bind(Header)}></a>
@@ -98,21 +123,22 @@ function Header(props) {
 
             {/*搜索框 文章分类*/}
             <Col xs={24} md={0}>
-                {classifyVisible && <NavBar  path={props.router.asPath} typeList={typeList} />}
-                {searchVisible &&  <SearchBar  onSearchReload={onSearchReload}/>}
+                {classifyVisible && <NavBar path={props.router.asPath} typeList={typeList}/>}
+                {searchVisible && <SearchBar onSearchReload={onSearchReload}/>}
                 <Modal
                     title="关于博主"
                     visible={aboutVisible}
                     footer={null}
                     destroyOnClose
                     wrapClassName={'aboutModal'}
-                    onCancel={()=>{setAboutVisible(false)}}
+                    onCancel={() => {
+                        setAboutVisible(false)
+                    }}
                 >
                     <About/>
                 </Modal>
 
             </Col>
-
 
 
         </Row>

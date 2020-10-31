@@ -12,5 +12,6 @@ module.exports = app => {
     router.get('/default/hotList', controller.default.hot.getHotList);
     router.get('/default/otherMsgById', controller.default.article.getOtherMsgById);
     router.get('/default/getArticleTotals', controller.default.article.getArticleTotals);
+    router.get('/default/getBgImage', controller.default.bg.getBgImage);
 
 };

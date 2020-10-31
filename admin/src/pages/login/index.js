@@ -1,3 +1,4 @@
+//系统登录页
 import React, {useState} from 'react';
 import {Button, Checkbox, Form, Input, message} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
@@ -6,23 +7,26 @@ import Style from './style.module.scss'
 import {post} from '../../utils/requestUtil'
 
 function Login(props) {
+    //登录提交状态
     const [loading, setLoading] = useState(false);
-    let onFinish = values => {
-        console.log('Success:', values);
+    const onFinish = values => {
+        // console.log('Success:', values);
         loginClick(values)
     };
-    let onFinishFailed = errorInfo => {
+    //表单校验失败
+    const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
 
-    let loginClick = async (formValues) => {
+    //点击登录
+    const loginClick = async (formValues) => {
         const {account, password, remember} = formValues;
         try {
             setLoading(true);
-            let res = await post(ipPort+'/admin/login', {
+            let res = await post(ipPort + '/admin/login', {
                 account, password, remember
             });
-            console.log('res', res);
+            // console.log('res', res);
             setLoading(false);
             if (res.success) {
                 props.history.push('/admin');

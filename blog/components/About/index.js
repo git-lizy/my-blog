@@ -1,6 +1,12 @@
+/*
+* 组件名称：关于博主
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
 import React, {memo} from 'react'
-import {message, Tooltip} from 'antd'
-import {WechatOutlined, QqOutlined, GithubOutlined} from '@ant-design/icons'
+import {Tooltip} from 'antd'
+import {GithubOutlined, QqOutlined, WechatOutlined} from '@ant-design/icons'
 import './style.scss'
 
 function About(props) {

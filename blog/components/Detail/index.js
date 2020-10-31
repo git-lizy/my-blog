@@ -1,11 +1,13 @@
+/*
+* 组件名称：文章详情
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
 import React, {useEffect, useState} from 'react'
-import {message, Spin} from 'antd'
-import {useCookie} from 'next-cookie'
-import Qs from 'qs'
-import {get,post} from '../../utils/requestUtil'
+import {Spin} from 'antd'
 import highLight from 'highlight.js'
 import marked from 'marked'
-import ipPort from '../../common/ipPort'
 import "./style.scss"
 import './detail.scss'
 import 'highlight.js/styles/monokai-sublime.css'
@@ -13,10 +15,9 @@ import {withRouter} from 'next/router'
 
 function Detail(props) {
     // const [data, setData] = useState({});
-    const {data} =props
+    const {data} = props
     const [loading, setLoading] = useState(false);
     const renderer = new marked.Renderer();
-    const Cookie = useCookie()
 
     marked.setOptions({
         renderer: renderer,
@@ -79,8 +80,8 @@ function Detail(props) {
                     <div className={'otherMsg'}>
                         <div className={'title'}>{data.title}</div>
                         <div className={'date'}>
-                            <span>发布时间：{data.create_date?.slice(0,10)}</span>
-                            <span>更新时间：{data.update_date?.slice(0,10)}</span>
+                            <span>发布时间：{data.create_date?.slice(0, 10)}</span>
+                            <span>更新时间：{data.update_date?.slice(0, 10)}</span>
                         </div>
                     </div>
 

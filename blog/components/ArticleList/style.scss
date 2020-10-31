@@ -1,4 +1,5 @@
 @import "../../pages/base.scss";
+
 .shenglue {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -15,10 +16,10 @@
 }
 
 .articleItem {
-  padding:10px 14px;
+  padding: 10px 14px;
   margin-bottom: 14px;
   margin-right: 20px;
-  min-height:130px;
+  min-height: 130px;
   box-shadow: 4px 4px rgba(200, 200, 200, 0.4);
   @media screen and (max-width: 768px) {
     margin: 16px 16px 0 16px;
@@ -41,52 +42,57 @@
     .title {
 
       @extend .shenglue;
-      color:$themeColor;
+      color: $themeColor;
       font-size: 20px;
       line-height: 20px;
       font-weight: bold;
-      padding-bottom:12px
+      padding-bottom: 12px
     }
 
 
-
     .date {
-      display:flex;
-      flex-wrap:wrap;
+      display: flex;
+      flex-wrap: wrap;
+
       .hotNumber {
         font-size: 14px;
         @media screen and (max-width: 768px) {
           font-size: 12px;
         }
         padding-left: 14px;
-        padding-right:18px;
+        padding-right: 18px;
         position: relative;
-        &::after{
+
+        &::after {
           position: absolute;
-          left:0;
-          top:5px;
+          left: 0;
+          top: 5px;
           @media screen and (max-width: 768px) {
-            top:3px;
+            top: 3px;
           }
           content: '';
           background-size: cover;
-          width:12px;
-          height:12px;
+          width: 12px;
+          height: 12px;
         }
-        &.hot::after{
+
+        &.hot::after {
           background-image: url("/icon/hot.svg");
         }
-        &.createDate::after{
+
+        &.createDate::after {
           background-image: url("/icon/create_time.svg");
         }
-        &.update_date::after{
+
+        &.update_date::after {
           background-image: url("/icon/update_time.svg");
         }
 
       }
-      span{
-        color:#bbbbbb;
-        display:inline-block;
+
+      span {
+        color: #bbbbbb;
+        display: inline-block;
       }
 
     }
@@ -110,7 +116,7 @@
   text-align: center;
   color: #bbbbbb;
   @media screen and (max-width: 768px) {
-    padding:8px 0;
+    padding: 8px 0;
   }
 
 }

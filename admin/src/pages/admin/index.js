@@ -1,10 +1,9 @@
+/*路由页面公共父组件容器*/
 import React, {useState} from 'react';
 import {Route} from 'react-router-dom'
-import {Layout, Menu, message} from 'antd';
+import {Layout, Menu} from 'antd';
 import {FileOutlined, PieChartOutlined,} from '@ant-design/icons';
 import Style from './style.module.scss'
-import {get} from "../../utils/requestUtil";
-import ipPort from "../../common/ipPort";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
@@ -12,23 +11,25 @@ const {SubMenu} = Menu;
 
 function Index(props) {
     const search = props.location.search
+    //侧边栏折叠状态
     const [collapsed, setCollapsed] = useState(false);
 
 
-
+    //点击折叠按钮
     let onCollapse = collapsed => {
         setCollapsed(collapsed)
     };
-
+    //菜单按钮点击
     let menuClick = ({item, key, keypath, selectedKey}) => {
-
+        //发布文章
         if (key === 'fbwz') {
             props.history.push('/admin')
         }
+        //文章列表
         if (key === 'wzlb') {
             props.history.push('/admin/list')
         }
-
+        //留言管理
         if (key === 'lygl') {
             props.history.push('/admin/message')
         }
@@ -61,7 +62,7 @@ function Index(props) {
                 <Layout className="site-layout">
                     <Content style={{margin: '0 16px'}}>
                         {props.child.map(item => {
-                            return <Route exact={item.exact} key={item.path+search} path={item.path}
+                            return <Route exact={item.exact} key={item.path + search} path={item.path}
                                           render={props => <item.component {...props} />}/>
                         })}
                     </Content>

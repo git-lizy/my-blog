@@ -4,11 +4,12 @@ const Controller = require('egg').Controller;
 
 
 class FileController extends Controller {
+    //上传
     async upload() {
         const {ctx, app} = this;
         const { articleId } = ctx.request.body
         const file = ctx.request.files[0]
-        console.log('fileeee',file)
+        // console.log('fileeee',file)
         let uploadRes = await ctx.service.file.upload(file,articleId);
         // if(isCover){
         //     //如果当前是上传封面，则删除旧有封面
@@ -17,7 +18,7 @@ class FileController extends Controller {
 
         ctx.body = uploadRes
     }
-
+    //删除
     async delete() {
         const {ctx, app} = this;
         const { oldPath,type='file' } = ctx.request.body

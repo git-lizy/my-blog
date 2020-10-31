@@ -37,18 +37,18 @@ class ArticleService extends Service {
         if (type) {
             if(keywords){
                 sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' AND `type` = ' + `'${type}'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
-                console.log('11111',sql)
+                // console.log('11111',sql)
             }else{
-                console.log('2')
+                // console.log('2')
                 sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             }
 
         } else {
             if (keywords) {
-                console.log('3')
+                // console.log('3')
                 sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'`+' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             } else {
-                console.log('4')
+                // console.log('4')
                 sql = 'SELECT * FROM `article_list` ' +' ORDER BY `update_date` DESC '+ (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10':'')
             }
         }
@@ -116,7 +116,7 @@ class ArticleService extends Service {
     async getArticleDetail(article_id, shoulUpdate) {
         const {ctx, app} = this;
 
-        console.log('otherMsggggg',shoulUpdate)
+        // console.log('otherMsggggg',shoulUpdate)
         try {
             //获取当前文章详情内容
             let contentMsg = await app.mysql.query('SELECT * FROM `article_content` WHERE `article_id` = ' + `'${article_id}'` + ' LIMIT 0, 1');
@@ -172,7 +172,7 @@ class ArticleService extends Service {
                 msg: '操作成功',
             }
         } catch (e) {
-            console.log('e', e)
+            // console.log('e', e)
             return {
                 success: false,
                 msg: '操作失败',

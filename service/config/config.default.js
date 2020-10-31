@@ -26,20 +26,20 @@ module.exports = appInfo => {
     const userConfig = {
         // myAppName: 'egg',
     };
-
+    //跨域资源共享
     config.cors = {
         // origin: ipPort.blog,//匹配规则  域名+端口  *则为全匹配
         credentials: true,
         allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
     };
-
+    //文件上传获取文件对象的配置
     config.multipart = {
         mode: 'file',
     };
 
     config.security = {
         csrf: false, //暂时取消csrf安全防范
-        domainWhiteList:[ipPort.admin,ipPort.blog]
+        domainWhiteList:[ipPort.admin,ipPort.blog],//配置白名单（配置后可跨域携带cookie）
     };
     // config.view={
     //   // 如果还有其他模板引擎，需要合并多个目录
@@ -65,6 +65,11 @@ module.exports = appInfo => {
         // load into agent, default is close
         agent: false,
     };
+    //配置静态资源目录
+    config.static={
+        prefix: '/files',
+        dir: path.resolve(appInfo.baseDir, '../files'), // `String` or `Array:[dir1, dir2, ...]` 静态化目录,可以设置多个静态化目录
+    }
 
     return {
         ...config,

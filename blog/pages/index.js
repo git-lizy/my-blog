@@ -25,6 +25,7 @@ function Home(props) {
     )
 }
 
+//服务端渲染获取初始数据
 Home.getInitialProps = async()=>{
     try{
         let res = await get(ipPort + '/default/articleList', {page:1});

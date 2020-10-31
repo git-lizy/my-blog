@@ -14,17 +14,18 @@
   }
 }
 
-.backToTopContainer{
+.backToTopContainer {
   @media screen and (max-width: 576px) {
-    :global(.ant-back-top){
-      right:20px;
+    :global(.ant-back-top) {
+      right: 20px;
     }
   }
-  .backToTop{
+
+  .backToTop {
     background-image: url("/icon/backTop.svg");
-    background-size:cover;
-    width:36px;
-    height:36px;
+    background-size: cover;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
 
   }

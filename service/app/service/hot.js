@@ -1,6 +1,7 @@
 const Service = require('egg').Service;
 
 class HotService extends Service {
+    //获取热门文章
     async getHotList() {
         const {ctx, app} = this;
         let sql = 'SELECT * FROM `article_list` ORDER BY `hot` DESC LIMIT 0, 10';

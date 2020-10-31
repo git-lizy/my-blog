@@ -1,3 +1,4 @@
+//axios请求封装
 import axios from 'axios'
 // import Qs from 'qs'
 const $axios = axios.create({

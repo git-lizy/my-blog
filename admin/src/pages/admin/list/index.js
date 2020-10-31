@@ -1,15 +1,19 @@
+/*文章列表管理页面*/
 import React, {useEffect, useState} from 'react';
 import {get, post} from "../../../utils/requestUtil";
 import {Button, Col, Form, Input, message, Popconfirm, Row, Select, Space, Spin, Table} from "antd";
 import ipPort from '../../../common/ipPort'
 import Style from './style.module.scss'
+
 const {Option} = Select
 
-
 function Index(props) {
-    const [tableData, setTableData] = useState([]); //文章列表数据源
+    //文章列表数据源
+    const [tableData, setTableData] = useState([]);
+    //页面加载状态
     const [pageLoading, setPageLoading] = useState(false)
-    const [Typelist, setTypelist] = useState([]); //文章类型数据源
+    //文章类型数据源
+    const [Typelist, setTypelist] = useState([]);
 
     useEffect(() => {
         getArticlList({})
@@ -39,11 +43,11 @@ function Index(props) {
     }
 
     //获取指定条件文章列表
-    async function getArticlList({type,page,keywords}) {
+    async function getArticlList({type, page, keywords}) {
 
         setPageLoading(true)
         try {
-            let res = await get(ipPort + '/default/articleList', {type,page,keywords});
+            let res = await get(ipPort + '/default/articleList', {type, page, keywords});
             if (res.data === 'no-login') {
                 props.history.push('/')
                 return
@@ -88,6 +92,7 @@ function Index(props) {
         console.log('page',pagination)
     }
 
+    //表格列配置
     const columns = [
         {
             title: '标题',
@@ -143,20 +148,19 @@ function Index(props) {
 
     ];
 
-    const query = (values) =>{
-        const {type,keywords} = values
-        getArticlList({type,keywords})
+    //点击查询按钮
+    const query = (values) => {
+        const {type, keywords} = values
+        getArticlList({type, keywords})
     }
-
-
 
     return (
         <div className={Style.container}>
             <Form onFinish={query} layout={'vertical'} name="controrl-ref">
-                <Row align={'middle'}  gutter={30}>
+                <Row align={'middle'} gutter={30}>
 
-                    <Col  span={8}>
-                        <Form.Item name="type" label="文章类型" >
+                    <Col span={8}>
+                        <Form.Item name="type" label="文章类型">
                             <Select
                                 placeholder="请选择类型"
                                 allowClear
@@ -170,12 +174,12 @@ function Index(props) {
                         </Form.Item>
                     </Col>
                     <Col span={8}>
-                        <Form.Item  name="keywords" label="关键字" >
+                        <Form.Item name="keywords" label="关键字">
                             <Input placeholder="请输入标题"/>
                         </Form.Item>
                     </Col>
-                    <Col span={8} style={{textAlign:'left'}}>
-                        <Button  type={'primary'} htmlType={'submit'}>查询</Button>
+                    <Col span={8} style={{textAlign: 'left'}}>
+                        <Button type={'primary'} htmlType={'submit'}>查询</Button>
                     </Col>
 
                 </Row>

@@ -9,16 +9,16 @@
   @media screen and (max-width: 768px) {
     height: 220px;
   }
-  .classifyTabs{
-    .ant-tabs-tab{
-      color:#dddddd;
-      padding-left:10px;
-      padding-right:10px;
-      &:nth-last-child(2){
-        margin-right:0
-      }
-    }
-  }
+  //.classifyTabs{
+  //  .ant-tabs-tab{
+  //    color:#dddddd;
+  //    padding-left:10px;
+  //    padding-right:10px;
+  //    &:nth-last-child(2){
+  //      margin-right:0
+  //    }
+  //  }
+  //}
 
   .HeaderMain {
     height: 45px;
@@ -32,9 +32,9 @@
     top: 0;
 
     &.scrollStyle {
-      background-color: rgba(80 ,80 ,80, 0.8);
+      background-color: rgba(80, 80, 80, 0.8);
       color: #aaaaaa;
-      box-shadow:0 0 15px 0 rgba(41, 36, 36, 0.8)
+      box-shadow: 0 0 15px 0 rgba(41, 36, 36, 0.8)
     }
 
     .name {
@@ -61,15 +61,15 @@
     }
 
 
-
   }
 
 
 }
-.aboutModal{
-  .ant-modal{
+
+.aboutModal {
+  .ant-modal {
     //width: 400px;
-    max-width:90%;
+    max-width: 90%;
   }
 }
 

@@ -1,7 +1,7 @@
 @import "../../pages/base";
 
 .NavBar {
-  color: rgba(53,121,179,0.65);
+  color: rgba(53, 121, 179, 0.65);
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid transparent;
@@ -23,54 +23,60 @@
   .ant-row {
     width: 100%;
     justify-content: flex-start;
+
     &::-webkit-scrollbar {
       display: none;
     }
+
     &:hover {
       cursor: pointer;
     }
+
     @media screen and (max-width: 768px) {
       height: 40px;
       line-height: 40px;
-      flex-wrap:nowrap;
+      flex-wrap: nowrap;
       overflow: auto;
     }
   }
 
-  .NavBarItem{
+  .NavBarItem {
     line-height: 30px;
     border-bottom: 1px solid #eeeeee;
     @media screen and (max-width: 768px) {
       line-height: inherit;
       border-bottom: none;
-      &.active{
+      &.active {
         background-color: $themeColor;
       }
     }
 
-    .itemTotal{
-      display:inline-block;
-      font-size:14px;
+    .itemTotal {
+      display: inline-block;
+      font-size: 14px;
       @media screen and (max-width: 768px) {
         display: none;
-    }
+      }
     }
 
   }
 
   //统计部分样式
-  .ant-statistic{
-    text-align:center;
-    flex:1;
-    .ant-statistic-content{
-      color:$themeColor;
-      font-size:14px;
+  .ant-statistic {
+    text-align: center;
+    flex: 1;
+
+    .ant-statistic-content {
+      color: $themeColor;
+      font-size: 14px;
 
     }
-    .ant-statistic-content-suffix{
-      color:#bbbbbb;
-      font-size:12px;
+
+    .ant-statistic-content-suffix {
+      color: #bbbbbb;
+      font-size: 12px;
     }
+
     @media screen and (max-width: 768px) {
       display: none;
     }

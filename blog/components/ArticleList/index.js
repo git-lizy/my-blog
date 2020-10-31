@@ -1,5 +1,11 @@
+/*
+* 组件名称：文章列表
+* 开发者：scw
+* 开发日期：2020-09-12
+* 上次修改日期：2020-10-31
+* */
 import React, {useEffect, useRef, useState} from 'react'
-import {Col, message, Row, Spin,Skeleton} from 'antd'
+import {Col, message, Row, Spin} from 'antd'
 import {withRouter} from 'next/router'
 import Qs from 'qs'
 import {get} from '../../utils/requestUtil'
@@ -9,14 +15,17 @@ import ipPort from '../../common/ipPort'
 
 
 function articleList(props) {
+    //组件加载状态
     const [loading, setLoading] = useState(false);
-    const {path,initialList} = props;
-    const [loadingText, setLoadingText] = useState(initialList.length<10?'已经是最后一页了':'加载完毕');
+    const {path, initialList} = props;
+    const [loadingText, setLoadingText] = useState(initialList.length < 10 ? '已经是最后一页了' : '加载完毕');
     const list = useRef([]);
     const CurrentPage = useRef(1);
     const isEnd = useRef(initialList.length < 10); //是否加载全部完毕
-    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#'):false
-    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1,jingHaoIndex?jingHaoIndex:path.length)) : {};
+    //获取地址可能出现的#下标
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
+    //获取地址传递的参数
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
     let type = path.startsWith('/list') ? query.type : undefined;
     let keywords = path.startsWith('/list') ? query.keywords : undefined;
 
@@ -28,7 +37,7 @@ function articleList(props) {
             const totalHeight = document.documentElement.scrollHeight;
             const clientHeight = document.documentElement.offsetHeight;
             if (scrollTop + clientHeight >= totalHeight) {
-                getArticlList(type, CurrentPage.current + 1,keywords);
+                getArticlList(type, CurrentPage.current + 1, keywords);
                 CurrentPage.current = CurrentPage.current + 1
             }
         }
@@ -51,18 +60,18 @@ function articleList(props) {
 
     }, []);
 
-    async function getArticlList(type, page,keywords) {
+    async function getArticlList(type, page, keywords) {
         try {
             if (page) {
                 setLoadingText('正在加载');
-                let res = await get(ipPort + '/default/articleList', {type, page,keywords});
+                let res = await get(ipPort + '/default/articleList', {type, page, keywords});
                 if (res.success) {
                     if (res.results.length === 10) {
                         //这里用于进行区分第一次默认获取的服务端渲染数据和后续的加载数据
-                        list.current = list.current.length?[...list.current, ...res.results]:[...initialList, ...res.results];
+                        list.current = list.current.length ? [...list.current, ...res.results] : [...initialList, ...res.results];
                         setLoadingText('加载完毕')
                     } else {
-                        list.current = list.current.length?[...list.current, ...res.results]:[...initialList, ...res.results];
+                        list.current = list.current.length ? [...list.current, ...res.results] : [...initialList, ...res.results];
                         isEnd.current = true; //说明加载完毕
                         setLoadingText('已经是最后一页了')
                     }
@@ -77,14 +86,14 @@ function articleList(props) {
             } else {
                 setLoading(true);
                 setLoadingText('正在加载');
-                let res = await get(ipPort + '/default/articleList', {type,page,keywords});
+                let res = await get(ipPort + '/default/articleList', {type, page, keywords});
                 setLoading(false);
                 if (res.success) {
                     if (res.results.length === 10) {
-                        list.current = list.current.length?[...list.current, ...res.results]:[...initialList, ...res.results];
+                        list.current = list.current.length ? [...list.current, ...res.results] : [...initialList, ...res.results];
                         setLoadingText('加载完毕')
                     } else {
-                        list.current = list.current.length?[...list.current, ...res.results]:[...initialList, ...res.results];
+                        list.current = list.current.length ? [...list.current, ...res.results] : [...initialList, ...res.results];
                         isEnd.current = true; //说明加载完毕
                         setLoadingText('已经是最后一页了')
                     }
@@ -107,18 +116,18 @@ function articleList(props) {
         props.router.push(`/detail?id=${id}`)
     };
     return (
-        <Spin spinning={loading} >
+        <Spin spinning={loading}>
             <div className="articleList">
-                {(list.current.length>0?list.current:initialList).map(item => {
-                    return <Row  className={'articleItem card'} key={item.id}>
+                {(list.current.length > 0 ? list.current : initialList).map(item => {
+                    return <Row className={'articleItem card'} key={item.id}>
                         {/*<Col className={'cover'}><img src={ipPort+item.cover_path} alt="cover"/></Col>*/}
                         <Col className="msg">
                             <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>
                             <span className={'introduce'}>{item.introduce}</span>
                             <div className={'date'}>
                                 <span className={'hotNumber createDate'}>{item.type}</span>
-                                <span className={'hotNumber createDate'}>{item.create_date?.slice(0,10)}</span>
-                                <span className={'hotNumber update_date'}>{item.update_date?.slice(0,10)}</span>
+                                <span className={'hotNumber createDate'}>{item.create_date?.slice(0, 10)}</span>
+                                <span className={'hotNumber update_date'}>{item.update_date?.slice(0, 10)}</span>
                                 <span className={'hotNumber hot'}>{item.hot}</span>
                             </div>
 
