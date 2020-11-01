@@ -89,7 +89,7 @@ function SideBar(props) {
                 className="markNavMain"
                 source={articleDetail.content ? articleDetail.content : ''}
                 // headingTopOffset={80}
-                // ordered={false}
+                ordered={false}
             />
         </div>
         }

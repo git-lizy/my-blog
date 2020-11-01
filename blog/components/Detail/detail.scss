@@ -1,9 +1,27 @@
+@import "../../pages/base.scss";
 #detail {
   p {
     line-height: 1.6;
     font-style: normal;
     color: rgb(59, 69, 78);
+    font-size: 16px;
   }
+  code{
+    margin: 0 2px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background-color: #dddddd;
+    display: inline;
+    vertical-align: bottom;
+    line-height: 1.5;
+  }
+  em{
+    color: #807e7e;
+  }
+  strong{
+    color: $themeColor;
+  }
+
 
   pre {
     padding: 0.75rem 0.15rem 0.75rem 0.8rem;
@@ -15,6 +33,10 @@
     & > code {
       line-height: 1.55rem;
     }
+  }
+
+  h1,h2,h3,h4,h5,h6{
+    font-weight: bold;
   }
 
 }

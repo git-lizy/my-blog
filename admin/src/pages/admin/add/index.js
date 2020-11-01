@@ -8,10 +8,9 @@ import {PlusCircleOutlined,} from '@ant-design/icons';
 import ipPort from '../../../common/ipPort'
 import highLight from 'highlight.js'
 import marked from 'marked'
-import 'cropperjs/dist/cropper.css' // 引入Cropper对应的css
-import 'highlight.js/styles/monokai-sublime.css'
 import Style from './style.module.scss'
 import './preview.scss'
+import 'highlight.js/styles/monokai-sublime.css'
 
 const {Option} = Select;
 
