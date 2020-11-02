@@ -106,7 +106,7 @@ function Header(props) {
     )
 
 
-    return <div className={'Header'} id={'Header'} >
+    return <div className={'Header'} id={'Header'} style={{backgroundImage: `url(${ipPort + bgPath})`}}>
         <Row justify={'space-around'} className={'HeaderMain'}>
             <Col xs={13}>
                 <a className={'name'} onClick={indexClick.bind(Header)}></a>

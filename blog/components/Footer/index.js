@@ -16,6 +16,9 @@ function Footer(props) {
                 <div>
                     Powered By Next，Node & Antd
                 </div>
+                <a className="ICP" href={'http://beian.miit.gov.cn/'} target={'blank'}>
+                    京ICP备2020040527号
+                </a>
             </Col>
         </Row>
     </div>
