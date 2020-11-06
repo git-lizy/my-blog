@@ -17,12 +17,15 @@ import ipPort from "../../common/ipPort";
 
 
 function Header(props) {
+    //分类显隐
     const [classifyVisible, setClassifyVisible] = useState(false)
+    //搜索显隐
     const [searchVisible, setSearchVisible] = useState(false)
+    //关于显隐
     const [aboutVisible, setAboutVisible] = useState(false)
+    //背景大图
     const [bgPath, setBgPath] = useState('')
     const {typeList, onSearchReload} = props
-
     const header = useRef()
     const headerMain = useRef()
     const indexClick = () => {
@@ -49,12 +52,9 @@ function Header(props) {
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
         if (scrollTop > headerHeight - 50) {
             headerMain.current.classList.add('scrollStyle')
-            // classifyRef.current && navBar.current.classList.add('scrollStyle')
-            // searchRef.current && searchBar.current.classList.add('scrollStyle')
         } else {
             headerMain.current.classList.remove('scrollStyle')
-            // classifyRef.current && navBar.current.classList.remove('scrollStyle')
-            // searchRef.current && searchBar.current.classList.remove('scrollStyle')
+
         }
     }
 
@@ -107,9 +107,10 @@ function Header(props) {
 
 
     return <div className={'Header'} id={'Header'} style={{backgroundImage: `url(${ipPort + bgPath})`}}>
+    {/*//     return <div className={'Header'} id={'Header'} >*/}
         <Row justify={'space-around'} className={'HeaderMain'}>
             <Col xs={13}>
-                <a className={'name'} onClick={indexClick.bind(Header)}></a>
+                <a className={'name'} onClick={indexClick.bind(Header)}>铸心</a>
                 <span className={'type'}>&nbsp;个人技术博客</span>
             </Col>
             <Col xs={0} md={7} className="headerRight">

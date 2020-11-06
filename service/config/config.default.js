@@ -41,10 +41,7 @@ module.exports = appInfo => {
         csrf: false, //暂时取消csrf安全防范
         domainWhiteList:[ipPort.admin,ipPort.blog],//配置白名单（配置后可跨域携带cookie）
     };
-    // config.view={
-    //   // 如果还有其他模板引擎，需要合并多个目录
-    //   root: path.join(appInfo.baseDir, 'app/assets'),
-    // },
+
 
     config.mysql = {
         // database configuration

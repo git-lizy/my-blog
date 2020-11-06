@@ -3,15 +3,12 @@
 const Controller = require('egg').Controller;
 const moment = require('moment')
 
-// import { Controller } from 'egg'
 
 class ArticleController extends Controller {
     //获取文章列表
     async getArticleList() {
         const {ctx, app} = this;
-        // console.log('query', ctx.request.query);
         const {type, page, keywords} = ctx.request.query
-
         let res = await ctx.service.article.getArticleList(type, page, keywords);
         ctx.body = res;
     }
@@ -19,7 +16,6 @@ class ArticleController extends Controller {
     //获取随机文章id
     async getRandomArticleId() {
         const {ctx, app} = this;
-        // console.log('query', ctx.request.query);
         let res = await ctx.service.article.getRandomArticleId();
         ctx.body = res;
     }
@@ -134,9 +130,9 @@ class ArticleController extends Controller {
 
     }
 
+    //获取文章详情
     async getArticleDetail() {
         const {ctx, app} = this;
-
         const {id, update} = ctx.request.query
         let res = await ctx.service.article.getArticleDetail(id, update);
         ctx.body = res;

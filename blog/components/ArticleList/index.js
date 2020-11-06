@@ -44,10 +44,7 @@ function articleList(props) {
 
     };
     useEffect(() => {
-        // console.log('path',props.router)
         async function func() {
-            // await getArticlList(type,CurrentPage.current,keywords);
-
             scrollListener = throttle(scrollListener, 1000);
             document.addEventListener('scroll', scrollListener)
         }
@@ -120,7 +117,6 @@ function articleList(props) {
             <div className="articleList">
                 {(list.current.length > 0 ? list.current : initialList).map(item => {
                     return <Row className={'articleItem card'} key={item.id}>
-                        {/*<Col className={'cover'}><img src={ipPort+item.cover_path} alt="cover"/></Col>*/}
                         <Col className="msg">
                             <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>
                             <span className={'introduce'}>{item.introduce}</span>

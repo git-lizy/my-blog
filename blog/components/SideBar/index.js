@@ -18,7 +18,6 @@ import './style.scss'
 
 function SideBar(props) {
     const {typeList, articleDetail} = props
-    // console.log('articleDetail',articleDetail)
     const [isDetail] = useState(!!props.router.asPath.startsWith('/detail?'))
     const [rankList, setRankList] = useState([]);
     const [rankLoading, setRankLoading] = useState(false);

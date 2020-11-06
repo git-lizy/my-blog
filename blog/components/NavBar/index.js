@@ -56,7 +56,6 @@ function NavBar(props) {
             })}
 
             <Statistic title="文章总数" value={articleTotal} suffix="篇"/>
-            {/*&nbsp;&nbsp;*/}
             <Statistic title="总访问量" value={hotTotal} suffix="次"/>
         </Row>
     </div>

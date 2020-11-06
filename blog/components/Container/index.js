@@ -51,7 +51,7 @@ function Container(props) {
             <Row style={{width: '100%'}} align="middle">
                 <Col xs={0} sm={0} md={18} style={{paddingBottom: '10px'}}>
                     {typeList.length > 0 &&
-                    <Location typeList={typeList} key={props.router.asPath} path={props.router.asPath}/>}
+                    <Location typeList={typeList} key={path} path={path}/>}
                 </Col>
                 <Col xs={0} md={6} style={{paddingBottom: '10px'}}>
                     <SearchBar onSearchReload={onSearchReload}/>
@@ -67,7 +67,7 @@ function Container(props) {
 
                 </Col>
                 <Col xs={0} sm={0} md={6}>
-                    <SideBar key={props.router.asPath} typeList={typeList} articleDetail={articleDetail}/>
+                    <SideBar key={path} typeList={typeList} articleDetail={articleDetail}/>
                 </Col>
             </Row>
         </Row>

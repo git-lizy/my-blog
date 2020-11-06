@@ -11,18 +11,10 @@ class BgController extends Controller {
         let res = {}
         try {
             let day = String(new Date().getDate())
-            const hours = new Date().getHours()
-            let dayOrNight
-            if (hours >= 6 && hours < 18) {
-                dayOrNight = 'day'
-            } else {
-                dayOrNight = 'night'
-            }
-
             res = {
                 success: true,
                 msg: '查询成功',
-                path: `/files/bg/${day}_${dayOrNight}.jpg`,
+                path: `/files/bg/${day}.jpg`,
             }
         } catch (e) {
             res = {

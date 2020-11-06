@@ -5,7 +5,6 @@ const path = require('path')
 class FileService extends Service {
     //上传
     async upload(file, articleId) {
-        // console.log('file', file);
         const {ctx, app} = this;
         let res = {};
         try {
@@ -52,10 +51,8 @@ class FileService extends Service {
                 throw '缺失参数：oldPath'
             }
             if (type === 'file') {
-                // console.log('kkkk')
                 await fs.unlink(path.resolve(__dirname, `../../../`) + filePath)
             } else if (type === 'directory') {
-                // console.log('xxxx')
                 //递归删除文件夹以及其文件
                 await fs.rmdir(path.resolve(__dirname, `../../../files/`) + filePath, {recursive: true})
             }

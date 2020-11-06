@@ -13,11 +13,12 @@ function Home(props) {
     return (
         <>
             <Head>
-                <title>铸心个人博客|专注于互联网web前端基础技术分享</title>
+                <title>首页 | 铸心博客-专注于互联网web前端基础技术分享</title>
+                <link rel="icon" href="/favicon.ico" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-                <meta name="keywords" content="铸心,博客,前端,web前端,html,css,javascript,vue,react,es6,node,webpack"/>
+                <meta name="keywords" content="铸心,博客,前端,web前端,html,html5,css,css3,javascript,js,vue,react,es6,node,webpack"/>
                 <meta name="description"
-                      content="铸心个人技术博客于学习笔记，专注于互联网web前端基础技术分享,包括html,css,javascript,vue,react,es6,node,webpack等相关技术"/>
+                      content="铸心个人技术博客与学习笔记，专注于互联网web前端基础技术分享,包括html,html5,css,css3,javascript,js,vue,react,es6,node,webpack等相关技术"/>
             </Head>
             <ArticleList initialList={initialList} key={props.router.asPath} path={props.router.asPath}/>
         </>

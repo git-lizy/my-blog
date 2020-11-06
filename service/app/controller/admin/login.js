@@ -8,7 +8,6 @@ class LoginController extends Controller {
     //登录
     async index() {
         const {ctx, app} = this;
-        // console.log('body', ctx.request.body);
         const {account = '', password = '', remember = ''} = ctx.request.body;
         let ExsitedList = await app.mysql.query('SELECT * FROM `admin_user` WHERE `account` = ' + `'${account}'` + ' AND `password` = ' + `'${password}'` + ' LIMIT 0, 10');
 
@@ -17,7 +16,6 @@ class LoginController extends Controller {
             //记住用户
             if (remember) {
                 ctx.session.userId = ExsitedList[0].id;
-                // console.log('ctx.session.userId', ctx.session.userId);
                 ctx.body = {success: true, msg: '登录成功'};
             } else {
                 ctx.body = {success: true, msg: '登录成功'};

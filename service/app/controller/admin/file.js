@@ -9,13 +9,7 @@ class FileController extends Controller {
         const {ctx, app} = this;
         const {articleId} = ctx.request.body
         const file = ctx.request.files[0]
-        // console.log('fileeee',file)
         let uploadRes = await ctx.service.file.upload(file, articleId);
-        // if(isCover){
-        //     //如果当前是上传封面，则删除旧有封面
-        //     oldPath && await ctx.service.file.delete(oldPath);
-        // }
-
         ctx.body = uploadRes
     }
 
@@ -23,7 +17,6 @@ class FileController extends Controller {
     async delete() {
         const {ctx, app} = this;
         const {oldPath, type = 'file'} = ctx.request.body
-
         let res = await ctx.service.file.delete(oldPath, type);
 
         ctx.body = res

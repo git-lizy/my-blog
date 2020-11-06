@@ -29,9 +29,6 @@
     li {
       line-height: 1.8;
       font-size: 14px;
-      //overflow: hidden;
-      //text-overflow:ellipsis;
-      //white-space: nowrap;
       a {
         &:hover {
           color: $themeColor;
@@ -42,9 +39,6 @@
     }
   }
 
-  //.card{
-  //  padding: ;
-  //}
   .about {
     @extend .classify;
 

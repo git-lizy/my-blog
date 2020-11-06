@@ -13,7 +13,7 @@ function About(props) {
     return <div className={'About'}>
         <div className={'aboutMain'}>
             <section className={'headPhoto'}></section>
-            <section className={'logo'}></section>
+            <section className={'logo'}>铸心</section>
             <section className={'split'}>
                 <span></span>
                 <span>社交账号</span>

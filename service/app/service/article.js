@@ -32,23 +32,18 @@ class ArticleService extends Service {
     //根据条件获取文章列表数据
     async getArticleList(type, page, keywords) {
         const {ctx, app} = this;
-        // console.log('query', ctx.request.query);
         let sql;
         if (type) {
             if (keywords) {
                 sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'` + ' AND `type` = ' + `'${type}'` + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
-                // console.log('11111',sql)
             } else {
-                // console.log('2')
                 sql = 'SELECT * FROM `article_list` WHERE `type` = ' + `'${type}'` + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
             }
 
         } else {
             if (keywords) {
-                // console.log('3')
                 sql = 'SELECT * FROM `article_list` WHERE `title` LIKE ' + `'%${keywords}%'` + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
             } else {
-                // console.log('4')
                 sql = 'SELECT * FROM `article_list` ' + ' ORDER BY `update_date` DESC ' + (page ? ' LIMIT ' + `${(page - 1) * 10}` + ', 10' : '')
             }
         }
@@ -117,13 +112,11 @@ class ArticleService extends Service {
     async getArticleDetail(article_id, shoulUpdate) {
         const {ctx, app} = this;
 
-        // console.log('otherMsggggg',shoulUpdate)
         try {
             //获取当前文章详情内容
             let contentMsg = await app.mysql.query('SELECT * FROM `article_content` WHERE `article_id` = ' + `'${article_id}'` + ' LIMIT 0, 1');
             //获取当前文章其他信息
             let {results: otherMsg} = await ctx.service.article.getOtherMsgById(article_id)
-            // console.log('otherMsggggg',otherMsg,otherMsg.results.length)
             //是否更新浏览量
             if (shoulUpdate === 'true') {
 
@@ -138,7 +131,6 @@ class ArticleService extends Service {
                     results: [{
                         ...otherMsg[0],
                         ...contentMsg[0],
-                        // article_id:otherMsg[0].id,
 
                     }]
 
@@ -167,13 +159,11 @@ class ArticleService extends Service {
         const {ctx, app} = this;
         try {
             let res = await app.mysql.query('UPDATE `article_list` SET `hot` = ' + `${numberOldHot + 1}` + ' WHERE `id` = ' + `'${articleId}'`);
-            // console.log('res',res)
             return {
                 success: true,
                 msg: '操作成功',
             }
         } catch (e) {
-            // console.log('e', e)
             return {
                 success: false,
                 msg: '操作失败',

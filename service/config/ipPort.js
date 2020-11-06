@@ -1,3 +1,4 @@
+//根据环境不同的ip端口配置
 let blog,service,admin,ip
 if(process.env.NODE_ENV==='production'){
     ip='47.95.223.83'
