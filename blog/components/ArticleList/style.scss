@@ -22,7 +22,7 @@
   min-height: 150px;
   box-shadow: 4px 4px rgba(200, 200, 200, 0.3);
   @media screen and (max-width: 768px) {
-    margin: 16px 16px 0 16px;
+    margin: 14px 14px 0 14px;
 
     &:first-child {
       margin-top: 0px;
@@ -30,15 +30,12 @@
   }
 
 
-
   .msg {
     flex: 3;
     display: flex;
     flex-direction: column;
     @extend .shenglue;
-
     .title {
-
       @extend .shenglue;
       color: $themeColor;
       font-size: 20px;
@@ -47,7 +44,6 @@
       padding-bottom: 12px;
       @media screen and (max-width: 768px) {
         font-size: 18px;
-        //line-height: 20px;
       }
     }
 
@@ -55,7 +51,7 @@
     .date {
       display: flex;
       flex-wrap: wrap;
-
+      padding-top: 2px;
       .hotNumber {
         font-size: 14px;
         @media screen and (max-width: 768px) {
@@ -105,9 +101,9 @@
       overflow: auto;
       text-overflow: initial;
       white-space: initial;
-      flex-basis: calc(100% - 54px);
+      flex-basis: calc(100% - 56px);
       @media screen and (max-width: 768px) {
-        flex-basis: calc(100% - 50px);
+        flex-basis: calc(100% - 52px);
         font-size: 12px;
       }
 
