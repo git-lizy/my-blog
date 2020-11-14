@@ -4,8 +4,8 @@
 * 开发日期：2020-09-12
 * 上次修改日期：2020-10-31
 * */
-import React, {memo, useEffect, useState,} from 'react'
-import {message, Spin} from 'antd'
+import React, {memo, useEffect, useState,useRef} from 'react'
+import {message, Spin,Affix} from 'antd'
 import {get} from "../../utils/requestUtil";
 import ipPort from "../../common/ipPort";
 import NavBar from '../../components/NavBar'
@@ -23,6 +23,7 @@ function SideBar(props) {
     const [rankLoading, setRankLoading] = useState(false);
     useEffect(() => {
         getHotList()
+
     }, []);
 
 
@@ -82,15 +83,18 @@ function SideBar(props) {
         }
 
         {isDetail &&
-        <div className={'markNav card'}>
-            <div className={'title'}><span>&nbsp;文章导航</span></div>
-            <MarkNav
-                className="markNavMain"
-                source={articleDetail.content ? articleDetail.content : ''}
-                // headingTopOffset={80}
-                ordered={false}
-            />
-        </div>
+            <Affix offsetTop={60}>
+                <div className={'markNav card '} id={'markNav'}>
+                    <div className={'title'}><span>&nbsp;文章导航</span></div>
+                    <MarkNav
+                        className="markNavMain"
+                        source={articleDetail.content ? articleDetail.content : ''}
+                        // headingTopOffset={80}
+                        ordered={false}
+                    />
+                </div>
+            </Affix>
+
         }
 
 

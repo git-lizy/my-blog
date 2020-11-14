@@ -52,8 +52,8 @@
 
   .markNav {
     @extend .classify;
-    padding: 0;
 
+    padding: 0;
     .title {
       padding: 6px 10px 0;
 
@@ -61,10 +61,16 @@
         background-image: url("/icon/nav.svg");
       }
     }
-
+    .markdown-navigation{
+      overflow: auto;
+      max-height: 500px;
+    }
     .markdown-navigation .title-anchor.active {
       font-weight: bold;
       color: $themeColor;
+    }
+    .markdown-navigation .title-level4{
+      color:#666
     }
   }
 

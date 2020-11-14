@@ -23,6 +23,9 @@
   }
 
   pre {
+    code{
+      background-color: transparent;
+    }
     padding: 0.75rem 0.15rem 0.75rem 0.8rem;
     background-color: #183055 !important;
     color: #f8f8f2 !important;
