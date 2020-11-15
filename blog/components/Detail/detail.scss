@@ -5,6 +5,9 @@
     font-style: normal;
     color: rgb(59, 69, 78);
     font-size: 16px;
+    img{
+      max-width: 100%;
+    }
   }
   code{
     margin: 0 2px;
@@ -14,6 +17,7 @@
     display: inline;
     vertical-align: bottom;
     line-height: 1.5;
+    word-break:break-all;
   }
   em{
     color: #807e7e;

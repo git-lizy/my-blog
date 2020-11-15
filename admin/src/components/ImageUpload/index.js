@@ -135,7 +135,7 @@ function ImageUpload(props) {
                 beforeUpload={beforeUpload}
                 onRemove={beforeRemove}
             >
-                {fileList.length >= 8 ? null : uploadButton}
+                {uploadButton}
             </Upload>
             <Modal
                 visible={previewVisible}

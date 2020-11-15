@@ -121,7 +121,7 @@ function articleList(props) {
                             <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>
                             <span className={'introduce'}>{item.introduce}</span>
                             <div className={'date'}>
-                                <span className={'hotNumber createDate'}>{item.type}</span>
+                                <span className={'hotNumber type'}>{item.type}</span>
                                 <span className={'hotNumber createDate'}>{item.create_date?.slice(0, 10)}</span>
                                 <span className={'hotNumber update_date'}>{item.update_date?.slice(0, 10)}</span>
                                 <span className={'hotNumber hot'}>{item.hot}</span>

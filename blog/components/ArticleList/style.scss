@@ -73,6 +73,9 @@
           width: 12px;
           height: 12px;
         }
+        &.type::after {
+          background-image: url("/icon/classify.svg");
+        }
 
         &.hot::after {
           background-image: url("/icon/hot.svg");
@@ -103,7 +106,7 @@
       white-space: initial;
       flex-basis: calc(100% - 56px);
       @media screen and (max-width: 768px) {
-        flex-basis: calc(100% - 52px);
+        flex-basis: calc(100% - 54px);
         font-size: 12px;
       }
 
