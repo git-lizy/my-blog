@@ -8,11 +8,11 @@
 
 .articleList {
   @media screen and (max-width: 768px) {
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 322px);
   }
-  @media screen and (min-width: 768px) {
-    min-height: calc(100vh - 205px);
-  }
+  //@media screen and (min-width: 768px) {
+  //  min-height: calc(100vh - 205px);
+  //}
 }
 
 .articleItem {
@@ -64,10 +64,8 @@
         &::after {
           position: absolute;
           left: 0;
-          top: 5px;
-          @media screen and (max-width: 768px) {
-            top: 3px;
-          }
+          top: 50%;
+          transform: translateY(-50%);
           content: '';
           background-size: cover;
           width: 12px;
@@ -105,10 +103,10 @@
       text-overflow: initial;
       white-space: initial;
       flex-basis: calc(100% - 56px);
-      @media screen and (max-width: 768px) {
-        flex-basis: calc(100% - 54px);
-        font-size: 12px;
-      }
+      //@media screen and (max-width: 768px) {
+      //  flex-basis: calc(100% - 54px);
+      //  font-size: 12px;
+      //}
 
     }
   }
