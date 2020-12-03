@@ -46,5 +46,28 @@
   h1{
     font-size: 2em;
   }
+  table{
+    margin: 10px 0;
+    tr{
+      &:nth-child(2n){
+        background-color:#f5f7f9
+      }
+      th{
+        text-align:center;
+        font-weight:bold;
+        border:1px solid #dfe2e5;
+        margin:0;
+        padding:6px 13px;
+      }
+      td{
+        border:1px solid #dfe2e5;
+        margin:0;
+        padding:6px 13px;
+      }
+    }
+    thead{
+      background-color:#f5f7f9
+    }
+  }
 
 }
