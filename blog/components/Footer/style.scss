@@ -5,5 +5,19 @@
   .ICP{
     color: #bbbbbb
   }
+  .GWA{
+    color: #bbbbbb;
+    padding-left: 36px;
+    position: relative;
+    display: inline-block;
+    &::before{
+      position: absolute;
+      content:'';
+      left: 12px;
+      background-image: url("/icon/gwb_logo.svg");
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 

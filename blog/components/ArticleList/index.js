@@ -118,7 +118,7 @@ function articleList(props) {
                 {(list.current.length > 0 ? list.current : initialList).map(item => {
                     return <Row className={'articleItem card'} key={item.id}>
                         <Col className="msg">
-                            <a className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</a>
+                            <strong className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</strong>
                             <span className={'introduce'}>{item.introduce}</span>
                             <div className={'date'}>
                                 <span className={'hotNumber type'}>{item.type}</span>

@@ -19,6 +19,10 @@ function Footer(props) {
                 <a className="ICP" href={'http://beian.miit.gov.cn/'} target={'blank'}>
                     京ICP备2020040527号
                 </a>
+                <a className="GWA" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010602007497">
+                        京公网安备 11010602007497号
+                </a>
+
             </Col>
         </Row>
     </div>

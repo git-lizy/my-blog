@@ -110,7 +110,7 @@ function Header(props) {
     {/*//     return <div className={'Header'} id={'Header'} >*/}
         <Row justify={'space-around'} className={'HeaderMain'}>
             <Col xs={13}>
-                <a className={'name'} onClick={indexClick.bind(Header)}>铸心</a>
+                <strong className={'name'} onClick={indexClick.bind(Header)}>铸心</strong>
                 <span className={'type'}>&nbsp;个人技术博客</span>
             </Col>
             <Col xs={0} md={7} className="headerRight">

@@ -36,7 +36,7 @@ function Detail(props) {
             <div className="detail">
                 <div className="detailMain card">
                     <div className={'otherMsg'}>
-                        <div className={'title'}>{data.title}</div>
+                        <strong className={'title'}>{data.title}</strong>
                         <div className={'date'}>
                             <span>发布时间：{data.create_date?.slice(0, 10)}</span>
                             <span>更新时间：{data.update_date?.slice(0, 10)}</span>
