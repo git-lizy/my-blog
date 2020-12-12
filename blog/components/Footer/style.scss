@@ -10,6 +10,11 @@
     padding-left: 36px;
     position: relative;
     display: inline-block;
+    @media screen and (max-width:768px){
+      display: block;
+      width: max-content;
+      margin: 0 auto;
+    }
     &::before{
       position: absolute;
       content:'';

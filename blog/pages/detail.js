@@ -29,8 +29,10 @@ function Home(props) {
     return (
         <>
             <Head>
-                <title>铸心博客 | {detailData.title}</title>
+                <title>铸心 | {detailData.title}</title>
                 <link rel="icon" href="/favicon.ico" />
+                <meta name='robots' content='all'/>
+                <meta name='author' content='铸心'/>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
                 <meta name="keywords" content="铸心,博客,前端,web前端,html,html5,css,css3,javascript,js,vue,react,es6,node,webpack"/>
                 <meta name="description"
