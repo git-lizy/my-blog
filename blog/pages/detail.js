@@ -31,6 +31,7 @@ function Home(props) {
             <Head>
                 <title>铸心 | {detailData.title}</title>
                 <link rel="icon" href="/favicon.ico" />
+                <meta name="baidu-site-verification" content="code-ejaBp8EWBt" />
                 <meta name='robots' content='all'/>
                 <meta name='author' content='铸心'/>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
