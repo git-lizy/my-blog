@@ -1,9 +1,15 @@
 //路由配置
-import login from '../pages/login'
-import admin from '../pages/admin'
-import addArticle from '../pages/admin/add'
-import list from '../pages/admin/list'
-import message from '../pages/admin/message'
+import AsyncComponent from './asyncComponent'
+// import login from '../pages/login'
+const login = AsyncComponent(()=>import('../pages/login'))
+// import admin from '../pages/admin'
+const admin = AsyncComponent(()=>import('../pages/admin'))
+// import addArticle from '../pages/admin/add'
+const addArticle = AsyncComponent(()=>import('../pages/admin/add'))
+// import list from '../pages/admin/list'
+const list = AsyncComponent(()=>import('../pages/admin/list'))
+// import message from '../pages/admin/message'
+const message = AsyncComponent(()=>import('../pages/admin/message'))
 
 let router = [
     {
