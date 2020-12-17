@@ -110,6 +110,7 @@ function articleList(props) {
     }
 
     let itemClick = (id) => {
+        setLoading(true)
         props.router.push(`/detail?id=${id}`)
     };
     return (

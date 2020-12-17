@@ -94,13 +94,13 @@ function Header(props) {
     const classifyMenu = (
         <Menu>
             <Menu.Item>
-                <a className={'search'} onClick={MenuItemClick.bind(Header, 'classify')}>文章分类</a>
+                <a className={'classifyText'}  onClick={MenuItemClick.bind(Header, 'classify')}>文章分类</a>
             </Menu.Item>
             <Menu.Item>
-                <a className={'search'} onClick={MenuItemClick.bind(Header, 'search')}>文章搜索</a>
+                <a className={'classifyText'} onClick={MenuItemClick.bind(Header, 'search')}>文章搜索</a>
             </Menu.Item>
             <Menu.Item>
-                <a className={'search'} onClick={MenuItemClick.bind(Header, 'about')}>关于博主</a>
+                <a className={'classifyText'}  onClick={MenuItemClick.bind(Header, 'about')}>关于博主</a>
             </Menu.Item>
         </Menu>
     )

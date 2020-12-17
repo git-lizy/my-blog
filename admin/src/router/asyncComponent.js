@@ -1,4 +1,5 @@
 import React,{useState,useEffect,lazy,Suspense} from 'react'
+import {Spin} from 'antd'
 
 //异步加载组件
 function AsyncComponent(importComponent) {
@@ -15,7 +16,7 @@ function AsyncComponent(importComponent) {
         },[])
 
         const Component = componentObj.component
-        return (<>{Component && <Suspense fallback={<span style={{position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)'}}>loading</span>}><Component {...props}/></Suspense>}</>)
+        return (<>{Component && <Suspense fallback={<Spin spinning style={{position:'fixed',left:'50%',top:'50%',transform:'translate(-50%,-50%)'}}/>}><Component {...props}/></Suspense>}</>)
     }
 
     return TrueAsyncComponent

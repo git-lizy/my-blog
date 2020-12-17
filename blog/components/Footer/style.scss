@@ -1,7 +1,11 @@
 @import "../../pages/base";
 
 .Footer {
-  padding: 10px 0;
+  padding: 10px 0 6px 0;
+  @media screen and (max-width: 768px) {
+    font-size:12px;
+  }
+
   .ICP{
     color: #bbbbbb
   }
