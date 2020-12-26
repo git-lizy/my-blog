@@ -11,7 +11,7 @@ function Error(props) {
 
         <div className={'errorContainer'}>
             <div>
-                <div className={'errorIcon'}></div>
+                <div className={'errorIcon iconfont icon-error'}></div>
                 <div>页面走丢了</div>
                 <a onClick={backToIndex.bind(Error)}>返回首页</a>
             </div>

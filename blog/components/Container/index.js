@@ -74,7 +74,7 @@ function Container(props) {
         <Footer/>
         <div className={'backToTopContainer'}>
             <BackTop visibilityHeight={1200}>
-                <div className={'backToTop'}></div>
+                <div className={'backToTop iconfont icon-backToTop'}></div>
             </BackTop>
         </div>
     </>

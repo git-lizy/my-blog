@@ -52,8 +52,8 @@ function SideBar(props) {
 
     return <div className={'SideBar'}>
 
-        <div className={'about card'}>
-            <div className={'title'}><span>&nbsp;关于博主</span></div>
+        <div className={'about card classify'}>
+            <div className={'title iconfont icon-about'}><span>&nbsp;关于博主</span></div>
             <About/>
         </div>
 
@@ -61,14 +61,14 @@ function SideBar(props) {
         {!isDetail &&
         <>
             <div className={'classify card'}>
-                <div className={'title'}><span>&nbsp;文章分类</span></div>
+                <div className={'title iconfont icon-classify'}><span>&nbsp;文章分类</span></div>
                 <NavBar path={props.router.asPath} typeList={typeList}/>
             </div>
 
 
             <Spin spinning={rankLoading}>
-                <div className={'rank card'}>
-                    <div className={'title'}><span>&nbsp;热门文章</span></div>
+                <div className={'rank card classify'}>
+                    <div className={'title iconfont icon-rank'}><span>&nbsp;热门文章</span></div>
                     <ul>
                         {rankList.map((item, index) => {
                             return <li key={index}>
@@ -79,13 +79,24 @@ function SideBar(props) {
                     </ul>
                 </div>
             </Spin>
+
+            <div className={'friend card classify'}>
+                <div className={'title iconfont icon-rank'}><span>&nbsp;友情链接</span></div>
+                <ul>
+                    <li>
+                        <a href={'http://www.yctang.club'} target={'blank'}>yctang</a>
+                    </li>
+
+                </ul>
+            </div>
         </>
+
         }
 
         {isDetail &&
             <Affix offsetTop={60}>
                 <div className={'markNav card '} id={'markNav'}>
-                    <div className={'title'}><span>&nbsp;文章导航</span></div>
+                    <div className={'title iconfont icon-navBar'}><span>&nbsp;文章导航</span></div>
                     <MarkNav
                         className="markNavMain"
                         source={articleDetail.content ? articleDetail.content : ''}

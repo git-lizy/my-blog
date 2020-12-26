@@ -10,9 +10,6 @@
   @media screen and (max-width: 768px) {
     min-height: calc(100vh - 326px);
   }
-  //@media screen and (min-width: 768px) {
-  //  min-height: calc(100vh - 205px);
-  //}
 }
 
 .articleItem {
@@ -57,36 +54,8 @@
         @media screen and (max-width: 768px) {
           font-size: 12px;
         }
-        padding-left: 14px;
         padding-right: 18px;
         position: relative;
-
-        &::after {
-          position: absolute;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-          content: '';
-          background-size: cover;
-          width: 12px;
-          height: 12px;
-        }
-        &.type::after {
-          background-image: url("/icon/classify.svg");
-        }
-
-        &.hot::after {
-          background-image: url("/icon/hot.svg");
-        }
-
-        &.createDate::after {
-          background-image: url("/icon/create_time.svg");
-        }
-
-        &.update_date::after {
-          background-image: url("/icon/update_time.svg");
-        }
-
       }
 
       span {
@@ -103,10 +72,7 @@
       text-overflow: initial;
       white-space: initial;
       flex-basis: calc(100% - 56px);
-      //@media screen and (max-width: 768px) {
-      //  flex-basis: calc(100% - 54px);
-      //  font-size: 12px;
-      //}
+
 
     }
   }

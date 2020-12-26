@@ -25,7 +25,7 @@ function Home(props) {
     const {detailData, setDetail} = props
     useEffect(() => {
         setDetail(detailData)
-    })
+    },[])
     return (
         <>
             <Head>
@@ -37,7 +37,7 @@ function Home(props) {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
                 <meta name="keywords" content="铸心,博客,前端,web前端,html,html5,css,css3,javascript,js,vue,react,es6,node,webpack"/>
                 <meta name="description"
-                      content="铸心个人技术博客与学习笔记，专注于互联网web前端基础技术分享,包括html,html5,css,css3,javascript,js,vue,react,es6,node,webpack等相关技术"/>
+                      content="铸心个人技术博客与学习笔记，专注于互联网web前端基础技术分享"/>
             </Head>
             <Detail data={detailData} key={props.router.asPath}/>
         </>

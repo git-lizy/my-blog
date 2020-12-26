@@ -22,11 +22,9 @@
   }
 
   .backToTop {
-    background-image: url("/icon/backTop.svg");
-    background-size: cover;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+    &:before{
+      font-size: 30px;
+    }
 
   }
 

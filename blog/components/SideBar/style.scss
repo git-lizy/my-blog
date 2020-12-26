@@ -7,23 +7,8 @@
     margin-bottom: 16px;
 
     .title {
-      color: $themeColor;
       font-size: 14px;
-
-      & span {
-        vertical-align: middle;
-      }
-
-      &::before {
-        content: ' ';
-        background-image: url("/icon/classify.svg");
-        background-size: cover;
-        width: 18px;
-        height: 18px;
-        display: inline-block;
-        vertical-align: middle;
-      }
-
+      color: $themeColor;
     }
 
     li {
@@ -40,13 +25,6 @@
   }
 
   .about {
-    @extend .classify;
-
-    .title {
-      &::before {
-        background-image: url("/icon/about.svg");
-      }
-    }
 
   }
 
@@ -57,9 +35,6 @@
     .title {
       padding: 6px 10px 0;
 
-      &::before {
-        background-image: url("/icon/nav.svg");
-      }
     }
     .markdown-navigation{
       overflow: auto;
@@ -75,14 +50,11 @@
   }
 
   .rank {
-    @extend .classify;
-    margin-bottom: 0;
 
-    .title {
-      &::before {
-        background-image: url("/icon/rank.svg");
-      }
-    }
+  }
+
+  .friend {
+    margin-bottom: 0;
   }
 
 }
