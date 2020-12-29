@@ -31,12 +31,12 @@ class ArticleController extends Controller {
 
         try {
             //写入其他信息
-            let addOtherMsgRes = await app.mysql.query(
+            let addOtherMsgRes = await conn.query(
                 'INSERT INTO `article_list`(`id`,`title`, `type`, `introduce`, `hot`,  `create_date`, `update_date`) VALUES (' +
                 `'${articleId}'` + ', ' + `'${title}'` + ', ' + `'${type}'` + ', ' + `'${introduce}'` + ',' + '0' + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'`
                 + ')')
             //写入文章详情数据
-            let addContentRes = await app.mysql.query(
+            let addContentRes = await conn.query(
                 'INSERT INTO `article_content`(`article_id`,`content`) VALUES ('
                 + `'${articleId}'` + ', ' + `'${content}'`
                 + ')')
@@ -72,9 +72,9 @@ class ArticleController extends Controller {
         try {
 
             //更新 其他信息
-            let updateOtherMsgRes = await app.mysql.query('UPDATE `article_list` SET `title` = ' + `'${title}'` + ', `type` = ' + `'${type}'` + ', `introduce` = ' + `'${introduce}'` + ',`update_date` = ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ' WHERE `id` = ' + `'${articleId}'`)
+            let updateOtherMsgRes = await conn.query('UPDATE `article_list` SET `title` = ' + `'${title}'` + ', `type` = ' + `'${type}'` + ', `introduce` = ' + `'${introduce}'` + ',`update_date` = ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ' WHERE `id` = ' + `'${articleId}'`)
             //更新文章详情数据
-            let updateContentRes = await app.mysql.query('UPDATE `article_content` SET `content` = ' + `'${content}'` + ' WHERE `article_id` = ' + `'${articleId}'`)
+            let updateContentRes = await conn.query('UPDATE `article_content` SET `content` = ' + `'${content}'` + ' WHERE `article_id` = ' + `'${articleId}'`)
             //提交事务
             await conn.commit()
             res = {
@@ -105,9 +105,9 @@ class ArticleController extends Controller {
         try {
 
             //删除其他信息
-            await app.mysql.query('DELETE FROM `article_list` WHERE `id` = ' + `'${articleId}'`)
+            await conn.query('DELETE FROM `article_list` WHERE `id` = ' + `'${articleId}'`)
             //删除详情信息
-            await app.mysql.query('DELETE FROM `article_content` WHERE `article_id` = ' + `'${articleId}'`)
+            await conn.query('DELETE FROM `article_content` WHERE `article_id` = ' + `'${articleId}'`)
             //提交事务
             await conn.commit()
             //删除对应文章相关的图片静态资源

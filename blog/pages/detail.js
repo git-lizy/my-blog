@@ -59,8 +59,7 @@ Home.getInitialProps = async (ctx) => {
     }
 
     const {asPath: path} = ctx
-    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
-    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, path.length)) : {};
     let id = query.id;
     let update = shouldUpdateHot(id)
     try {

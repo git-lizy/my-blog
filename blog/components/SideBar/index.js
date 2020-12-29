@@ -100,6 +100,7 @@ function SideBar(props) {
                     <MarkNav
                         className="markNavMain"
                         source={articleDetail.content ? articleDetail.content : ''}
+                        updateHashAuto={false}
                         // headingTopOffset={80}
                         ordered={false}
                     />
