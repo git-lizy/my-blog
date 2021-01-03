@@ -1,11 +1,5 @@
 @import "../../pages/base.scss";
 
-.shenglue {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .articleList {
   @media screen and (max-width: 768px) {
     min-height: calc(100vh - 326px);
@@ -31,9 +25,7 @@
     flex: 3;
     display: flex;
     flex-direction: column;
-    @extend .shenglue;
     .title {
-      //@extend .shenglue;
       color: $themeColor;
       font-size: 20px;
       line-height: 20px;

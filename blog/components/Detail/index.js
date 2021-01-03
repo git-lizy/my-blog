@@ -4,13 +4,12 @@
 * 开发日期：2020-09-12
 * 上次修改日期：2020-10-31
 * */
-import React from 'react'
+import React,{memo} from 'react'
 import highLight from 'highlight.js'
 import marked from 'marked'
 import "./style.scss"
 import './detail.scss'
 import 'highlight.js/styles/monokai-sublime.css'
-import {withRouter} from 'next/router'
 
 function Detail(props) {
     const {data} = props
@@ -50,4 +49,4 @@ function Detail(props) {
     )
 }
 
-export default withRouter(Detail)
+export default memo(Detail)

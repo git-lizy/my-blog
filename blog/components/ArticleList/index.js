@@ -4,7 +4,7 @@
 * 开发日期：2020-09-12
 * 上次修改日期：2020-10-31
 * */
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState,memo} from 'react'
 import {Col, message, Row, Spin} from 'antd'
 import {withRouter} from 'next/router'
 import Qs from 'qs'
@@ -138,4 +138,4 @@ function articleList(props) {
     )
 }
 
-export default withRouter(articleList)
+export default withRouter(memo(articleList))

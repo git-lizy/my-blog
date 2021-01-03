@@ -4,13 +4,13 @@
 * 开发日期：2020-09-12
 * 上次修改日期：2020-10-31
 * */
-import React, {memo, useEffect} from 'react'
+import React, {memo} from 'react'
 import {Input} from 'antd'
 import {withRouter} from 'next/router'
 import './style.scss'
 
 function SearchBar(props) {
-    const {onSearchReload, onRef} = props
+    const {onSearchReload} = props
 
     const onSearch = (value) => {
         props.router.replace(`/list?keywords=${value}`)
