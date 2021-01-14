@@ -21,6 +21,7 @@ const initMapStateToProps = (state) => {
 
 };
 
+
 function Home(props) {
     const {detailData, setDetail} = props
     useEffect(() => {
