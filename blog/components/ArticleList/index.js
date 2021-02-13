@@ -113,10 +113,11 @@ function articleList(props) {
         props.router.push(`/detail?id=${id}`)
     };
     return (
-        <Spin spinning={loading}>
+
             <div className="articleList">
                 {(list.current.length > 0 ? list.current : initialList).map(item => {
-                    return <Row className={'articleItem card'} key={item.id}>
+                    return   <Spin spinning={loading}>
+                    <Row className={'articleItem card'} key={item.id}>
                         <Col className="msg">
                             <strong className={'title'} onClick={itemClick.bind('', item.id)}>{item.title}</strong>
                             <span className={'introduce'}>{item.introduce}</span>
@@ -130,11 +131,11 @@ function articleList(props) {
 
                         </Col>
                     </Row>
+                    </Spin>
                 })}
 
                 <div className={'loadingText'}>{loadingText}</div>
             </div>
-        </Spin>
     )
 }
 

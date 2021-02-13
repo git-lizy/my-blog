@@ -15,7 +15,10 @@ class LoginController extends Controller {
       // 存在此用户
       // 记住用户
       if (remember) {
-        ctx.session.userId = ExsitedList[0].id;
+        const sessionId = `${ExsitedList[0].account}_${new Date().getTime()}`;
+        ctx.session.userId = sessionId;
+        // 更新该用户在表中的sessionId
+        await app.mysql.query('UPDATE `admin_user` SET `session_id` = ' + `'${sessionId}'` + ' WHERE `account` = ' + `'${ExsitedList[0].account}'`);
         ctx.body = { success: true, msg: '登录成功' };
       } else {
         ctx.body = { success: true, msg: '登录成功' };
