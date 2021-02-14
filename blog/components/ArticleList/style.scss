@@ -4,6 +4,10 @@
   @media screen and (max-width: 768px) {
     min-height: calc(100vh - 326px);
   }
+  .ant-spin-nested-loading:nth-last-child(2) .articleItem{
+    margin-bottom: 0;
+  }
+
 }
 
 .articleItem {
@@ -13,11 +17,11 @@
   min-height: 150px;
   box-shadow: 4px 4px rgba(200, 200, 200, 0.3);
   @media screen and (max-width: 768px) {
-    margin: 14px 14px 0 14px;
-
+    margin: 14px;
     &:first-child {
       margin-top: 0px;
     }
+
   }
 
 
