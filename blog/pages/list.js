@@ -31,7 +31,8 @@ function Home(props) {
 //服务端渲染获取初始数据
 Home.getInitialProps = async (ctx) => {
     const {asPath: path} = ctx
-    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, path.length)) : {};
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
     let type = path.startsWith('/list') ? query.type : undefined;
     let keywords = path.startsWith('/list') ? query.keywords : undefined;
     try {

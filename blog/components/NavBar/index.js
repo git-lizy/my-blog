@@ -14,9 +14,10 @@ import ipPort from "../../common/ipPort";
 
 function NavBar(props) {
     const {typeList, path, onRef} = props;
-
+    //获取地址可能出现的#下标
+    const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
     //获取地址传递的参数
-    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, path.length)) : {};
+    const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
     const {type} = query;
     const [articleTotal, setArticleTotal] = useState(0)
     const [hotTotal, setHotTotal] = useState(0)
