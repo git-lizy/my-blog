@@ -61,4 +61,4 @@ function NavBar(props) {
     </div>
 }
 
-export default (memo(withRouter(NavBar)))
+export default (withRouter(NavBar))

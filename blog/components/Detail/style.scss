@@ -17,6 +17,7 @@
     }
     .title {
       color: $themeColor;
+      word-break: break-all;
       font-size: 22px;
       display: block;
       text-align: center;

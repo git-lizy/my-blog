@@ -84,7 +84,7 @@ function SideBar(props) {
                 <div className={'title iconfont icon-rank'}><span>&nbsp;友情链接</span></div>
                 <ul>
                     <li>
-                        <a href={'http://www.yctang.club'} target={'blank'}>yctang</a>
+                        <a href={'http://www.tangyincheng.com/'} target={'blank'}>yctang</a>
                     </li>
 
                 </ul>
@@ -113,4 +113,4 @@ function SideBar(props) {
     </div>
 }
 
-export default memo(withRouter(SideBar))
+export default (withRouter(SideBar))

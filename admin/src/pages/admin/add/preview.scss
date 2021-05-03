@@ -1,4 +1,4 @@
-@import "../../../common/base";
+
 #preview {
   p {
     line-height: 1.6;
@@ -23,9 +23,7 @@
   em{
     color: #807e7e;
   }
-  strong{
-    color: $themeColor;
-  }
+
 
   pre {
     code{

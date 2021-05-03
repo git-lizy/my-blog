@@ -36,7 +36,7 @@ function articleList(props) {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const totalHeight = document.documentElement.scrollHeight;
             const clientHeight = document.documentElement.offsetHeight;
-            if (scrollTop + clientHeight >= totalHeight) {
+            if (scrollTop + clientHeight +2 >= totalHeight) {
                 getArticlList(type, CurrentPage.current + 1, keywords);
                 CurrentPage.current = CurrentPage.current + 1
             }
