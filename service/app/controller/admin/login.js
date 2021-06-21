@@ -19,9 +19,9 @@ class LoginController extends Controller {
         ctx.session.userId = sessionId;
         // 更新该用户在表中的sessionId
         await app.mysql.query('UPDATE `admin_user` SET `session_id` = ' + `'${sessionId}'` + ' WHERE `account` = ' + `'${ExsitedList[0].account}'`);
-        ctx.body = { success: true, msg: '登录成功' };
+        ctx.body = { success: true, account: account, userId: ExsitedList[0].Id, msg: '登录成功' };
       } else {
-        ctx.body = { success: true, msg: '登录成功' };
+        ctx.body = { success: true, account: account, userId: ExsitedList[0].Id, msg: '登录成功' };
       }
 
     } else {

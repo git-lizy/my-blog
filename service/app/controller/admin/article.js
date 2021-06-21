@@ -8,8 +8,8 @@ class ArticleController extends Controller {
   // 获取文章列表
   async getArticleList() {
     const { ctx, app } = this;
-    const { type, page, keywords } = ctx.request.query;
-    const res = await ctx.service.article.getArticleList(type, page, keywords);
+    const { userId, type, page, keywords } = ctx.request.query;
+    const res = await ctx.service.article.getArticleList(userId, type, page, keywords);
     ctx.body = res;
   }
 
@@ -25,15 +25,15 @@ class ArticleController extends Controller {
     const { ctx, app } = this;
     // 创建mysql事务
     const conn = await app.mysql.beginTransaction();
-    const { articleId, title, type, content, introduce } = ctx.request.body;
+    const { userId, articleId, title, type, content, introduce, visible } = ctx.request.body;
 
     let res = {};
 
     try {
       // 写入其他信息
       const addOtherMsgRes = await conn.query(
-        'INSERT INTO `article_list`(`id`,`title`, `type`, `introduce`, `hot`,  `create_date`, `update_date`) VALUES (' +
-                `'${articleId}'` + ', ' + `'${title}'` + ', ' + `'${type}'` + ', ' + `'${introduce}'` + ',' + '0' + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'`
+        'INSERT INTO `article_list`(`id`,`userId`,`title`, `type`, `introduce`, `hot`, `visible`, `create_date`, `update_date`) VALUES (' +
+                `${articleId}` + ',  ' + `${userId}` + ', ' + `'${title}'` + ', ' + `'${type}'` + ', ' + `'${introduce}'` + ',' + '0' + ',' + `'${visible}'` + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ', ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'`
                 + ')');
       // 写入文章详情数据
       const addContentRes = await conn.query(
@@ -58,7 +58,6 @@ class ArticleController extends Controller {
       };
     }
     ctx.body = res;
-
   }
 
   // 编辑更新文章
@@ -66,13 +65,13 @@ class ArticleController extends Controller {
     const { ctx, app } = this;
     // 创建mysql事务
     const conn = await app.mysql.beginTransaction();
-    const { articleId, title, type, content, introduce } = ctx.request.body;
+    const { articleId, title, type, content, introduce, visible } = ctx.request.body;
 
     let res = {};
     try {
 
       // 更新 其他信息
-      const updateOtherMsgRes = await conn.query('UPDATE `article_list` SET `title` = ' + `'${title}'` + ', `type` = ' + `'${type}'` + ', `introduce` = ' + `'${introduce}'` + ',`update_date` = ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ' WHERE `id` = ' + `'${articleId}'`);
+      const updateOtherMsgRes = await conn.query('UPDATE `article_list` SET `title` = ' + `'${title}'` + ', `type` = ' + `'${type}'` + ', `introduce` = ' + `'${introduce}'` + ', `visible` = ' + `'${visible}'` + ', `update_date` = ' + `'${moment().format('YYYY-MM-DD HH:mm:ss')}'` + ' WHERE `id` = ' + `'${articleId}'`);
       // 更新文章详情数据
       const updateContentRes = await conn.query('UPDATE `article_content` SET `content` = ' + `'${content}'` + ' WHERE `article_id` = ' + `'${articleId}'`);
       // 提交事务

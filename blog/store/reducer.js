@@ -19,7 +19,26 @@ function articleDetail(state = {}, action) {
     }
 }
 
+function userInfo(state = {
+    username: '颖创',
+    wechat: '',
+    QQ: '',
+    github: '',
+    keywords: '',
+    description: '',
+    sendword: '',
+}, action) {
+    switch(action.type) {
+        case 'getUserInfo' :
+            return action.data
+        default: 
+            return state
+    }
+}
+
+
 export default combineReducers({
     articleTypeList,
-    articleDetail
+    articleDetail,
+    userInfo
 })

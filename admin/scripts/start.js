@@ -120,7 +120,7 @@ checkBrowsers(paths.appPath, isInteractive)
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
       if (err) {
-        return console.log(err);
+        return console.log('Error:'+err);
       }
       if (isInteractive) {
         clearConsole();
@@ -138,7 +138,7 @@ checkBrowsers(paths.appPath, isInteractive)
         console.log();
       }
 
-      console.log(chalk.cyan('Starting the development server...\n'));
+      console.log(chalk.cyan(`Starting the development server...${HOST}:${port}\n`));
       openBrowser(urls.localUrlForBrowser);
     });
 

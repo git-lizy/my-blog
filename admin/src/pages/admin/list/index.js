@@ -4,6 +4,7 @@ import {get, post} from "../../../utils/requestUtil";
 import {Button, Col, Form, Input, message, Popconfirm, Row, Select, Space, Spin, Table} from "antd";
 import ipPort from '../../../common/ipPort'
 import Style from './style.module.scss'
+import { getUserInfo } from '../../../utils/Info';
 
 const {Option} = Select
 
@@ -32,7 +33,6 @@ function Index(props) {
                 setTypelist(res.results)
             } else {
                 setTypelist([]);
-                message.error(`获取文章类型失败,异常信息：${res.code}`)
             }
 
         } catch (e) {
@@ -44,10 +44,10 @@ function Index(props) {
 
     //获取指定条件文章列表
     async function getArticlList({type, page, keywords}) {
-
         setPageLoading(true)
+        let { userId } = getUserInfo()
         try {
-            let res = await get(ipPort + '/default/articleList', {type, page, keywords});
+            let res = await get(ipPort + '/default/articleList', {type, userId, page, keywords});
             if (res.data === 'no-login') {
                 props.history.push('/')
                 return
@@ -185,7 +185,7 @@ function Index(props) {
                 </Row>
             </Form>
             <Spin spinning={pageLoading}>
-                <Table onChange={tableChange} columns={columns} dataSource={tableData}/>
+                <Table onChange={tableChange} columns={columns} dataSource={tableData} rowKey={tableData => tableData.id} />
             </Spin>
         </div>
     );

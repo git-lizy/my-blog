@@ -28,7 +28,7 @@ module.exports = appInfo => {
   };
     // 跨域资源共享
   config.cors = {
-    // origin: ipPort.blog,//匹配规则  域名+端口  *则为全匹配
+   // origin: ipPort.admin,//匹配规则  域名+端口  *则为全匹配
     credentials: true,
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
@@ -53,9 +53,9 @@ module.exports = appInfo => {
       // username
       user: 'root',
       // password
-      password: 'gouri123',
+      password: 'root',
       // database
-      database: 'my_blog',
+      database: 'MyBlog',
     },
     // load into app, default is open
     app: true,

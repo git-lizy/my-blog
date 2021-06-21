@@ -73,15 +73,15 @@ function ImageUpload(props) {
     };
     //图片真正上传到服务器前（返回true或promise为resolve则上传）
     const beforeUpload = async (file, fileList) => {
-        // console.log('file', file, fileList);
+        let { articleId, uploadChange } = props
         try {
             let res = await postFile(ipPort + '/admin/upload', {
                 file: file,
-                articleId: props.articleId,
+                articleId: articleId,
             });
             if (res.success) {
-                // console.log('res.path', res.path)
-                setCurrentUploadPath(res.path);
+                setCurrentUploadPath(res.path)
+                uploadChange(res.path)
                 return true
             } else {
                 setCurrentUploadPath('');
@@ -99,10 +99,10 @@ function ImageUpload(props) {
     };
     //图片真正从服务器删除前（返回true或promise为resolve则删除）
     const beforeRemove = async (file) => {
-        // console.log('file', file)
         try {
             let res = await postFile(ipPort + '/admin/delete', {
-                oldPath: file.path,//删除的图片服务器路径地址
+                oldPath: currentUploadPath,//删除的图片服务器路径地址
+                type: 'file'
             });
             if (res.success) {
                 return true

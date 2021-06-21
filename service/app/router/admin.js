@@ -8,6 +8,8 @@ module.exports = app => {
   const { router, controller } = app;
   const adminAuth = app.middleware.adminLoginCheck({}, app);
   router.post('/admin/login', controller.admin.login.index);
+  router.post('/admin/logout', adminAuth, controller.admin.logout.index);
+  router.get('/admin/info', controller.admin.info.index);
   router.get('/admin/getArticleList', adminAuth, controller.admin.article.getArticleList);
   router.post('/admin/upload', adminAuth, controller.admin.file.upload);
   router.post('/admin/delete', adminAuth, controller.admin.file.delete);

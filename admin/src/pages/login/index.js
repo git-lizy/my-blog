@@ -5,12 +5,13 @@ import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import ipPort from '../../common/ipPort'
 import Style from './style.module.scss'
 import {post} from '../../utils/requestUtil'
+import { setUserInfo } from '../../utils/Info'
+import md5 from 'js-md5'
 
 function Login(props) {
     //登录提交状态
     const [loading, setLoading] = useState(false);
     const onFinish = values => {
-        // console.log('Success:', values);
         loginClick(values)
     };
     //表单校验失败
@@ -24,13 +25,12 @@ function Login(props) {
         try {
             setLoading(true);
             let res = await post(ipPort + '/admin/login', {
-                account, password, remember
+                account, password: md5(password), remember
             });
-            // console.log('res', res);
             setLoading(false);
             if (res.success) {
-                props.history.push('/admin');
-
+                setUserInfo({ account: res.account, userId: res.userId })
+                props.history.push('/admin')
                 message.success('登录成功')
             } else {
                 message.error('账号或密码错误')
@@ -45,7 +45,7 @@ function Login(props) {
 
         <div className={Style.loginMain}>
             <div className={Style.title}>
-                <div className={'blog'}>铸心博客</div>
+                <div className={'blog'}>博客</div>
                 <div className={'system'}>后台管理系统</div>
             </div>
 

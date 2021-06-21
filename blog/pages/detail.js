@@ -24,23 +24,25 @@ const initMapStateToProps = (state) => {
 
 function Home(props) {
     const {detailData, setDetail} = props
+    const {id} = props.router.query
+
     useEffect(() => {
         setDetail(detailData)
     },[])
     return (
         <>
             <Head>
-                <title>铸心 | {detailData.title}</title>
+                <title>颖创 | {detailData.title}</title>
                 <link rel="icon" href="/favicon.ico" />
                 <meta name="baidu-site-verification" content="code-ejaBp8EWBt" />
                 <meta name='robots' content='all'/>
-                <meta name='author' content='铸心'/>
+                <meta name='author' content='颖创'/>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-                <meta name="keywords" content="铸心,博客,前端,web前端,html,html5,css,css3,javascript,js,vue,react,es6,node,webpack"/>
+                <meta name="keywords" content="颖创,博客,前端,web前端,html,html5,css,css3,javascript,js,vue,react,es6,node,webpack"/>
                 <meta name="description"
-                      content="铸心个人技术博客与学习笔记，专注于互联网web前端基础技术分享"/>
+                      content="颖创个人技术博客与学习笔记，专注于互联网web前端基础技术分享"/>
             </Head>
-            <Detail data={detailData} key={props.router.asPath}/>
+            <Detail data={detailData} id={id} key={props.router.asPath}/>
         </>
     )
 }
@@ -62,18 +64,18 @@ Home.getInitialProps = async (ctx) => {
     const {asPath: path} = ctx
     const jingHaoIndex = path.lastIndexOf('#') > -1 ? path.lastIndexOf('#') : false
     const query = path.lastIndexOf('?') > -1 ? Qs.parse(path.slice(path.lastIndexOf('?') + 1, jingHaoIndex ? jingHaoIndex : path.length)) : {};
-    let id = query.id;
+    let {id} = query
     let update = shouldUpdateHot(id)
     try {
         let res = await get(ipPort + '/default/articleDetail', {id, update});
         if (res.success) {
 
-            return {detailData: res.results[0]}
+            return {detailData: res.results[0], id}
         } else {
-            return {detailData: {}}
+            return {detailData: {id}}
         }
     } catch (e) {
-        return {detailData: {}}
+        return {detailData: {id}}
     }
 
 

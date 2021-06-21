@@ -9,6 +9,7 @@ ul {
 
 body, html {
   background-color: #f2f2f2 !important;
+  background-image: url(/background.webp);
 }
 
 .card {
@@ -16,6 +17,10 @@ body, html {
   background-color: #ffffff;
   padding: 6px 10px;
   box-shadow: 4px 4px rgba(200, 200, 200, 0.3);
+}
+
+.Header {
+  background-image: url(/header_bg.jpg);
 }
 
 //字体图标
@@ -54,6 +59,12 @@ body, html {
 
 .icon-classify:before {
   content: "\e70c";
+}
+.icon-like {
+  color: hotpink;
+}
+.icon-like svg {
+  vertical-align: middle;
 }
 
 .icon-navBar:before {

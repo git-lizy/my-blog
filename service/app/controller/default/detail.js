@@ -13,6 +13,13 @@ class DetailController extends Controller {
     ctx.body = res;
   }
 
+  // 增加文章点赞次数
+  async addFavour() {
+    const { ctx, app } = this;
+    const res = await ctx.service.article.addFavour();
+    ctx.body = res;
+  }
+
 }
 
 module.exports = DetailController;

@@ -25,7 +25,7 @@ function Header(props) {
     const [aboutVisible, setAboutVisible] = useState(false)
     //背景大图
     const [bgPath, setBgPath] = useState('')
-    const {typeList, onSearchReload} = props
+    const {typeList, onSearchReload, Info } = props
     const header = useRef()
     const headerMain = useRef()
     const indexClick = () => {
@@ -106,15 +106,15 @@ function Header(props) {
     )
 
 
-    return <div className={'Header'} id={'Header'} style={{backgroundImage: `url(${ipPort + bgPath})`}}>
+    return <div className={'Header'} id={'Header'} /**style={{backgroundImage: `url(${ipPort + bgPath})`}} */> 
     {/*//     return <div className={'Header'} id={'Header'} >*/}
         <Row justify={'space-around'} className={'HeaderMain'}>
             <Col xs={13}>
-                <strong className={'name'} onClick={indexClick.bind(Header)}>铸心</strong>
+                <strong className={'name'} onClick={indexClick.bind(Header)}>{Info.username}</strong>
                 <span className={'type'}>&nbsp;个人技术博客</span>
             </Col>
             <Col xs={0} md={7} className="headerRight">
-                你见树，却未见森林
+                {Info.sendword}
             </Col>
             <Col xs={7} md={0} className="headerRight">
                 <Dropdown overlay={classifyMenu} trigger={['click']}>
@@ -136,7 +136,7 @@ function Header(props) {
                         setAboutVisible(false)
                     }}
                 >
-                    <About/>
+                    <About Info={Info} />
                 </Modal>
 
             </Col>

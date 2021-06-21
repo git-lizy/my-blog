@@ -15,9 +15,8 @@ import 'markdown-navbar/dist/navbar.css'
 import {withRouter} from 'next/router'
 import './style.scss'
 
-
 function SideBar(props) {
-    const {typeList, articleDetail} = props
+    const {typeList, articleDetail, Info } = props
     const [isDetail] = useState(!!props.router.asPath.startsWith('/detail?'))
     const [rankList, setRankList] = useState([]);
     const [rankLoading, setRankLoading] = useState(false);
@@ -29,8 +28,9 @@ function SideBar(props) {
 
     async function getHotList() {
         setRankLoading(true);
+        let { userId } = Info
         try {
-            let res = await get(ipPort + '/default/hotList', {});
+            let res = await get(ipPort + '/default/hotList', { userId });
             setRankLoading(false);
             if (res.success) {
                 setRankList(res.results)
@@ -54,7 +54,7 @@ function SideBar(props) {
 
         <div className={'about card classify'}>
             <div className={'title iconfont icon-about'}><span>&nbsp;关于博主</span></div>
-            <About/>
+            <About Info={Info} />
         </div>
 
 
@@ -62,7 +62,7 @@ function SideBar(props) {
         <>
             <div className={'classify card'}>
                 <div className={'title iconfont icon-classify'}><span>&nbsp;文章分类</span></div>
-                <NavBar path={props.router.asPath} typeList={typeList}/>
+                <NavBar path={props.router.asPath} typeList={typeList} Info={Info} />
             </div>
 
 

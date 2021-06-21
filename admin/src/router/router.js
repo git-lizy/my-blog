@@ -4,6 +4,7 @@ const login = AsyncComponent(()=>import('../pages/login'))
 const admin = AsyncComponent(()=>import('../pages/admin'))
 const addArticle = AsyncComponent(()=>import('../pages/admin/add'))
 const list = AsyncComponent(()=>import('../pages/admin/list'))
+const type = AsyncComponent(()=>import('../pages/admin/type'))
 const message = AsyncComponent(()=>import('../pages/admin/message'))
 
 let router = [
@@ -20,12 +21,16 @@ let router = [
             {
                 component: addArticle,//主页（发布文章页）
                 path: '/admin',
-                exact: true,
+                exact: true,     
             },
-
             {
                 component: list,//文章列表管理页
                 path: '/admin/list',
+                exact: true,
+            },
+            {
+                component: type,//文章类型
+                path: '/admin/type',
                 exact: true,
             },
             {
